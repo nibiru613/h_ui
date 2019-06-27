@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" @click="groupClick">
+  <div :class="classes">
     <slot></slot>
   </div>
 </template>
@@ -62,6 +62,9 @@
     },
     mounted () {
       this.updateValue();
+      this.$on('on-group-click',()=>{
+        this.$emit('on-click');
+      })
     },
     methods: {
       updateValue () {
@@ -81,9 +84,9 @@
         this.$emit('on-change', data.value);
         this.dispatch('FormItem', 'on-form-change', data.value);
       },
-      groupClick(){
-        this.$emit('on-click');
-      },
+      // groupClick(){
+      //   this.$emit('on-click');
+      // },
       focus() {
         let targetRadio = this.$slots.default.filter(slot => {
           let isRadio = slot.componentOptions && slot.componentOptions.tag

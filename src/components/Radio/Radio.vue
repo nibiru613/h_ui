@@ -144,6 +144,7 @@
       },
       radioClick(){
         this.$emit('on-click')
+        this.dispatch('RadioGroup', 'on-group-click')
       },
       updateValue () {
         this.currentValue = this.value === this.trueValue;

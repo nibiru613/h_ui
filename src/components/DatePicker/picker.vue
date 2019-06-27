@@ -255,6 +255,7 @@
     methods: {
       onSelectionModeChange(type){
           if (type.match(/^date/)) type = 'date';
+          if (type.match(/^month/)) type = 'month';
           this.selectionMode = oneOf(type, ['year', 'month', 'date', 'time']) && type;
           return this.selectionMode;
       },
@@ -540,9 +541,6 @@
     },
     watch: {
       visible (state) {
-        // 显示前才计算位置
-        this.setPlacement()
-
         if (state === false){
           //   this.$refs.drop.destroy();
           const input = this.$el.querySelector('input');
@@ -551,6 +549,9 @@
             this.dispatch('Msgbox', 'on-esc-real-close', true);
           }, 0);
         }else{
+          // 显示前才计算位置
+          this.setPlacement()
+
           setTimeout(() => {
             this.dispatch('Msgbox', 'on-esc-real-close', false);
           }, 0);

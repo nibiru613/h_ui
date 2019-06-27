@@ -7,6 +7,8 @@
     <p>级联选择对数据有较严格要求，请参照示例的格式使用data，每项数据至少包含 value、label 两项，子集为 children，以此类推。<br>
     value 为当前选择的数据的 value 值的数组，比如 ['beijing', 'gugong'] ，按照级联顺序依次排序，使用 v-model 进行双向绑定。</p>
     <h-cascader :data="data" v-model="value1" style="width:200px"></h-cascader>
+    <h2>多选模式</h2>
+    <h-cascader :data="data" v-model="mValue" multiple style="width:200px"></h-cascader>
     <h2>指定 value 默认值，组件会在初始化时选定数据</h2>
     <h-cascader :data="data" v-model="value2" style="width:200px"></h-cascader>
     <h2>设置属性 trigger 为 hover，当鼠标悬停时就会展开子集。</h2>
@@ -60,6 +62,7 @@ export default{
       value4: [],
       value9: [],
       value10: [],
+      mValue: [],
       cityData:data,
       data9: [{
         value: 'beijing',

@@ -4,24 +4,36 @@
     <p>选择器支持单选、多选、搜索，以及键盘快捷操作。</p>
     <h1>selectBlock测试用例</h1>
     {{value2}}
-    <h-simple-select autoPlacement
+    <h-simple-select ref="ceshi"
+                     label-in-value
+                     autoPlacement
                      filterable
+                     showBottom
+                     specialIndex
+                     multiple
+                     hideMult
+                     isSelectFilter
                      placeholder="123"
-                     style="width:200px"
+                     showTotalNum
                      v-model="value2"
+                     @on-change="change"
                      widthAdaption>
+      <div slot="header">
+        <h-button @click="selectAll(true)">全选</h-button>
+        <h-button @click="selectAll(false)">全不选</h-button>
+        <h-button @click="selectTop(true)">已选置顶</h-button>
+        <h-button @click="selectTop(false)">已选不置顶</h-button>
+      </div>
       <h-select-block :data="bigData"
-                      :showCol="showCol"
                       @on-scroll="select"></h-select-block>
     </h-simple-select>
     <h-button @on-click="loaddata">加载数据</h-button>
+    <h-button @on-click="changValue(true)">选择数据</h-button>
+    <h-button @on-click="changValue(false)">选择数据1</h-button>
     <h-simple-select autoPlacement
-    hideMult
-                     filterable
+                     specialIndex
                      isArrow="false"
-                     multiple
                      isSelectFilter
-                     showBottom
                      checkToHead
                      placeholder="123"
                      transfer
@@ -80,7 +92,7 @@
         <h-button @click="changeData">已选置顶</h-button>
       </div>
     </h-simple-select>
-    <h-simple-select 
+    <h-simple-select
       v-model="valueRemote"
       filterable
       show-bottom
@@ -105,7 +117,7 @@
 </template>
 <script>
 let bigData = []
-for (let i = 0; i < 160; i++) {
+for (let i = -1; i < 160; i++) {
   let obj = {}
   obj.value = i + ''
   if(i==0){
@@ -127,7 +139,7 @@ export default {
       bigData: [],
       value: '',
       value1: [],
-      value2: '2',
+      value2: ['2'],
       v20190321: {
         options: [
           {
@@ -179,6 +191,15 @@ export default {
     }
   },
   methods: {
+    selectAll(status){
+      this.$refs.ceshi.toggleSelect(status)
+    },
+    selectTop(status){
+      this.$refs.ceshi.selectedTop(status)
+    },
+    changValue(stae) {
+      this.value2 =stae? ['2', '3','4','5']:['3','4']
+    },
     changValue2() {
       this.v20190321.value2 = ['2', '3']
     },

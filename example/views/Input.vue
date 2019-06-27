@@ -59,6 +59,9 @@
       <h-col span="12">
         {{value5}}
         <h-input v-model="value5"
+                showWordLimit
+                :maxlength="100"
+                limitTip="字"
                  type="textarea"
                  placeholder="请输入..."
                  :disabled="disabled"
@@ -78,7 +81,7 @@
              placeholder="请输入..."
              style="width: 200px"
              :disabled="true"
-             show-word-limit></h-input>
+             ></h-input>
     <h-input v-model="value8"
              type="textarea"
              :autosize="{minRows: 2,maxRows: 5}"

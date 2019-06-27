@@ -224,8 +224,13 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
         background-color: $table-td-hover-bg;
       }
     }
+    // tr:hover{
+    //   td{background-color: $table-td-hover-bg;}
+    // }
   }
-
+  // &-row:hover{//改变hover高亮显示形式
+  //   td{ background-color: $table-td-hover-bg}
+  // }
   tr.#{$table-prefix-cls}-row-hover{
     td{
       background-color: $table-td-hover-bg;

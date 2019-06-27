@@ -365,6 +365,7 @@ export default {
       resizeProxyVisible: false,
       moveProxyVisible:false,
       showScroll:false,
+      fixedBodyClientHeight:0,
       headerRealHeight:0,
       selectType:false,
       buttomNum:null,
@@ -553,15 +554,21 @@ export default {
     fixedBodyStyle () {
       let style = {};
       if (this.bodyHeight !== 0 || this.maxHeight) {
-        let height =this.patibleHeight?this.bodyHeight-this.scrollBarWidth:this.bodyHeight;
+        //let fixedbodyheight=this.fixedBodyClientHeight<=0?this.$refs.fixedRightBody.clientHeight:this.fixedBodyClientHeight;
+        if(this.fixedBodyClientHeight<0){
+          this.fixedBodyClientHeight=0
+        }
+        let height =this.patibleHeight?this.bodyHeight-this.scrollBarWidth+this.fixedBodyClientHeight:this.bodyHeight+this.fixedBodyClientHeight;
         if (this.tableWidth < this.initWidth) {
           height = height + this.scrollBarWidth-1;
         }
         // height不存在时bodyheight为0
         if (this.height){
-           style.height = this.scrollBarWidth > 0 ? `${height}px` : `${height}px`;
-           if(this.fixedAutoHeight&&this.$refs.fixedRightBody.clientHeight<height){
-              style.height="auto";
+          style.height = this.scrollBarWidth > 0 ? `${height}px` : `${height}px`;
+           if(this.fixedAutoHeight){
+             if(this.bodyRealHeight<height){
+                style.height=`${this.bodyRealHeight}px`;
+             }           
            }
           }
         if (this.maxHeight) style.maxHeight = this.scrollBarWidth > 0 ? `${height}px` : `${height}px`       
@@ -748,7 +755,9 @@ export default {
             if (column.width) {
                 width = column.width||width;
             } else {
-                if (width < this.minWidth) width = this.minWidth;
+              let min = column.minWidth?column.minWidth:100
+              if (width < min) width = min
+                // if (width < this.minWidth) width = this.minWidth;
             }
             this.cloneColumns[i]._width =width||'';
             tableWidth = this.cloneColumns.map(cell => cell._width).reduce((a, b) => a + b)||this.tableWidth;
@@ -809,7 +818,9 @@ export default {
               if (column.width) {
                   width = column.width||'';
               } else {
-                  if (width < this.minWidth) width = this.minWidth;
+                let min = column.minWidth?column.minWidth:100
+                if (width < min) width = min
+                  // if (width < this.minWidth) width = this.minWidth;
               }
               this.cloneColumns[i]._width = this.hasWidth?width:width||'';
               this.tableWidth = this.cloneColumns.map(cell => cell._width).reduce((a, b) => a + b)||this.tableWidth;
@@ -831,7 +842,9 @@ export default {
               if (column.width) {
                   width = column.width||'';
               } else {
-                  if (width < this.minWidth) width = this.minWidth;
+                let min = column.minWidth?column.minWidth:100
+                if (width < min) width = min
+                  // if (width < this.minWidth) width = this.minWidth;
               }
               this.cloneColumns[i]._width = width||'';
               this.tableWidth = this.cloneColumns.map(cell => cell._width).reduce((a, b) => a + b);
@@ -1670,8 +1683,11 @@ export default {
           this.$nextTick(()=>{
             this.cloneData = deepCopy(this.data);
             this.buttomNum = null;
+              if(this.fixedAutoHeight){
+                this.fixedBodyClientHeight=-1;
+              }
           });
-
+          
         },
         deep: true
       },

@@ -384,10 +384,16 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
         color: $no-select-color;
         position: absolute;
         top: 8px;
-        right: 25px;
+        right: 20px;
     }
     &-hideMultHead-select,&-hideMultHead-select:after{
         color: $selected-color;
+    }
+    &-selected-num{
+        display: block;
+        height: $input-height-base - 2px;
+        line-height: $input-height-base - 2px;
+        padding-left: 8px;
     }
 }
 .#{$selectTable-prefix-cls}-checkHead{

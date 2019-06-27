@@ -13,7 +13,7 @@
     <!-- :multiLevel="multiLevel1" -->
     <!-- <h-msg-box v-model="showmsg" :width="1000"> -->
       <!-- notAdaptive  -->
-    <h-simple-table ref="simTable" :summationData="summationData" :columns="columnsBig1" border :data="bigData" height="300" @on-selection-change="selsetChange" @on-sort-change="selsetChange">
+    <h-simple-table ref="simTable" :summationData="summationData" :columns="columnsBig1" border :data="bigData" height="300" @on-selection-change="selsetChange" @on-sort-change="selsetChange" highlightRow>
     </h-simple-table>
     <!-- </h-msg-box> -->
     <h-button type="primary" size="large" @click="exportData(1)"><h-icon type="ios-download-outline"></h-icon> 导出原始数据</h-button>
@@ -697,15 +697,15 @@ export default {
           align: 'center',
           width:200,
           sortable:true,
-          fixed:'left',
+          // fixed:'left',
         },
-        {
-          type: 'selection',
-          align: 'center',
-          key:'select',
-          width:200,
-          // fixed:'left'
-        },
+        // {
+        //   type: 'selection',
+        //   align: 'center',
+        //   key:'select',
+        //   width:200,
+        //   // fixed:'left'
+        // },
         {
           title: '姓名',
           key: 'fundId',
@@ -727,43 +727,22 @@ export default {
         {
           title: '年龄',
           key: 'tradeDate',
-          width:200,
-          // sortable:true,
+          minWidth:200,
+          sortable:true,
           // fixed:'left',
         },
         {
           title: '地址',
           ellipsis:true,
-          width:200,
+          minWidth:200,
           key: 'securityCode',
         },
         {
           title: '地址1',
           key: 'securityName',
-          width:200,
+          minWidth:200,
           sortable:true,
-        },
-        // {
-        //   title: '地址2',
-        //   key: 'securityId',
-        //   sortable:true,
-        // },
-        // {
-        //   title: '地址3',
-        //   key: 'tradeDir',
-        // },
-        // {
-        //   title: '地址4',
-        //   key: 'tradeSubtype',
-        // },
-        // {
-        //   title: '地址5',
-        //   key: 'marketNo',
-        // },
-        // {
-        //   title: '地址6',
-        //   key: 'tradeQuantity',
-        // }
+        }
     ]
     // this.columnsBig1.push({
     //   title: '地址6',

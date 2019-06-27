@@ -19,6 +19,13 @@
         </h-date-picker>
       </h-col>
     </h-row>
+    <h2>type: MonthRange</h2>
+    <h-row>
+      <h-col span="12">
+        {{monthRangeModel}}
+        <h-date-picker v-model="monthRangeModel" type="monthrange" format="yyyy/MM" showFormat></h-date-picker>
+      </h-col>
+    </h-row>
     <!-- <h-row> -->
       <h2>显示快捷方式</h2>
       <p>设置属性 format 可以改变日期的显示格式<br>
@@ -230,6 +237,7 @@
         value3:  [ "2018-08-16", "2018-08-23" ],
         model1:'',
         model2:["2018-08-16", "2018-08-23"],
+        monthRangeModel: ["2019-03-01", "2020-06-01"],
         model3:'',
         model4:'',
         model5:'',

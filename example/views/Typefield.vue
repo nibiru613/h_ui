@@ -5,7 +5,7 @@
     <h2>基本用法</h2>
     <h1>algin设置左中右</h1>
       {{value11}}
-      <h-typefield v-model="value11" focusAllSelect integerNum="17" suffixNum="2" type="money" bigTips placeholder="金额" bigTips @on-blur="s" style="width:300px" algin="left" ref="test"></h-typefield>
+      <h-typefield v-model="value11" focusAllSelect integerNum="17" suffixNum="2" type="money" bigTips placeholder="金额"  @on-blur="s" style="width:300px" algin="left" ref="test"></h-typefield>
       <Button @on-click="testClick(true)">获取焦点</Button>
       <Button @on-click="testClick(false)">失去焦点</Button>
       {{value12}}
@@ -110,8 +110,8 @@ export default {
     kChange(val){
       console.log('按钮事件已触发'+val);
     },
-    s(){
-      console.log(this.value);
+    s(e){
+      console.log(e);
     }
   }
 }

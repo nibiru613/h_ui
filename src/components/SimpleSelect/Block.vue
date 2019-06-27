@@ -24,7 +24,7 @@
 
         <slot><span :style="showCol.length ? styleArr[0] : ''"
                 :class="showCol.length ? 'itemcol' : ''"
-                :title="showCol.length ? showLabel(item) : ''">
+                :title="showCol.length || hideMult ? showLabel(item) : ''">
             <checkbox v-show="multiple&&!hideMult"
                       size="large"
                       :value="item.selected"
@@ -218,7 +218,9 @@ export default {
       let num = getBarBottom(event.target, getScrollBarSize())
       this.$emit('on-scroll', num, this.lastScollTop)
       // 修复滚动后出现 x 滚动条问题
-      this.$parent.setWidthAdaption()
+      if (this.$parent.widthAdaption) {
+        this.$parent.setWidthAdaption()
+      }
     },
     updateVisibleData(scrollTop) {
       let itemHeight = Number(this.itemHeight)
@@ -249,14 +251,20 @@ export default {
         itemHeight +
         offset}px, 0)`
     },
-    selectedTop() {
-      this.cloneData.sort((a, b) => {
-        if (a.selected && !b.selected) {
-          return -1
-        } else {
-          return 0
-        }
-      })
+    selectedTop(status) {
+      if(status){
+        this.cloneData.sort((a, b) => {
+          if (a.selected && !b.selected) {
+            return -1
+          } else {
+            return 0
+          }
+        })
+      }else{
+        this.cloneData.sort((a, b) => {
+          return a._index<b._index?-1:0
+        })
+      }
       this.$refs.block.scrollTop = 0
       this.updateVisibleData(0)
       this.$parent.$parent.updateOptions()
@@ -301,9 +309,10 @@ export default {
     if (this.showHeader.length) {
       this.styleArr = this.showHeader.map(item => this.calcStyle(item.width))
     } else if (this.showCol.length) {
-      this.styleArr = ['', ...new Array(this.showCol.length).fill('')].map(
-        this.calcStyle
-      )
+      this.styleArr = []
+      for(let i = 0; i < this.showCol.length + 1; i++) {
+        this.styleArr.push(this.calcStyle(''))
+      }
     }
   },
   mounted() {
@@ -320,8 +329,8 @@ export default {
     this.$on('on-query-change', val => {
       this.queryChange(val)
     })
-    this.$on('on-select-top', () => {
-      this.selectedTop()
+    this.$on('on-select-top', (status) => {
+      this.selectedTop(status)
     })
 
     // v20190321
@@ -340,7 +349,8 @@ export default {
     this.hideMult = this.$parent.$parent.hideMult
     this.cloneData = deepCopy(this.data)
     // v20190321 添加focus
-    this.cloneData.forEach(item => {
+    this.cloneData.forEach((item,i) => {
+      item._index = i
       this.$set(item, 'focus', false)
     })
     this.$nextTick(() => {
@@ -359,7 +369,8 @@ export default {
         }
         this.$nextTick(() => {
           this.cloneData = deepCopy(this.data)
-          this.cloneData.forEach(item => {
+          this.cloneData.forEach((item,i) => {
+            item._index = i
             this.$set(item, 'focus', false)
           })
           this.$parent.$parent.updateOptions(true)

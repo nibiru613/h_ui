@@ -23,7 +23,7 @@
                         :current-view="leftDatePanelView"
                         :date-prefix-cls="datePrefixCls"></date-panel-label>
                     <span
-                        v-if="splitPanels || leftPickerTable !== 'date-table'"
+                        v-if="splitPanels || leftPickerTable !== 'date-table' && pickerType !== 'monthrange'"
                         :class="iconBtnCls('next', '-double')"
                         @click="nextYear('left')"><Icon name="arrow-r"></Icon></span>
                     <span
@@ -51,7 +51,7 @@
             <div :class="[prefixCls + '-content', prefixCls + '-content-right']" v-show="!isTime">
                 <div :class="[datePrefixCls + '-header']" v-show="currentView !== 'time'">
                 <span
-                        v-if="splitPanels || rightPickerTable !== 'date-table'"
+                        v-if="splitPanels || rightPickerTable !== 'date-table' && pickerType !== 'monthrange'"
                         :class="iconBtnCls('prev', '-double')"
                         @click="prevYear('right')"><Icon name="arrow-l"></Icon></span>
                     <span
@@ -159,7 +159,7 @@
                 leftPickerTable: `${this.selectionMode}-table`,
                 rightPickerTable: `${this.selectionMode}-table`,
                 leftPanelDate: leftPanelDate,
-                rightPanelDate: new Date(leftPanelDate.getFullYear(), leftPanelDate.getMonth() + 1, 1)
+                rightPanelDate: new Date(this.pickerType === 'monthrange' ? leftPanelDate.getFullYear() + 1 : leftPanelDate.getFullYear(), leftPanelDate.getMonth() + 1, 1)
             };
         },
         computed: {
@@ -218,7 +218,7 @@
             // set panels positioning
             const leftPanelDate = this.startDate || this.dates[0] || new Date();
             this.leftPanelDate = leftPanelDate;
-            const rightPanelDate = new Date(leftPanelDate.getFullYear(), leftPanelDate.getMonth() + 1, 1);
+            const rightPanelDate = new Date(this.pickerType === 'monthrange' ? leftPanelDate.getFullYear() + 1 : leftPanelDate.getFullYear(), leftPanelDate.getMonth() + 1, 1);
             this.rightPanelDate = this.splitPanels ? new Date(Math.max(this.dates[1], rightPanelDate)) : rightPanelDate;
             },
             currentView(currentView){

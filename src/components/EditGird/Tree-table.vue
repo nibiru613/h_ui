@@ -15,7 +15,8 @@
             <tr :class="rowClasses(row._index)"
                 @mouseenter="handleMouseIn(row._index)"
                 @mouseleave="handleMouseOut(row._index)"
-                @click="clickCurrentRow(row._index)">
+                @click="clickCurrentRow(row._index)"
+                v-show="!row.hidden">
               <td v-for="(column,inx) in columns"
                   :class="alignCls(column, row)">
                 <Cell :prefix-cls="prefixCls"

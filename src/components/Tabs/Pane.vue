@@ -1,5 +1,5 @@
 <template>
-  <div :class="prefixCls" v-show="show"><slot></slot></div>
+  <div v-if="nolazy" :class="prefixCls" v-show="show"><slot></slot></div>
 </template>
 <script>
   const prefixCls = 'h-tabs-tabpane';
@@ -30,7 +30,8 @@
       return {
         prefixCls: prefixCls,
         show: true,
-        currentName: this.name
+        currentName: this.name,
+        nolazy:false,
       };
     },
     methods: {
@@ -55,6 +56,9 @@
     },
     mounted () {
       this.updateNav();
+      if(!this.$parent.lazy||this.$parent.animated){
+        this.nolazy = true
+      }
     }
   };
 </script>

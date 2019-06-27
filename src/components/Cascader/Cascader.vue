@@ -2,7 +2,14 @@
   <div :class="classes" v-clickoutside="clickOutside">
     <div :class="[prefixCls + '-rel']" @click="toggleOpen" ref="reference">
       <slot>
+        <div :class="[prefixCls + '-tag-wrapper']" v-if="multiple" ref="tagWrapper">
+          <div class="h-tag" v-for="(item, index) in multipleValue" :key="index" :title="item.label">
+            <span class="h-tag-text">{{ item.label }}</span>
+            <Icon name="close" @click.native.stop="removeTag(item.selected[item.selected.length - 1].__value)"></Icon>
+          </div>
+        </div>
         <h-input
+          v-else
           ref="input"
           :readonly="readonly && !filterable"
           :disabled="disabled"
@@ -14,8 +21,8 @@
           :class="[prefixCls + '-label']"
           v-show="filterable && query === ''"
           @click="handleFocus">{{ displayRender }}</div>
-        <Icon name="close" :class="[prefixCls + '-arrow']" v-show="showCloseIcon" @click.native.stop="clearSelect"></Icon>
-        <Icon name="unfold" :class="[prefixCls + '-arrow']"></Icon>
+        <Icon :class="iconCls" name="close" v-show="showCloseIcon" @click.native.stop="clearSelect"></Icon>
+        <Icon :class="iconCls" name="unfold"></Icon>
       </slot>
     </div>
     <transition name="slide-up">
@@ -35,7 +42,8 @@
             :data="data"
             :disabled="disabled"
             :change-on-select="changeOnSelect"
-            :trigger="trigger"></Caspanel>
+            :trigger="trigger" 
+            :multiple="multiple"></Caspanel>
           <div :class="[prefixCls + '-dropdown']" v-show="filterable && query !== '' && querySelections.length">
             <ul :class="[selectPrefixCls + '-dropdown-list']">
               <li
@@ -61,7 +69,7 @@
   import Caspanel from './Caspanel.vue';
   import clickoutside from '../../directives/clickoutside';
   import TransferDom from '../../directives/transfer-dom';
-  import { oneOf } from '../../util/tools';
+  import { oneOf, findInx } from '../../util/tools';
   import { on, off } from '../../util/dom';
   import Emitter from '../../mixins/emitter';
   import Locale from '../../mixins/locale';
@@ -147,6 +155,10 @@
         },
         default: 'bottom'
       },
+      multiple: {
+        type: Boolean,
+        default: false
+      }
     },
     data () {
       return {
@@ -162,7 +174,8 @@
         isLoadedChildren: false,    // #950
         fPlacement:this.placement,
         isFocus:false,
-        viewValue:''
+        viewValue:'',
+        iconCls: [prefixCls + '-arrow']
       };
     },
     computed: {
@@ -172,6 +185,7 @@
           {
             [`${prefixCls}-show-clear`]: this.showCloseIcon,
             [`${prefixCls}-size-${this.size}`]: !!this.size,
+            [`${prefixCls}-multiple`]: this.multiple,
             [`${prefixCls}-visible`]: this.visible,
             [`${prefixCls}-disabled`]: this.disabled,
             [`${prefixCls}-not-found`]: this.filterable && this.query !== '' && !this.querySelections.length
@@ -254,6 +268,32 @@
             [`provice-city`]:this.setProviceCity
           }
         ]
+      },
+      multipleValue() {
+        const data = this.data;
+        const value = [];
+        const travel = (items, arr) => {
+          if (Array.isArray(items)) {
+            items.forEach(item => {
+              if (!item._checked && !item._indeterminate) return;
+              if (Array.isArray(item.children)) {
+                travel(item.children, arr.concat([item]));
+              } else {
+                let selected = arr.concat([item]);
+                let label = [];
+                for (let i = 0; i < selected.length; i++) {
+                  label.push(selected[i].label);
+                }
+                value.push({
+                  label: this.renderFormat(label, selected),
+                  selected: selected
+                });
+              }
+            })
+          }
+        }
+        travel(data, []);
+        return value;
       }
     },
     methods: {
@@ -299,7 +339,7 @@
         this.tmpSelected = result;
       },
       updateSelected (init = false) {
-        if (!this.changeOnSelect || init) {
+        if ((!this.changeOnSelect || init) && !this.multiple) {
           this.broadcast('Caspanel', 'on-find-selected', {
             value: this.currentValue
           });
@@ -372,10 +412,139 @@
           e.preventDefault();
           this.visible=false;
         }
+      },
+      getMultipleValue() {
+        const data = this.data;
+        const travel = node => {
+          if (!node._checked && !node._indeterminate) return [];
+          let children = node.children;
+          if (children) {
+            let arr = children.map(child => {
+              let valArr = travel(child);
+              valArr.forEach(v => {
+                v.unshift(node.value);
+              });
+              return valArr;
+            }).reduce((arr, v) => arr.concat(v), []);
+            return arr;
+          } else {
+            return [[node.value]];
+          }
+        }
+        return data.map(d => travel(d)).reduce((arr, v) => arr.concat(v), []);
+      },
+      getRawData() {
+        const data = this.data;
+        const cloneData = JSON.parse(JSON.stringify(data));
+        const travel = function (arr) {
+          if (Array.isArray(arr)) {
+            arr.forEach(d => {
+              delete d._checked;
+              delete d._indeterminate;
+              travel(d.children);
+            })
+          }
+        }
+        travel(cloneData);
+        return cloneData;
+      },
+      updateCheck() {
+        if (!this.multiple) return;
+        const value = this.currentValue;
+        const data = this.data;
+        const layeredData = [];
+        const getLayeredData = (arr, level) => {
+          let lData = layeredData[level] || [];
+          arr.forEach(item => {
+            lData.push(item);
+            if (Array.isArray(item.children)) {
+              getLayeredData(item.children, level + 1);
+            } else {
+              // 先把叶子节点置为unchecked
+              this.$set(item, '_checked', false);
+            }
+          });
+          layeredData[level] = lData;
+        }
+        getLayeredData(data, 0);
+
+        // 勾选子节点
+        value.forEach(val => {
+          let i = val.length - 1;
+          if (i >= 0) {
+            let lData = layeredData[i];
+            if (Array.isArray(lData)) {
+              let idx = findInx(lData, item => item.value === val[i]);
+              if (idx > -1) {
+                lData[idx]._checked = true;
+              }
+            }
+          }
+        })
+        const setCheck = (arr) => {
+          return arr.map(d => {
+            // -1: unchecked, 0: indeterminate, 1: checked
+            let checkState;
+            const children = d.children;
+            if (Array.isArray(children)) {
+              if (children.length > 0) {
+                const checkStates = setCheck(children);
+                if (
+                  checkStates.findIndex(s => s == 0) > -1 ||
+                  (checkStates.findIndex(s => s == 1) > -1 &&
+                    checkStates.findIndex(s => s == -1) > -1)
+                ) {
+                  checkState = 0;
+                  this.$set(d, '_checked', false);
+                  this.$set(d, '_indeterminate', true);
+                } else if (checkStates.findIndex(s => s == 1) > -1) {
+                  checkState = 1;
+                  this.$set(d, '_checked', true);
+                  this.$set(d, '_indeterminate', false);
+                } else {
+                  checkState = -1;
+                  this.$set(d, '_checked', false);
+                  this.$set(d, '_indeterminate', false);
+                }
+              }
+            } else {
+              if (!d.hasOwnProperty('_checked')) {
+                this.$set(d, '_checked', false);
+              }
+              checkState = d._checked ? 1 : -1;
+            }
+            return checkState;
+          })
+        }
+        setCheck(data);
+      },
+      removeTag(value) {
+        if (this.disabled) return;
+        let idx = findInx(this.currentValue, cv => cv.join(",") === value);
+        if (idx > -1) {
+          this.$emit("on-remove-tag", this.currentValue[idx]);
+          this.currentValue.splice(idx, 1);
+        }
+      },
+      async updateIconCls() {
+        if (this.currentValue.length > 0 && this.multiple) {
+          let cls = await new Promise(resolve => {
+            this.$nextTick(() => {
+              const el =  this.$refs.tagWrapper;
+              resolve(el.scrollHeight > el.clientHeight ? ['offset-left', prefixCls + '-arrow'] : [])
+            })
+          })
+          if (cls.length > 0) {
+            this.iconCls = cls;
+            return;
+          }
+        }
+        this.iconCls = [prefixCls + '-arrow'];
       }
     },
     created () {
       this.validDataStr = JSON.stringify(this.getValidData(this.data));
+      this.updateCheck();
       this.$on('on-result-change', (params) => {
         // lastValue: is click the final val
         // fromInit: is this emit from update value
@@ -388,9 +557,13 @@
           this.selected = this.tmpSelected;
 
           let newVal = [];
-          this.selected.forEach((item) => {
+          if (this.multiple) {
+            newVal = this.getMultipleValue();
+          } else {
+            this.selected.forEach((item) => {
               newVal.push(item.value);
-          });
+            });
+          }
 
           if (!fromInit) {
             this.updatingValue = true;
@@ -398,7 +571,7 @@
             this.emitValue(this.currentValue, oldVal);
           }
         }
-        if (lastValue && !fromInit) {
+        if (lastValue && !fromInit && !this.multiple) {
           this.handleClose();
         }
       });
@@ -442,18 +615,21 @@
       },
       currentValue () {
         this.$emit('input', this.currentValue);
+        this.updateIconCls();
         if (this.updatingValue) {
             this.updatingValue = false;
             return;
         }
+        this.updateCheck();
         this.updateSelected(true);
       },
       data: {
         deep: true,
         handler () {
-          const validDataStr = JSON.stringify(this.getValidData(this.data));
+          const validDataStr = JSON.stringify(this.getValidData(this.getRawData()));
           if (validDataStr !== this.validDataStr) {
             this.validDataStr = validDataStr;
+            this.updateCheck();
             if (!this.isLoadedChildren) {
               this.$nextTick(() => this.updateSelected());
             }

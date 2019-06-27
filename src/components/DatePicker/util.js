@@ -144,7 +144,8 @@ export const DEFAULT_FORMATS = {
     time: 'HH:mm:ss',
     timerange: 'HH:mm:ss',
     daterange: 'yyyy-MM-dd',
-    datetimerange: 'yyyy-MM-dd HH:mm:ss'
+    datetimerange: 'yyyy-MM-dd HH:mm:ss',
+    monthrange: 'yyyy-MM'
 };
 
 const RANGE_SEPARATOR = ' - ';
@@ -205,6 +206,10 @@ export const TYPE_VALUE_RESOLVER_MAP = {
     datetimerange: {
         formatter: RANGE_FORMATTER,
         parser: RANGE_PARSER
+    },
+    monthrange: {
+      formatter: RANGE_FORMATTER,
+      parser: RANGE_PARSER
     },
     timerange: {
         formatter: RANGE_FORMATTER,

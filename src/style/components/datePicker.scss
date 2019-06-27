@@ -21,14 +21,24 @@ $date-picker-cells-width-with-weeknumbers: 226px;
     overflow: visible;
     max-height: none;
   }
+  
+  &-cells:not(&-cells-month-selection) {
+    span {
+      width: 24px;
+      height: 24px;
+    }
+    span.#{$date-picker-prefix-cls}-cells-cell {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
   &-cells{
     width: $date-picker-cells-width;
     margin: 10px;
     white-space: normal;
     span{
       display: inline-block;
-      width: 24px;
-      height: 24px;
       em{
         display: inline-block;
         width: 24px;
@@ -48,8 +58,6 @@ $date-picker-cells-width-with-weeknumbers: 226px;
       color: $btn-disable-color;
     }
     span.#{$date-picker-prefix-cls}-cells-cell{
-        width: 28px;
-        height: 28px;
         cursor: pointer;
     }
     &-cell{
@@ -146,14 +154,25 @@ $date-picker-cells-width-with-weeknumbers: 226px;
       width: $date-picker-cells-width-with-weeknumbers;
   }
 
+  &-cells-year, &-cells-month:not(&-cells-month-selection) {
+    span {
+      width: 40px;
+      height: 28px;
+      margin: 10px 12px;
+    }
+  }
+
+  &-cells-month-selection {
+    span {
+      padding: 10px 12px;
+    }
+  }
+
   &-cells-year,&-cells-month{
     margin-top: 14px;
     // padding-left: 11px;
     span{
-      width: 40px;
-      height: 28px;
       line-height: 28px;
-      margin: 10px 12px;
       border-radius: $btn-border-radius-small;
       em{
         width: 40px;

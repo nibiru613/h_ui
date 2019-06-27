@@ -11,12 +11,12 @@
             v-if="clearable&&type!='textarea'"
             @on-click="handleClear"></Icon>
       <Icon :name="icon"
-            :class="[prefixCls + '-icon',prefixCls + '-icon-normal']"
+            :class="[prefixCls + '-icon',prefixCls + '-icon-normal']" :style="iconStyle"
             v-if="icon&&type!='textarea'"
             @on-click="handleIconClick"></Icon>
       <transition name="fade">
         <Icon name="load-c"
-              class="h-icon h-load-loop"
+              class="h-icon h-load-loop" 
               :class="[prefixCls + '-icon', prefixCls + '-icon-validate']"
               v-if="!icon"></Icon>
       </transition>
@@ -33,6 +33,7 @@
              :autofocus="autofocus"
              :spellcheck="spellcheck"
              :autocomplete="autocomplete"
+             :style="inputStyle"
              @keyup.enter="handleEnter"
              @keyup="handleKeyup"
              @keypress="handleKeypress"
@@ -88,7 +89,7 @@
       </ul>
     </div>
     <div v-if="showWordLimit" :class="[prefixCls + '-word-limit']">
-     {{currentLength}}/{{maxlength}}
+     {{currentLength}}/{{maxlength}} {{limitTip}}
     </div>
   </div>
 </template>
@@ -222,6 +223,10 @@ export default {
     clearable:{
       type:Boolean,
       default:false
+    },
+    limitTip:{
+      type:String,
+      default:''
     }
   },
   data() {
@@ -234,6 +239,8 @@ export default {
       textareaStyles: {},
       viewValue:this.value,
       clearstyle:{},
+      /* 是否按下按键 */
+      keyPressed: false
     }
   },
   computed: {
@@ -312,6 +319,23 @@ export default {
       }
 
       return this.value.length
+    },
+    iconStyle(){
+      let style={};
+      if(this.clearable){
+        style.width=26+'px'
+      }
+      return style;
+    },
+    inputStyle(){
+      let  style={};
+      if(this.clearable){
+        style.paddingRight=30+'px';
+        if(this.icon){
+            style.paddingRight=42+'px';
+        }
+      }
+      return style;
     }
   },
   methods: {
@@ -320,15 +344,17 @@ export default {
     },
     handleKeydown(event) {
       this.$emit('on-keydown', event)
+      this.keyPressed = true;
     },
     handleKeypress(event) {
       this.$emit('on-keypress', event)
     },
     handleKeyup(event) {
       this.$emit('on-keyup', event)
-      if (this.keyUpMode) {
+      if (this.keyUpMode && this.keyPressed) {
         this.handleInput(event)
       }
+      this.keyPressed = false;
     },
     handleIconClick(event) {
       this.$emit('on-click', event)
@@ -367,7 +393,7 @@ export default {
       }
     },
     handleInputValue(event) {
-      if (!this.keyUpMode) {
+      if (!this.keyUpMode || !this.keyPressed) {
         this.handleInput(event)
       }
     },
@@ -497,9 +523,10 @@ export default {
       }
     },
     showClear(){
-      let right=this.icon?20:0;
+      let right=this.icon?22:10;
        this.clearstyle= {
-         right:right+'px'
+         right:right+'px',
+         width:'16px'
        }
     }
   },

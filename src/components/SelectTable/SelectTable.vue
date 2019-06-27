@@ -9,10 +9,11 @@
          @keyup="keyup"
          @keydown="keydown"
          @click="toggleMenu">
+      <span v-if="showTotal" :class="[prefixCls + '-selected-num']">共选择 {{selectedMultiple.length}} 项</span>
       <!-- 多选时输入框内选中值模拟 -->
       <div class="h-tag"
            v-for="(item, index) in selectedMultiple"
-           v-show="item.label"
+           v-show="item.label&&!showTotal"
            :key="index">
         <span class="h-tag-text">{{ item.label }}</span>
         <Icon name="close"
@@ -340,6 +341,11 @@ export default {
     specialVal:{
       type:[String,Number],
       default:'-1'
+    },
+    // 多选时离开焦点显示选择多少项
+    showTotalNum:{
+      type:Boolean,
+      default:false,
     }
   },
   data() {
@@ -372,7 +378,8 @@ export default {
       isBlock: false,
       allClick: false,
       viewValue:null,
-      isSelectAll:false
+      isSelectAll:false,
+      showTotal:false,
     }
   },
   computed: {
@@ -547,8 +554,8 @@ export default {
     }
   },
   methods: {
-    selectedTop() {
-      this.broadcast('Block', 'on-select-top')
+    selectedTop(status=true) {
+      this.broadcast('Block', 'on-select-top',status)
     },
     handleclick(e) {
       e.stopPropagation()
@@ -573,16 +580,17 @@ export default {
     toggleSelect(val) {
       this.isSelectAll = !this.isSelectAll
       if (this.isBlock) {
-        this.allClick = true
         let hybridValue = []
         let curValue = []
-        if(this.specialIndex){
-          
-        }
+        this.allClick = true
         this.findChild(child => {
           this.options.forEach((col, i) => {
             if(child.cloneData[i].disabled) return
             if(this.isSelectFilter && child.cloneData[i].hidden){
+              return false
+            }
+            if(this.specialIndex&&child.cloneData[i].value==this.specialVal) {
+              this.$set(child.cloneData[i], 'selected', false)
               return false
             }
             this.$set(child.cloneData[i], 'selected', val)
@@ -839,6 +847,12 @@ export default {
       // let _this = this
       if (!this.multiple) {
         let label = value
+        if (this.options.length) {
+          let option = this.options.filter(opt => opt.value === value)[0]
+          if (option) {
+            label = option.label
+          }
+        }
         if (this.isBlock) {
           this.findChild(child => {
             this.options.forEach((col, i) => {
@@ -889,7 +903,6 @@ export default {
             value: value[i]
           })
         }
-
         this.findChild(child => {
           if (this.isBlock) {
             let curSelect = true;
@@ -1145,8 +1158,13 @@ export default {
           this.lastQuery = this.currentLabel
           this.query = this.currentLabel
         } else if (this.multiple && this.model.length) {
-          if (this.currentLabel.length !== this.model.length)
-            this.currentLabel = new Array(this.model.length).fill('')
+          if (this.currentLabel.length !== this.model.length) {
+            let tmp = []
+            for (let i = 0; i < this.model.length; i++) {
+              tmp.push('')
+            }
+            this.currentLabel = tmp
+          }
 
           this.selectedMultiple = this.model.map((item, index) => {
             return {
@@ -1258,16 +1276,22 @@ export default {
       this.hideMenu()
     },
     selectBlockMultiple(value) {
-      if(this.specialIndex&&value==this.specialVal){
-        let arr = []
-        arr.push(this.specialVal)
-        this.model=arr
-        return false
-      }
       const index = this.model.indexOf(value)
       if (index >= 0) {
         this.removeTag(index)
       } else {
+        if(this.specialIndex){
+          if(value==this.specialVal){
+            let arr = []
+            arr.push(this.specialVal)
+            this.model=arr
+            return false
+          }
+          if (value!=this.specialVal && this.model.indexOf(this.specialVal)>=0) {
+            const index = this.model.indexOf(this.specialVal);
+            this.removeTag(index);
+          }
+        }
         this.model.push(value)
         this.broadcast('Drop', 'on-update-popper')
       }
@@ -1512,16 +1536,15 @@ export default {
     // },
     // eslint-disable-next-line
     selectedMultiple(val) {
-      // console.log('selectedMultiple', val)
-      // if (val.length==0&&this.filterable && !this.showBottom) {
-      //   this.$nextTick(()=>{
-      //     this.$refs.input.focus();
-      //   });
-      // }
       this.$nextTick(() => {
         this.offsetArrow()
       })
       this.viewValue = val
+      if(this.showTotalNum&&this.multiple&&!this.isInputFocus&&val.length>2){
+        this.showTotal = true
+      }else{
+        this.showTotal = false
+      }
     },
     selectHead(val) {
       // this.toggleSelect(val)
@@ -1533,6 +1556,15 @@ export default {
       handler(nv) {
         if (this.isBlock) {
           this.broadcast('Block', 'on-focus-index-change', nv - 1)
+        }
+      }
+    },
+    isInputFocus(val){
+      if(this.showTotalNum&&this.multiple){
+        if(!val&&this.selectedMultiple.length>2){
+          this.showTotal = true
+        }else{
+          this.showTotal = false
         }
       }
     }

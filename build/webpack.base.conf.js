@@ -83,7 +83,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         query: {
-          limit: 10000,
+          limit: 10000,//假如图片小于10kb打包到js（base64）里面，大于10kb打包到img（url-loader）下面
           name: utils.assetsPath('img/[name].[ext]')
         }
       },

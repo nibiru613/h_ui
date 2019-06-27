@@ -87,7 +87,7 @@
                   :transfer="column.transfer"
                   :isString="column.multiple||false"
                   :label-in-value="column.multiple|| column.singleShowLabel || false"
-                  :autoPlacement="column.autoPlacement || true"
+                  :autoPlacement="column.autoPlacement === undefined ? true : column.autoPlacement"
                   @on-change="editselectChange"
                   class="canEdit">
           <h-option v-for="(item,i) in option"
@@ -106,7 +106,7 @@
               :editable="column.editable"
               :showFormat="true"
               :transfer="column.transfer"
-              :autoPlacement="column.autoPlacement || true"
+              :autoPlacement="column.autoPlacement === undefined ? true : column.autoPlacement"
               @on-change="editdateChange"
               class="canEdit"></Date>
       </template>

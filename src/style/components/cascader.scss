@@ -12,6 +12,79 @@ $cascader-item-prefix-cls: "#{$css-prefix}cascader-menu-item";
   //position: relative;
   line-height: normal;
 
+  &.#{$cascader-prefix-cls}-multiple {
+    .#{$cascader-prefix-cls}-rel {
+      line-height: $input-height-base;
+      height: $input-height-base;
+      background: #fff;
+      border: 1px solid $border-color-base;
+      border-radius: $border-radius-small;
+      transition: all $transition-time $ease-in-out;
+      cursor: pointer;
+      overflow: hidden;
+      &:hover {
+        border-color: #54a4ff;
+      }
+      .#{$cascader-prefix-cls}-tag-wrapper {
+        width: 100%;
+        padding-right: 25px;
+        overflow-y: auto;
+        height: 100%;
+        .#{$css-prefix}tag {
+          cursor: inherit;
+          position: relative;
+          white-space: nowrap;
+          max-width: 40%;
+          text-overflow: ellipsis;
+          height: $form-component-height - 12px;
+          line-height: $form-component-height - 12px;
+          padding: 0;
+          padding-right: 12px;
+          padding-left: 2px;
+          margin-left:8px;
+          background: #F5F5F5 !important;
+          border: 1px solid $border-color-split !important;  
+          &>.#{$css-prefix}icon {
+            position: absolute;
+            right: 0;
+          }
+          span{
+              display: inline-block;
+              width: 100%;
+          }
+        }
+      }
+      i.offset-left {
+        right: 20px;
+      }
+    }
+    &.#{$cascader-prefix-cls}-disabled .#{$cascader-prefix-cls}-rel {
+      background-color: #f7f7f7;
+      &:hover {
+        border-color: $border-color-base;
+      }
+      .#{$css-prefix}tag {
+        color: #999;
+      }
+    }
+    &.#{$cascader-prefix-cls}-visible {
+      .#{$cascader-prefix-cls}-rel {
+        border-color: #54a4ff;
+        box-shadow: 0 0 0 2px rgba(41, 141, 255, 0.2);
+      }
+    }
+  }
+
+  &.#{$cascader-prefix-cls}-multiple.#{$cascader-prefix-cls}-size-small &-rel {
+    line-height: 26px;
+    height: 26px;
+  }
+
+  &.#{$cascader-prefix-cls}-multiple.#{$cascader-prefix-cls}-size-large &-rel {
+    line-height: $input-height-large;
+    height: $input-height-large;
+  }
+
   &-rel{
       display: inline-block;
       width: 100%;
@@ -22,7 +95,7 @@ $cascader-item-prefix-cls: "#{$css-prefix}cascader-menu-item";
       display: block;
       cursor: pointer;
   }
-  &-disabled .#{$css-prefix}input{
+  &-disabled .#{$css-prefix}input, &-disabled &-tag-wrapper {
       cursor: $cursor-disabled;
   }
 

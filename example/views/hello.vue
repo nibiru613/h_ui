@@ -1,38 +1,264 @@
 <template>
-    <div class="h-input-wrapper h-input-type h-input-group h-input-group-with-append h-input-hide-icon">
-        <h-input v-model="innerValue"></h-input>
-        <div class="h-input-group-append">
-            <slot name="append"/>
-        </div>
-    </div>
+<div>
+    <h-table height="300" border :columns="columns2" :data="data4" fixedAutoHeight></h-table>
+    <button @click="ttt">gengxinshuju</button>
+</div>
 </template>
-
 <script>
-export default {
-    props:{
-        value: String
-    },
-    data(){
-        return {
-            innerValue:''
+    export default {
+        data () {
+            return {
+                columns2: [
+                    {
+                        title: '姓名',
+                        key: 'name',
+                        width: 100,
+                        fixed: 'left'
+                    },
+                    {
+                        title: '年龄',
+                        key: 'age',
+                        width: 100
+                    },
+                    {
+                        title: '省份',
+                        key: 'province',
+                        width: 100
+                    },
+                    {
+                        title: '市区',
+                        key: 'city',
+                        width: 100
+                    },
+                    {
+                        title: '地址',
+                        key: 'address',
+                        // minwidth: 100
+                    },
+                    {
+                        title: '邮编',
+                        key: 'zip'
+                    },
+                    {
+                        title: '操作',
+                        key: 'action',
+                        fixed: 'right',
+                        width: 120,
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    }
+                                }, '查看'),
+                                h('Button', {
+                                    props: {
+                                        type: 'text',
+                                        size: 'small'
+                                    }
+                                }, '编辑')
+                            ]);
+                        }
+                    }
+                ],
+                data4: [
+                    {
+                        name: '王小明',
+                        age: 18,
+                        address: '北京市朝阳区芍药居',
+                        province: '北京市',
+                        city: '朝阳区',
+                        zip: 100000
+                    },
+                    {
+                        name: '张小刚',
+                        age: 25,
+                        address: '北京市海淀区西二旗',
+                        province: '北京市',
+                        city: '海淀区',
+                        zip: 100000
+                    },
+                    {
+                        name: '李小红',
+                        age: 30,
+                        address: '上海市浦东新区世纪大道',
+                        province: '上海市',
+                        city: '浦东新区',
+                        zip: 100000
+                    },
+                    {
+                        name: '周小伟',
+                        age: 26,
+                        address: '深圳市南山区深南大道',
+                        province: '广东',
+                        city: '南山区',
+                        zip: 100000
+                    },
+                    {
+                        name: '王小明',
+                        age: 18,
+                        address: '北京市朝阳区芍药居',
+                        province: '北京市',
+                        city: '朝阳区',
+                        zip: 100000
+                    },
+                    {
+                        name: '张小刚',
+                        age: 25,
+                        address: '北京市海淀区西二旗',
+                        province: '北京市',
+                        city: '海淀区',
+                        zip: 100000
+                    },
+                    {
+                        name: '李小红',
+                        age: 30,
+                        address: '上海市浦东新区世纪大道',
+                        province: '上海市',
+                        city: '浦东新区',
+                        zip: 100000
+                    },
+                    {
+                        name: '周小伟',
+                        age: 26,
+                        address: '深圳市南山区深南大道',
+                        province: '广东',
+                        city: '南山区',
+                        zip: 100000
+                    }
+                ]
+            }
+        },methods:{
+        ttt(){
+         this.data4=[
+                    {
+                        name: '王小明',
+                        age: 18,
+                        address: '北京市朝阳区芍药居',
+                        province: '北京市',
+                        city: '朝阳区',
+                        zip: 100000
+                    },
+                    {
+                        name: '张小刚',
+                        age: 25,
+                        address: '北京市海淀区西二旗',
+                        province: '北京市',
+                        city: '海淀区',
+                        zip: 100000
+                    },
+                    {
+                        name: '李小红',
+                        age: 30,
+                        address: '上海市浦东新区世纪大道',
+                        province: '上海市',
+                        city: '浦东新区',
+                        zip: 100000
+                    }
+                ];
         }
-    },
-    watch:{
-        innerValue(newVal, oldVal){
-            this.$nextTick(()=>{
-                if(newVal != '' && isNaN(newVal)){
-                    this.innerValue = oldVal;
-                } else {
-                    this.$emit('input', newVal)
-                }
-            })
-        },
-        value(newVal){
-            this.innerValue = newVal
         }
     }
-}
 </script>
+
+</script>
+<!-- <template>
+<div>
+    <h-form ref="formValidate" :model="formValidate" cols="2" :label-width="80">
+        <h-form-item label="input" prop="name">
+            <h-input v-model="formValidate.name" placeholder="请输入姓名" class="curItemClass" data-index="0"></h-input>
+        </h-form-item>
+        <h-form-item label="typefield" prop="mail">
+            <h-typefield v-model="formValidate.mail" placeholder="请输入邮箱" class="curItemClass" data-index="2"></h-typefield >
+        </h-form-item>
+        <h-form-item label="select" prop="city">
+            <h-select v-model="formValidate.city" placeholder="请选择所在地" class="curItemClass" data-index="1">
+                <h-option value="beijing">北京市</h-option>
+                <h-option value="shanghai">上海市</h-option>
+                <h-option value="shenzhen">深圳市</h-option>
+            </h-select>
+        </h-form-item>
+        <h-form-item label="simpleSelect" prop="city">
+            <h-simple-select v-model="formValidate.city" placeholder="请选择所在地" class="curItemClass" data-index="4">
+                <h-select-block :data="bigData"></h-select-block>
+            </h-simple-select>
+        </h-form-item>
+        <h-form-item prop="date" label="data">
+            <h-date-picker type="date" placeholder="选择日期" v-model="formValidate.date" class="curItemClass" data-index="5"></h-date-picker>
+        </h-form-item>
+        <h-form-item prop="time" label="time">
+            <h-time-picker type="time" placeholder="选择时间" v-model="formValidate.time" class="curItemClass" data-index="6"></h-time-picker>
+        </h-form-item>
+        <h-form-item label="radio" prop="gender">
+            <h-radio-group v-model="formValidate.gender">
+                <h-radio label="male" class="curItemClass" data-index="7">男</h-radio>
+                <h-radio label="female" class="curItemClass" data-index="8">女</h-radio>
+            </h-radio-group>
+        </h-form-item>
+        <h-form-item label="checkbox" prop="interest">
+            <h-checkbox-group v-model="formValidate.interest">
+                <h-checkbox label="吃饭" class="curItemClass" data-index="9"></h-checkbox>
+                <h-checkbox label="睡觉" class="curItemClass" data-index="10"></h-checkbox>
+                <h-checkbox label="跑步" class="curItemClass" data-index="11"></h-checkbox>
+                <h-checkbox label="看电影" class="curItemClass" data-index="12"></h-checkbox>
+            </h-checkbox-group>
+        </h-form-item>
+        <h-form-item>
+            <h-button type="primary" canFocus @click="handleSubmit('formValidate')" class="curItemClass" data-index="1">提交</h-button>
+            <h-button type="ghost"  canFocus  @click="handleReset('formValidate')" style="margin-left: 8px" class="curItemClass" data-index="1">重置</h-button>
+        </h-form-item>
+    </h-form>
+</div>
+</template>
+<script>
+import { enterHandler1 } from "../../src/util/tools.js";
+export default {
+  data() {
+    return {
+      formValidate: {
+        name: "",
+        mail: "",
+        city: "",
+        gender: "",
+        interest: [],
+        date: "",
+        time: "",
+        desc: ""
+      },
+      bigData: [
+        { value: "value1", label: "label1" },
+        { value: "value2", label: "label2" },
+        { value: "value3", label: "label3" },
+        { value: "value4", label: "label4" },
+        { value: "value5", label: "label5" },
+        { value: "value6", label: "label6" }
+      ]
+    };
+  },
+  methods: {
+    handleSubmit(name) {
+    //   this.$refs[name].validate(valid => {
+    //     if (valid) {
+    //       this.$Message.success("提交成功!");
+    //     } else {
+    //       this.$Message.error("表单验证失败!");
+    //     }
+    //   });
+    },
+    handleReset(name) {
+    //   this.$refs[name].resetFields();
+    }
+  },
+  mounted() {
+    window.isO45 = true;
+    document.addEventListener("keyup", event => {
+      enterHandler1(this.$refs.formValidate, event);
+    });
+  }
+};
+</script>
+-->
 <!--<template>
 <div>
         <h-table border :columns="columns4" :data="data1" rowSelect @on-select="selectOne" @on-select-all="selectAll" @on-selection-change="selectChange" @on-select-cancel="selectCancel"></h-table>

@@ -81,7 +81,7 @@
           this.hidden = !new RegExp(parsedQuery, 'i').test(this.searchLabel);
         }
       },
-      handleclick(){ 
+      handleclick(){
       }
     },
     watch: {

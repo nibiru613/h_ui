@@ -101,7 +101,8 @@
           :typeName = "typeName"
           @mouseenter.native.stop="handleMouseIn(row._index)"
           @mouseleave.native.stop="handleMouseOut(row._index)"
-          @click.native="clickCurrentRow(row._index)">
+          @click.native="clickCurrentRow(row._index)"
+          v-show="!row.hidden">
           <td v-for="(column,inx) in columns" :class="alignCls(column, row)" :key="inx">
             <Cell
               :prefix-cls="prefixCls"

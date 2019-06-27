@@ -293,7 +293,8 @@ export default {
           else {value = getCurrentYear()}
           break;
         case 4:
-          value = Number(val)>1950? val:getCurrentYear();
+          //value = Number(val)>1950? val:getCurrentYear();   //需求#147171 【TS:201906190498-资管业委会（资管）_沈佳伟-【需求类型】需求【需求描述】HUI的h-fast-date控件，给 赋值19000101，即1900年1月1日，焦点进入h-fast-date，再移出焦点，日期变成了2019-01-01，数据错误，需要修复
+          value = Number(val)>1000? val:getCurrentYear(); 
           break;
         default:
           value = getCurrentYear();

@@ -79,14 +79,22 @@ $selectBlock-prefix-cls:  "#{$css-prefix}select-block";
   height: 30px;
 }
 .#{$selectBlock-prefix-cls}-hideMult .#{$selectBlock-prefix-cls}-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &>span {
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     &:after{
         @include h-icon();
         font-size: 22px;
         content: '\E734';
         color: #fff;
         position: absolute;
-        top: 3px;
-        right: 8px;
+        top: 5px;
+        right: 2px;
     }
     &:hover:after{
         color: $no-select-color;

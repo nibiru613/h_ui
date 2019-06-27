@@ -285,6 +285,8 @@ export default {
       treeOptions:this.treeOption,
       canVisible:true,
       curKey:null,
+      /* 保存垂直滚动距离，用于判断垂直滚动方向 */
+      scrollTop: 0
     };
   },
   computed: {
@@ -836,7 +838,11 @@ export default {
       }
       let _this = this;
       let buttomNum = getBarBottom(event.target,this.scrollBarWidth);
-      this.$emit('on-scroll',buttomNum)
+      // 发生垂直滚动时才触发on-scroll事件
+      if (this.scrollTop !== event.target.scrollTop) {
+        this.$emit('on-scroll', buttomNum)
+        this.scrollTop = event.target.scrollTop;
+      }
       if (this.showHeader) this.$refs.header.scrollLeft = event.target.scrollLeft;
       if (this.isLeftFixed) this.$refs.fixedBody.scrollTop = event.target.scrollTop;
       if (this.isRightFixed) this.$refs.fixedRightBody.scrollTop = event.target.scrollTop;

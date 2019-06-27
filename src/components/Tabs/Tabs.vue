@@ -143,6 +143,10 @@
         type:Boolean,
         default: true,
       },
+      lazy:{
+        type:Boolean,
+        default:false
+      }
     },
     data () {
       return {
@@ -305,7 +309,12 @@
       updateStatus () {
         const tabs = this.getTabs();
         if (!this.panelRight) {
-          tabs.forEach(tab => tab.show = (tab.currentName === this.activeKey) || this.animated);
+          tabs.forEach(tab =>{
+            if(this.lazy&&!tab.nolazy&&tab.currentName === this.activeKey){
+              tab.nolazy=true
+            }
+            tab.show = (tab.currentName === this.activeKey) || this.animated
+          });
         }else{
           tabs.forEach(tab => tab.show = (tab.currentName === this.activeKey));
         }

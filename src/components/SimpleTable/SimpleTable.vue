@@ -74,11 +74,12 @@
               <template v-for="(row, index) in visibleData">
                 <table-tr :row="row"
                           :key="row._rowKey"
+                          :hoverIndex="hoverIndex"
                           :prefix-cls="prefixCls"
                           @mouseenter.native.stop="handleMouseIn(row._index)"
                           @mouseleave.native.stop="handleMouseOut(row._index)"
                           @click.native="clickCurrentRowTr($event,row._index,index)"
-                          @dblclick.native.stop="dblclickCurrentRowTr(row._index)">
+                          @dblclick.native.stop="dblclickCurrentRowTr(row._index,index)">
                   <td v-for="column in cloneColumns"
                       :class="alignCls(column, row)"
                       :data-index="row._index+1"
@@ -187,11 +188,12 @@
                 <template v-for="(row, index) in visibleData">
                   <table-tr :row="row"
                             :key="row._rowKey"
+                            :hoverIndex="hoverIndex"
                             :prefix-cls="prefixCls"
                             @mouseenter.native.stop="handleMouseIn(row._index)"
                             @mouseleave.native.stop="handleMouseOut(row._index)"
                             @click.native="clickCurrentRowTr($event,row._index,index)"
-                            @dblclick.native.stop="dblclickCurrentRowTr(row._index)">
+                            @dblclick.native.stop="dblclickCurrentRowTr(row._index,index)">
                     <td v-for="column in cloneColumns"
                         :class="alignCls(column, row,'left')"
                         :data-index="row._index+1"
@@ -303,7 +305,8 @@ import {
   removeClass,
   typeOf,
   getScrollBarSizeHeight,
-  scrollAnimate
+  scrollAnimate,
+  debounceWithImmediate
 } from '../../util/tools'
 import { on, off } from '../../util/dom'
 import Locale from '../../mixins/locale'
@@ -522,7 +525,8 @@ export default {
       curShiftIndex: null,
       sumMarginLeft: 0,
       baseInx: null,
-      offsetInx: null
+      offsetInx: null,
+      hoverIndex:-1,
     }
   },
   computed: {
@@ -728,7 +732,8 @@ export default {
     },
     textStyle() {
       let style = {}
-      style.width = this.initWidth != 0 ? this.initWidth + 'px' : '100%'
+      // style.width = this.initWidth != 0 ? this.initWidth + 'px' : '100%'
+      style.width ='100%'
       const height = this.bodyHeight
       style.height = this.height
         ? Number(height - this.scrollBarHeight) + 'px'
@@ -1100,6 +1105,9 @@ export default {
         let transformTop =
           Math.floor(this.$refs.body.scrollTop / this.itemHeight) *
           this.itemHeight
+        if(this.$refs.fixedBody){
+            this.$refs.fixedBody.scrollTop = transformTop
+          }
         if (this.scrollbarToZero) {
           transformTop = 0
           this.$refs.body.scrollTop = 0
@@ -1153,7 +1161,9 @@ export default {
               if (column.width) {
                 width = column.width || ''
               } else {
-                if (width < 100) width = 100
+                let min = column.minWidth?column.minWidth:100
+                if (width < min) width = min
+                // if (width < 100) width = 100
               }
               this.cloneColumns[i]._width = width || ''
               this.tableWidth = this.cloneColumns
@@ -1179,7 +1189,8 @@ export default {
               if (column.width) {
                 width = column.width || ''
               } else {
-                if (width < 100) width = 100
+                let min = column.minWidth?column.minWidth:100
+                if (width < min) width = min
               }
               this.cloneColumns[i]._width = width || ''
               this.tableWidth = this.cloneColumns
@@ -1257,11 +1268,13 @@ export default {
     handleMouseIn(_index) {
       if (this.disabledHover) return
       if (this.objData[_index]._isHover) return
-      this.objData[_index]._isHover = true
+      this.hoverIndex = _index
+      // this.objData[_index]._isHover = true
     },
     handleMouseOut(_index) {
       if (this.disabledHover) return
-      this.objData[_index]._isHover = false
+      this.hoverIndex = -1
+      // this.objData[_index]._isHover = false
     },
     highlightCurrentRow(_index) {
       if (!this.highlightRow) return
@@ -1335,7 +1348,7 @@ export default {
           // this.objData[_index]._isChecked=!this.objData[_index]._isChecked;
           this.toggleSelect(_index, curIndex)
         } else {
-          this.clickCurrentRow(_index)
+          this.clickCurrentRow(_index,curIndex)
         }
         if (this.objData[_index]._isHighlight) {
           this.shiftSelect = []
@@ -1355,14 +1368,15 @@ export default {
         this.getctrlSelect(_index)
       }
     },
-    dblclickCurrentRowTr(_index) {
+    dblclickCurrentRowTr(_index,curIndex) {
+      curIndex = curIndex + this.start
       if (!this.rowSelect) {
-        this.dblclickCurrentRow(_index)
+        this.dblclickCurrentRow(_index,curIndex)
       }
     },
-    clickCurrentRow(_index) {
+    clickCurrentRow(_index,curIndex) {
       if (!this.rowSelect) {
-        this.focusIndex = _index
+        this.focusIndex = curIndex
         this.highlightCurrentRow(_index)
       }
       this.$nextTick(() => {
@@ -1376,9 +1390,9 @@ export default {
         }
       })
     },
-    dblclickCurrentRow(_index) {
+    dblclickCurrentRow(_index,curIndex) {
       if (!this.rowSelect) {
-        this.focusIndex = _index
+        this.focusIndex = curIndex
         this.highlightCurrentRow(_index)
       }
       this.$nextTick(() => {
@@ -1644,13 +1658,13 @@ export default {
       )
       let curtop = Math.floor(scrolltop / this.itemHeight) * this.itemHeight
 
-      this.updateVisibleData(scrolltop)
+      this.updateVisibleDataDebounce(false)(scrolltop)
       this.$refs.content.style.transform = `translate3d(0, ${curtop}px, 0)`
       if (this.$refs.leftContent) {
         this.$refs.leftContent.style.transform = `translate3d(0, ${curtop}px, 0)`
       }
       setTimeout(() => {
-        this.updateVisibleData(scrolltop)
+      this.updateVisibleDataDebounce(false)(scrolltop)
       }, 0)
     },
     handleFixedMousewheel(event) {
@@ -1701,6 +1715,13 @@ export default {
       // if(this.$refs.leftContent){
       //   this.$refs.leftContent.style.transform = `translate3d(0, ${curtop}px, 0)`;
       // }
+    },
+    /**
+     * @description 防抖更新，滚动时调用，防止滚动卡顿
+     */
+    updateVisibleDataDebounce(immediate = true) {
+      if (!this.updateVisibleDataDebounce.body) this.updateVisibleDataDebounce.body = debounceWithImmediate(this.updateVisibleData, 30, immediate)
+      return this.updateVisibleDataDebounce.body
     },
     handleMouseWheel(event) {
       const deltaX = event.deltaX
@@ -1997,7 +2018,8 @@ export default {
         if (e.keyCode === 40 || e.keyCode === 38) {
           e.preventDefault()
           e.stopPropagation()
-          this.highlightCurrentRow(this.focusIndex)
+          let _index = this.rebuildData[this.focusIndex]._index
+          this.highlightCurrentRow(_index)
         }
       }
     },
@@ -2028,7 +2050,6 @@ export default {
     },
     keySelect(e) {
       if (e.shiftKey && (this.baseInx || this.baseInx == 0)) {
-        console.log(222)
         const keyCode = e.keyCode
         if (keyCode === 40) {
           e.preventDefault()
@@ -2100,7 +2121,7 @@ export default {
       if (val) {
         this.$refs.body.scrollTop = this.scrollTopSet
         this.$nextTick(() => {
-          this.clickCurrentRow(0)
+          // this.clickCurrentRow(0)
         })
       }
     },
