@@ -32,7 +32,7 @@
              @keydown.stop="keyDown"
              @input="change"
              @change="change"
-             :value="viewValue"
+             :value="viewValue==null?'':viewValue"
              :readonly="!editable ||readonly">
     </div>
   </div>
@@ -247,10 +247,10 @@ export default {
     },
     setValue(val) {
       // 如果 step 是小数，且没有设置 precision，是有问题的
-      if (!isNaN(this.precision)) {
+      if (!isNaN(this.precision)&&val!==null) {
         val = Number(Number(val).toFixed(this.precision))
         isNaN(val) && (val = 0)
-      }
+      }     
       this.$nextTick(() => {
         this.currentValue = val
         this.$emit('input', val)
@@ -264,21 +264,29 @@ export default {
         this.$refs.input.focus()
       }
     },
-    blur(event) {
+    blur(event) {     
       if (event == undefined) {
         this.focused = false
         return
+      }   
+      if(event.target.value.trim()==""&&!this.setzero){
+         this.setValue(null)
+         this.focused = false
+         this.viewValue=null;
+         return;
       }
-      let val = Number(event.target.value.trim())
-      this.focused = false
-      const { min, max } = this
-      if (val > max) {
-        this.setValue(max)
-      } else if (val < min) {
-        this.setValue(min)
-      } else {
-        this.setValue(val)
-      }
+       let val = Number(event.target.value.trim())
+       this.focused = false    
+       const { min, max } = this
+        if (val!==null) {
+            if (val > max) {
+              this.setValue(max)
+            } else if (val < min) {
+              this.setValue(min)
+            } else {
+              this.setValue(val)
+            }
+       }
     },
     keyDown(e) {
       if (e.keyCode === 38) {
@@ -293,16 +301,20 @@ export default {
       let val = event.target.value.trim()
       // 设置setzero后 清空后置为0(有min时置为min[后续判断])
       val = val == '' && this.setzero ? '0' : val
+       const isEmptyString = val.length === 0
+      if(isEmptyString){
+          this.setValue(null);
+          return;
+       }
       if (event.type == 'input' && val.match(/^\-?\.?$|\.$/)) return // prevent fire early if decimal. If no more input the change event will fire later
       if (event.type == 'change' && Number(val) === this.currentValue) return // already fired change for input event
 
-      // const { min, max } = this
-      const isEmptyString = val.length === 0
+    // const { min, max } = this
       val = Number(val)
-      if (!isNaN(val) && !isEmptyString) {
+      if (!isNaN(val)) {
         this.currentValue = val
 
-        // if (val > max) {
+         // if (val > max) {
         //     this.setValue(max);
         // } else if (val < min) {
         //     this.setValue(min);
@@ -310,10 +322,14 @@ export default {
         //     this.setValue(val);
         // }
       } else {
-        event.target.value = this.viewValue
+       event.target.value = this.viewValue
       }
     },
     changeVal(val) {
+       if(this.currentValue==null&&this.viewValue!=this.currentValue){
+         this.viewValue=null;
+         return;
+       }
       val = Number(val)
       if (!isNaN(val)) {
         const step = this.step
@@ -328,7 +344,7 @@ export default {
     /**
      * @description 计算显示值
      */
-    calcViewValue() {
+    calcViewValue() {   
       if (this.notScientificNotation) {
         let s = scientificNotationToString(this.currentValue)
         this.viewValue = this.precision
@@ -351,6 +367,10 @@ export default {
     value: {
       immediate: true,
       handler: function(val) {
+        if(val==null){
+           this.currentValue=null;
+           return;
+        }
         this.currentValue = val < this.min ? this.min : val
         this.calcViewValue()
       }

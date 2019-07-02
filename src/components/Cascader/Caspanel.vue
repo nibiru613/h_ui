@@ -2,8 +2,8 @@
   <span>
     <ul v-if="data && data.length" :class="[prefixCls + '-menu']">
       <Casitem
-        v-for="item in data"
-        :key="getKey()"
+        v-for="(item, i) in data"
+        :key="i"
         :prefix-cls="prefixCls"
         :data="item"
         :tmp-item="tmpItem"
@@ -121,7 +121,7 @@ export default {
       }
     },
     handleClickItem(item, event) {
-      if (this.trigger !== "click" && item.children) return;
+      if (this.trigger !== "click" && item.children && !this.multiple) return;
       // 勾选选项
       let target = event.target;
       // 事件是否由多选框触发
@@ -204,9 +204,6 @@ export default {
       } else {
         this.$parent.$parent.updateResult(result);
       }
-    },
-    getKey() {
-      return key++;
     }
   },
   mounted() {

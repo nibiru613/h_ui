@@ -4,6 +4,7 @@
       v-if="multiple"
       v-model="data._checked"
       :indeterminate="data._indeterminate"
+      :disabled="data.disabled"
     ></check-box>
     {{ data.label }}
     <Icon v-if="showArrow" name="ios-arrow-right"></Icon>

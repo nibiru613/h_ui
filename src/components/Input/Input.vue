@@ -360,7 +360,9 @@ export default {
       this.$emit('on-click', event)
     },
     handleClear(event){
-     this.currentValue='';
+    // this.currentValue='';
+     this.$emit('input', "")
+     this.$emit('on-input-change', event)
      this.$emit('on-clear',event)
     },
     handleFocus(event) {
