@@ -7,12 +7,12 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
         vertical-align: middle;
         float: left;
         font-size: $font-size-small;
-        color: $text-color;
+        color: $form-label-color;
         // line-height: 1;
-
+        background:$form-item-label-background;
         // padding: 10px 12px 10px 0;
         line-height: $form-component-height;
-        padding: 0 12px 0 0;
+        padding:$form-item-label-padding;
         box-sizing: border-box;
         // 多余即省略
         overflow: hidden;
@@ -20,7 +20,7 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
         text-overflow: ellipsis;
     }
     .#{$form-item-prefix-cls}-labelWrap .#{$form-item-prefix-cls}-label {
-        padding: 0 12px 0 0;
+        padding: $form-item-labelWrap-padding;
         height: $form-component-height;
         line-height: $form-component-height / 2;
         white-space: pre-wrap;
@@ -32,12 +32,12 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
     &-label-top .#{$form-item-prefix-cls}-label {
         float: none;
         display: inline-block;
-        padding: 0 0 10px 0;
+        padding: $form-label-top-padding;
     }
     &-inline{
         .#{$form-item-prefix-cls} {
             display: inline-block;
-            margin-right: 10px;
+            margin-right: $form-inline-margin-right;
             vertical-align: top;
         }
     }
@@ -46,11 +46,11 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
         .#{$form-item-prefix-cls} {
             display: block;
             float: left;
-            padding: 5px;
-            margin: 0;
+            padding: $form-row-form-item-padding;
+            margin: $form-row-form-item-margin;
             &-required {
                 .#{$form-item-prefix-cls}-requiredIcon {
-                    left: -3px;
+                    left: $form-row-required-left;
                 }
             }
             &-content {
@@ -64,7 +64,7 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
                 padding: 0;
                 &-required {
                 .#{$form-item-prefix-cls}-requiredIcon {
-                    left: -9px;
+                    left: $form-row-required-requiredIcon-left;
                 }
             }
             }
@@ -77,7 +77,7 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
 }
 
 .#{$form-item-prefix-cls} {
-    margin-bottom: 24px;
+    margin-bottom: $form-item-margin-bottom;
     vertical-align: top;
     @include clearfix();
     &-content {
@@ -95,9 +95,9 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
     &-error-tip{
         position: absolute;
         top: 100%;
-        left: 0;
-        line-height: 1;
-        padding-top: 6px;
+        left: $form-error-tip-left;
+        line-height: $form-error-tip-line-height;
+        padding-top:$form-error-tip-padding-top;
         color: $error-color;
     }
 
@@ -106,7 +106,7 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
         .#{$form-item-prefix-cls}-label:before {
             content: '*';
             display: inline-block;
-            margin-right: 2px;
+            margin-right: $form-required-label-before-margin-right;
             line-height: 0;
             font-family: SimSun;
             font-size: $font-size-small;
@@ -115,7 +115,7 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
         .#{$form-item-prefix-cls}-requiredIcon {
             display: inline-block;
             position: absolute;
-            left: -9px;
+            left: $form-required-item-requiredIcon-left;
             vertical-align: middle;
             line-height: $form-component-height;
             height: $form-component-height;
@@ -133,9 +133,9 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
 }
 @media all and (-ms-high-contrast:none) { 
 .#{$form-item-prefix-cls} .h-input {
-    padding: 0 12px;
+    padding: $form-item-h-input-padding;
 }
 } 
 .#{$form-item-prefix-cls} .h-input {
-    padding: 0 12px\0;
+    padding: $form-item-h-input-padding \0;
 }

@@ -2,23 +2,23 @@ $waves-prefix-cls: "#{$css-prefix}waves" ;
 .#{$waves-prefix-cls}{
 	&-wrap{
 	position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
+    width: $waves-wrap-width;
+    height:$waves-wrap-height;
+    left: $waves-wrap-left;
+    top:$waves-wrap-top;
     overflow: hidden;
     z-index: 0;
     color: $waves-container-color;
     pointer-events: none;
     &.light {
-      color: rgba(255,255,255, .45);
+      color: $waves-wrap-light-color;
     }
 	}
 	&-animation{
 		position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 50%;
+    top: $waves-animation-top;
+    left: $waves-animation-left;
+    border-radius: $waves-animation-border-radius;
     background: $waves-animation-background;
     opacity: 0;
     -webkit-transition: $waves-animation-transition;

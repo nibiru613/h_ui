@@ -13,8 +13,8 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
   position: relative;
 
   &-horizontal{
-    height: 60px;
-    line-height: 60px;
+    height: $menu-horizontal-height;
+    line-height: $menu-horizontal-height;
 
     &.#{$menu-prefix-cls}-light{
       &:after{
@@ -24,8 +24,8 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
         height: 1px;
         background: $border-color-base;
         position: absolute;
-        bottom: 0;
-        left: 0;
+        bottom: $menu-horizontal-light-bottom;
+        left: $menu-horizontal-light-left;
       }
     }
   }
@@ -38,9 +38,9 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
         height: 100%;
         background: $border-color-base;
         position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
+        top: $menu-vertical-light-top;
+        bottom: $menu-vertical-light-bottom;
+        right: $menu-vertical-light-right;
         z-index: 1;
       }
     }
@@ -50,17 +50,17 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
       .#{$menu-prefix-cls}{
         position: absolute;
         left: 100%;
-        width: 240px;
+        width: $menu-verti-side-width;
         top:0;
       }
     }
   }
 
   &-light{
-    background: #fff;
+    background: $menu-light-background;
   }
   &-dark{
-    background:  #1C232F;
+    background:  $menu-drak-background;
   }
   &-primary{
     background: $primary-color;
@@ -77,11 +77,11 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
     transition: all $transition-time $ease-in-out;
   }
   &-item > i{
-    margin-right: 6px;
+    margin-right: $menu-item-margin-right;
   }
   &-submenu-title > i, &-submenu-title span > i{
     display: inline-block;
-    margin-right: 3px;
+    margin-right: $menu-submenu-title-i-margin-right;
     vertical-align: middle;
   }
 
@@ -89,7 +89,7 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
   &-horizontal &-submenu
   {
     float: left;
-    padding: 0 20px;
+    padding: $menu-horizontal-padding;
     position: relative;
     cursor: pointer;
     z-index: 3;
@@ -111,14 +111,14 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
   &-dark.#{$menu-prefix-cls}-horizontal &-submenu{
     color: $menu-dark-subsidiary-color;
     &-active, &:hover{
-      color: #fff;
+      color: $menu-horizontal-item-active-color;
     }
   }
   // ----三级目录
   &-dark.#{$menu-prefix-cls}-horizontal &-submenu &-submenu{ 
       color: $text-color;
       line-height: 1;
-      padding: 7px 16px 8px;
+      padding:$menu-dark-horizontal-submenu-padding;
       white-space: nowrap;
       clear:both;
       width: 100%;
@@ -137,9 +137,9 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
 
   //水平模式primary主题下hover/active时超出1px【添加背景色时导致】
   &-primary.#{$menu-prefix-cls}-horizontal &-item, &-primary.#{$menu-prefix-cls}-horizontal &-submenu{
-    height: 60px;
-    line-height: 60px;
-    color: #fff;
+    height: $menu-horizontal-primary-item-height;
+    line-height: $menu-horizontal-primary-item-height;
+    color: $menu-horizontal-primary-item-color;
     &-active, &:hover{
       background: $link-active-color;
     }
@@ -160,9 +160,9 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
   &-item-group{
     line-height: normal;
     &-title {
-      height: 30px;
-      line-height: 30px;
-      padding-left: 8px;
+      height: $menu-item-group-title-height;
+      line-height: $menu-item-group-title-height;
+      padding-left: $menu-item-group-title-padding-left;
       font-size: $font-size-small;
       color: $legend-color;
     }
@@ -177,7 +177,7 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
   &-vertical &-item,
   &-vertical &-submenu-title
   {
-    padding: 14px 24px;
+    padding: $menu-vertical-item-padding;
     position: relative;
     cursor: pointer;
     z-index: 1;
@@ -190,8 +190,8 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
 
   &-vertical &-submenu-title-icon{
     position: absolute;
-    right: 15px;
-    top: 12px
+    right: $menu-vertical-submenu-title-icon-right;
+    top: $menu-vertical-submenu-title-icon-top;
   }
   &-submenu-title-icon {
     transition: transform $transition-time $ease-in-out;
@@ -204,13 +204,13 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
     -webkit-transform: rotate(180deg);
   }
   &-vertical &-submenu &-item{
-    padding-left: 43px;
+    padding-left: $menu-vertical-submenu-padding-left;
   }
   &-verti-side &-submenu &-submenu{
     position: relative;
   }
   &-verti-side &-submenu &-submenu &-submenu-title{
-    padding-left:43px;
+    padding-left:$menu-verti-side-padding-left;
   }
   &-verti-side &-submenu &-submenu &-submenu-title>&-submenu-title-icon{
     -webkit-transform: rotate(-90deg);
@@ -218,14 +218,14 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
 
   // 三级目录
   &-vertical &-submenu &-submenu &-item{
-    padding-left: 63px;
+    padding-left: $menu-vertical-submenu-submenu-padding-left;
   }
   &-vertical &-item-group{
     &-title{
-      height: 48px;
-      line-height: 48px;
+      height: $menu-vertical-title-height;
+      line-height: $menu-vertical-title-height;
       font-size: $font-size-base;
-      padding-left: 28px;
+      padding-left: $menu-vertical-title-padding-left;
     }
   }
   &-dark.#{$menu-prefix-cls}-vertical &-item-group{
@@ -251,7 +251,7 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
       background: $menu-dark-active-bg;
     }
     &:hover{
-      color: #fff;
+      color: $menu-dark-vertical-submenu-title-hover-color;
       background: $title-color;
     }
     &-active:not(.#{$menu-prefix-cls}-submenu){
@@ -261,12 +261,12 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
   }
   &-dark.#{$menu-prefix-cls}-vertical &-submenu &-item{
     &:hover{
-      color: #fff;
+      color: $menu-dark-vertical-submenu-title-hover-color;
       background: transparent !important;
     }
     &-active,&-active:hover{
       border-right: none;
-      color: #fff;
+      color: $menu-dark-vertical-submenu-title-active-color;
       background: $primary-color !important;
     }
     // 三级菜单下
@@ -275,27 +275,27 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
     }
   }
   &-dark,#{$menu-prefix-cls}-vertical &-item-active &-submenu-title{
-    color: #fff;
+    color: $menu-dark-vertical-submenu-title-color;
   }
 
   &-dark.#{$menu-prefix-cls}-vertical &-opened{
     background: $menu-dark-active-bg;
     .#{$menu-prefix-cls}-submenu-title{
         // background: $title-color;
-        background:  #1C232F;
+        background: $menu-dark-vertical-opened-submenu-title-background;
     }
     .#{$menu-prefix-cls}{
       // background: $title-color;
-      background:  #0D121E;
+      background:  $menu-dark-vertical-opened-background;
     }
     .#{$menu-prefix-cls}-submenu .#{$menu-prefix-cls}-submenu-title {
       //  background : $menu-dark-active-bg;
-      background:  #0D121E;
+      background:  $menu-dark-vertical-opened-submenu-background;
     }
   }
 
   &-collapse {
-    width: 64px;
+    width: $menu-collapse;
   }
   &-collapse  &-submenu {
      position: relative; 
@@ -303,12 +303,12 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
   }
   &-collapse > &-submenu > &-submenu-title {
     // padding-left: 20px;
-    line-height: 21px;
+    line-height: $menu-collapse-submenu-title-line-height;
   }
   &-collapse > &-submenu > &-submenu-title > i {
     margin: 0;
     // vertical-align: middle;
-    width: 20px;
+    width:$menu-collapse-submenu-title-with;
     text-align: center;
   }
   &-collapse > &-submenu > &-submenu-title > :not(.iconfont),
@@ -320,23 +320,23 @@ $menu-collapse-prefix-cls: "#{$css-prefix}menu-collapse";
     top: 0;
     left: 100%;
     z-index: 10;
-    width: 240px;
+    width: $menu-collapse-submenu-width;
   }
 
   &-collapse.#{$menu-prefix-cls}-dark > &-submenu &{
-    background: #1a2229;
+    background: $menu-collapse-dark-submenu-background;
   }
   &-collapse &-opened &-submenu-title-icon {
     -webkit-transform: rotate(0deg);
   }
   &-collapse.#{$menu-prefix-cls}-vertical.#{$menu-prefix-cls}-dark &-opened &-submenu-title {
-    background: #232a2f;
+    background: $menu-collapse-vertical-opened-submenu-title-background;
   }
 }
 @include select-item($menu-prefix-cls, $menu-dropdown-item-prefix-cls);
 
 .#{$menu-dropdown-item-prefix-cls} {
-  padding: 7px 16px 8px;
+  padding: $menu-horizontal-submenu-item-padding;
   font-size: $font-size-base !important;
 }
 

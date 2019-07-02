@@ -51,6 +51,21 @@
     }
 }
 
+@mixin button-custom($color, $background, $border) {
+    @include button-color($color, $background, $border);
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+            @include button-color($btn-disable-color, $btn-disable-bg, $btn-disable-border);
+        }
+    }
+}
+
 @mixin button-group-base($btnClassName) {
     position: relative;
     display: inline-block;
@@ -175,7 +190,7 @@
     }
 
     &-small {
-        @include button-size($btn-padding-small, $btn-font-size, $btn-border-radius-small);
+        @include button-size($btn-padding-small, $btn-font-size-small, $btn-border-radius-small);
     }
 }
 
@@ -284,19 +299,36 @@
 
 // Transparent
 @mixin btn-transparent() {
-  @include button-variant($btn-transparent-color, $btn-transparent-bg, $transparent-color);
-  border: none;
-  background: $btn-transparent-bg !important;
-
-  &:hover {
-    color: lighten($primary-color, 10%);
+    @include button-variant($btn-transparent-color, $btn-transparent-bg, $transparent-color);
+    border: none;
+    background: $btn-transparent-bg !important;
+  
+    &:hover {
+      color: lighten($primary-color, 10%);
+    }
+    //&:focus,
+    &:active,
+    &.active {
+        color: darken($primary-color, 10%);
+    }
   }
-  //&:focus,
-  &:active,
-  &.active {
-      color: darken($primary-color, 10%);
+@mixin  btn-info () {
+    @include button-custom($btn-primary-color, $info-color, $info-color);
+    border-style: solid;
+    border-radius:4px;
+    
+    &:hover {
+      color: $btn-info-hover-color;
+      background-color: $btn-info-hover-bgcolor;
+      border-color: $btn-info-hover-border-color;
+    }
+    &:active,
+    &.active {
+      color: $btn-info-press-color;
+      background-color: $btn-info-press-bgcolor;
+      border-color:$btn-info-press-border-color;
+    }
   }
-}
 
 // Color
 @mixin btn-color($color) {

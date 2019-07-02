@@ -71,9 +71,11 @@ import Tag from '../views/Tag.vue'
 import SimpleTreeGird from '../views/SimpleTreeGird.vue'
 import Calendar from '../views/Calendar.vue'
 // import Cuiyang from '../views/cuiyang/main'
-import Schedule from '../views/Schedule.vue';
+import Schedule from '../views/Schedule.vue'
 
 import DownLoad from '../views/DownLoad.vue'
+import uf3CommonStyle from '../views/uf3CommonStyle.vue'
+
 // const hyh = resolve=>{
 //     import(xxx.js).then(module=>{//import 实现异步加载
 //         resolve(module)
@@ -777,6 +779,11 @@ const router = new Router({
         name: 'Schedule',
         path: '/schedule',
         component: Schedule
+      },
+      {
+        name: 'uf3CommonStyle',
+        path: '/styleDemo',
+        component: uf3CommonStyle
       }
   ]
 })

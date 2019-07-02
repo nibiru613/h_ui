@@ -20,7 +20,7 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
         user-select: none;
         cursor: pointer;
 
-        background-color: #fff;
+        background-color: $selectTable-selection-background-color;
         border-radius: $btn-border-radius;
         border: 1px solid $border-color-base;
         transition: all $transition-time $ease-in-out;
@@ -38,10 +38,10 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
             }
         }
         .h-tag {
-            max-width: 45%;
+            max-width: $selectTable-selection-h-tag-max-width;
             text-overflow: ellipsis;
             white-space: nowrap;
-            padding-right: 16px;
+            padding-right: $selectTable-selection-h-tag-padding-right;
         }
         .h-tag span {
             display: inline-block;
@@ -107,8 +107,8 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            padding-left: 8px;
-            padding-right: 24px;
+            padding-left: $selectTable-single-selection-selected-value-padding-left;
+            padding-right: $selectTable-single-selection-selected-value-padding-right;
         }
     }
 
@@ -135,8 +135,8 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
     &-multiple &-selection{
         overflow-y: auto;
         height: $input-height-base;
-        padding-left:2px;
-        padding-right:30px;
+        padding-left:$selectTable-multiple-selection-padding-left;
+        padding-right:$selectTable-multiple-selection-padding-right;
 
         .#{$selectTable-prefix-cls}-placeholder{
             display: block;
@@ -147,8 +147,8 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            padding-left: 8px;
-            padding-right: 22px;
+            padding-left: $selectTable-multiple-selection-placeholder-padding-left;
+            padding-right: $selectTable-multiple-selection-placeholder-padding-right;
         }
     }
 
@@ -157,7 +157,7 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
         display: inline-block;
         height: $input-height-base;
         line-height: $input-height-base;
-        padding: 0 24px 0 8px;
+        padding: $selectTable-input-padding;
         font-size: $font-size-small;
         outline: none;
         border: none;
@@ -185,7 +185,7 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
     &-multiple &-input{
         height: $input-height-base - 3px;
         line-height: $input-height-base;
-        padding: 0 0 0 8px;
+        padding:$selectTable-multiple-input-padding;
         vertical-align: top;
     }
 
@@ -202,7 +202,7 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
         color: $btn-disable-color;
     }
     &-multiple .#{css-prefix}tag{
-        margin: 3px 4px 2px 0;
+        margin:$selectTable-multiple-tag-margin;
     }
 
     // select-arrow
@@ -229,14 +229,14 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
     }
     &-block-loading {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: $selectTable-block-loading-top;
+      left:$selectTable-block-loading-left;
       width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255, 255, 255, 0.9);
+      background:$selectTable-block-loading-background;
       color: $text-color;
     }
 
@@ -246,17 +246,17 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
         // overflow:auto;
         .h-selectTable-search {
             position: absolute;
-            background: #fff;
-            height: 52px;
-            padding: 10px;
+            background:$selectTable-dropdown-content-background;
+            height: $selectTable-dropdown-content-height;
+            padding: $selectTable-dropdown-content-padding;
             left: 0;
             top: 0;
             z-index: 1;
             input {
                 // height: 32px;
                 // line-height: 32px;
-                padding: 0 5px;
-                border: 1px solid #D7DDE4;
+                padding: $selectTable-dropdown-content-input-padding;
+                border: $selectTable-dropdown-content-input-border;
             }
             input:focus {
                 box-shadow: none;
@@ -275,17 +275,17 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
                     width: 0;
                 }
                 .h-table:before{
-                    background-color:#fff;
+                    background-color:$selectTable-dropdown-content-dropdown-list-table-before-background-color;
                 }
                 .h-table th,
                 .h-table td {
                     border-bottom: 0;
-                    border-top: 1px solid #E8E9EB;
+                    border-top:$selectTable-dropdown-content-dropdown-list-table-border-top;
                 }
                 .h-table-row-highlight td,
                 .h-table-row-checked td {
-                    background: #fff;
-                    color: #3591E0;
+                    background:$selectTable-dropdown-content-dropdown-list-table-row-checked-background;
+                    color: $selectTable-dropdown-content-dropdown-list-table-row-checked-color;
                 }
                 .h-table-row-hover td {
                     background:$background-color-select-hover;
@@ -294,8 +294,8 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
         }
         .#{$selectTable-prefix-cls}-checkHead{
             .h-checkbox-wrapper{
-                margin-left:8px;
-                line-height: 29px;
+                margin-left:$selectTable-dropdown-content-checkHead-margin-left;
+                line-height: $selectTable-dropdown-content-checkHead-line-height;
             }
         }
     }
@@ -303,17 +303,17 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
         padding: 0;
         .h-selectTable-search {
             position: absolute;
-            background: #fff;
-            height: 38px;
-            padding: 5px 5px 0;
+            background: $selectTable-dropdown-noline-content-selectTable-search-background;
+            height: $selectTable-dropdown-noline-content-selectTable-search-height;
+            padding: $selectTable-dropdown-noline-content-selectTable-search-padding;
             left: 0;
             top: 0;
             z-index: 1;
             input {
                 border: 0;
-                padding: 0 5px;
+                padding: $selectTable-dropdown-noline-content-selectTable-search-input-padding;
                 border-radius: 0;
-                border-bottom: 1px solid #D7DDE4;
+                border-bottom: $selectTable-dropdown-noline-content-selectTable-search-input-border-bottom;
             }
             input:focus {
                 box-shadow: none;
@@ -332,7 +332,7 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
                     width: 0;
                 }
                 .h-table:before{
-                    background-color:#fff;
+                    background-color:$selectTable-dropdown-noline-content-h-table-wrapper-background-color;
                 }
                 .h-table th {
                     border-bottom: 0;
@@ -342,8 +342,8 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
                 }
                 .h-table-row-highlight td,
                 .h-table-row-checked td{
-                    background: #fff;
-                    color: #3591E0;
+                    background: $selectTable-dropdown-noline-content-h-table-wrapper-row-checked-background;
+                    color: $selectTable-dropdown-noline-content-h-table-wrapper-row-checked-color;
 
                 }
                 .h-table-row-hover td {
@@ -372,19 +372,19 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
         position: relative;
         display: block;
         font-size: $font-size-small;
-        padding: 7px 12px;
+        padding: $selectTable-hideMultHead-padding;
     }
     &-hideMultHead:hover{
         cursor: pointer;
     }
     &-hideMultHead:after{
         @include h-icon();
-        font-size: 22px;
+        font-size: $selectTable-hideMultHead-after-font-size;
         content: '\E734';
         color: $no-select-color;
         position: absolute;
-        top: 8px;
-        right: 20px;
+        top: $selectTable-hideMultHead-after-top;
+        right: $selectTable-hideMultHead-after-right;
     }
     &-hideMultHead-select,&-hideMultHead-select:after{
         color: $selected-color;
@@ -407,7 +407,7 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
 .#{$selectTable-prefix-cls}-multiple .#{$selectTable-item-prefix-cls} {
     &-selected{
         color: $selected-color;
-        background: #fff;
+        background: $selectTable-multiple-selected-background;
     }
     &-focus,&-selected:hover{
         color:$selected-color;
@@ -416,7 +416,7 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
 
     .#{$selectTable-item-prefix-cls}-selected.#{$selectTable-item-prefix-cls}-focus {
         color: shade($selected-color, 10%);
-        background: #fff;
+        background: $selectTable-multiple-selected-background;
     }
     // .#{$checkbox-prefix-cls}-wrapper {
     //     float: right;
@@ -435,11 +435,11 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
     padding: 0;
 
     &-title {
-        padding-left: 8px;
-        font-size: 12px;
+        padding-left: $selectTable-select-group-title-padding-left;
+        font-size: $selectTable-select-group-title-font-size;
         color: $legend-color;
-        height: 30px;
-        line-height: 30px;
+        height: $selectTable-select-group-title-height;
+        line-height: $selectTable-select-group-title-height;
     }
 }
 
@@ -497,21 +497,21 @@ $select-group-prefix-cls:  "#{$css-prefix}selectTable-group";
 .#{$selectTable-prefix-cls}-multiple{
     .#{$selectTable-prefix-cls}{
         &-checkall{
-            border-top: 1px solid #e1e1e1;
+            border-top: $selectTable-multiple-checkall-border-top;
             text-align: right;
-            padding: 8px;
+            padding: $selectTable-multiple-checkall-padding;
             clear: both;
         }
     }
     .h-tag{
-        background: #F5F5F5 !important;
-        border: 1px solid #F7F7F7 !important
+        background: $selectTable-multiple-h-tag-background !important;
+        border: $selectTable-multiple-h-tag-border !important
     }
 }
 .#{$selectTable-prefix-cls}-header-slot{
-    border-bottom: 1px solid #e1e1e1;
+    border-bottom: $selectTable-header-slot-border-bottom;
 }
 .#{$selectTable-prefix-cls}-header-slot-top{
-    border-bottom: 1px solid #e1e1e1;
-    margin-top:52px;
+    border-bottom:$selectTable-header-slot-border-bottom;
+    margin-top:$selectTable-header-slot-margin-top;
 }

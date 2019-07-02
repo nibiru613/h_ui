@@ -1,16 +1,10 @@
 $steps-prefix-cls: "#{$css-prefix}steps";
-$steps-wait-icon-color: #D7DDE4;
-$steps-wait-title-color: #495060;
-$steps-split-color:#DCE1E7;
 $steps-wait-description-color: $steps-wait-title-color;
-$steps-wait-tail-color: $steps-split-color;
-$steps-title-color: #495060;
-
 
 .#{$steps-prefix-cls} {
   position:relative;
   width: 100%;
-  line-height: 1.5;
+  line-height: $steps-line-height;
   font-size: 0;
 
   &-item{
@@ -19,13 +13,13 @@ $steps-title-color: #495060;
     vertical-align: top;
     &.#{$steps-prefix-cls}-status-wait{
       .#{$steps-prefix-cls}-head-inner {
-        background-color: #fff;
+        background-color: $steps-item-head-inner-background-color;
         > .#{$steps-prefix-cls}-icon, span {
             color: $steps-wait-icon-color;
         }
       }
       .#{$steps-prefix-cls}-title {
-        color: $steps-wait-title-color;
+        color: $steps-item-title-color;
       }
       .#{$steps-prefix-cls}-content {
         color: $steps-wait-description-color;
@@ -41,23 +35,22 @@ $steps-title-color: #495060;
             border-color: $primary-color;
             background-color: $primary-color;
             > .#{$steps-prefix-cls}-icon, span {
-                color: #fff;
+                color: $steps-item-process-head-inner-color;
                 &.#{$steps-prefix-cls}-remark {
                     color: $primary-color;
                 }
             }
         }
         .#{$steps-prefix-cls}-title {
-            color: $steps-title-color;
+            color: $steps-item-process-title-color;
             font-weight: bold;
-            font-family: MicrosoftYaHei-Bold;
             font-size: $font-size-base; 
             letter-spacing: 0;
             text-align: left;
-            line-height: 24px;
+            line-height: $steps-item-process-title-line-height;
         }
         .#{$steps-prefix-cls}-content {
-            color: $steps-title-color;
+            color: $steps-item-process-title-color;
         }
         .#{$steps-prefix-cls}-tail > i {
             background-color: $steps-split-color;
@@ -67,7 +60,7 @@ $steps-title-color: #495060;
 
     &.#{$steps-prefix-cls}-status-finish {
         .#{$steps-prefix-cls}-head-inner {
-            background-color: #fff;
+            background-color: $steps-item-finish-head-inner-background-color;
             border-color: $primary-color;
             > .#{$steps-prefix-cls}-icon, span {
                 color: $primary-color;
@@ -89,7 +82,7 @@ $steps-title-color: #495060;
 
     &.#{$steps-prefix-cls}-status-error {
         .#{$steps-prefix-cls}-head-inner {
-            background-color: #fff;
+            background-color: $steps-item-error-head-inner-background-color;
             border-color: $error-color;
             > .#{$steps-prefix-cls}-icon {
                 color: $error-color;
@@ -122,11 +115,11 @@ $steps-title-color: #495060;
             height: auto;
             text-align: left;
             > .#{$steps-prefix-cls}-icon {
-                left: 0;
-                font-size: 20px;
-                top: 2px;
-                width: 20px;
-                height: 20px;
+                left:$steps-custom-head-inner-icon-left;
+                font-size: $steps-custom-head-inner-icon-font-size;
+                top: $steps-custom-head-inner-icon-top;
+                width: $steps-custom-head-inner-icon-width;
+                height:$steps-custom-head-inner-icon-height;
             }
         }
         &.#{$steps-prefix-cls}-status-process {
@@ -153,25 +146,25 @@ $steps-title-color: #495060;
   }
   .#{$steps-prefix-cls}-head-inner {
       display: block;
-      width: 26px;
-      height: 26px;
-      line-height: 26px;
-      margin-right: 8px;
+      width: $steps-head-inner-width;
+      height: $steps-head-inner-height;
+      line-height:$steps-head-inner-line-height;
+      margin-right: $steps-head-inner-line-margin-right;
       text-align: center;
-      border: 1px solid $steps-wait-icon-color;
+      border: 1px solid $steps-head-inner-border-color;
       border-radius: 50%;
-      font-size: 14px;
+      font-size: $steps-head-inner-line-font-size;
       transition: background-color $transition-time $ease-in-out;
       position: relative;
       > .#{$steps-prefix-cls}-icon {
-          font-size: 18px;
-          line-height: 24px;
+          font-size: $steps-head-inner-icon-font-size;
+          line-height: $steps-head-inner-icon-line-height;
           position: relative;
         &.#{$steps-prefix-cls}-remark {
             position: absolute;
-            right: -12px;
-            top: -12px;
-            font-size: 12px;
+            right: $steps-head-inner-icon-remark-right;
+            top: $steps-head-inner-icon-remark-top;
+            font-size: $steps-head-inner-icon-remark-font-size;
         }
         &.h-icon {
             font-size: 24px;
@@ -183,31 +176,31 @@ $steps-title-color: #495060;
       }
   }
   .#{$steps-prefix-cls}-main {
-    margin-top: 5px;
+    margin-top:$steps-main-margin-top;
       // display: inline;
       .#{$steps-prefix-cls}-content {
         font-family: 'Microsoft YaHei';
-        font-size: 12px;
-        color: #7E828A;
+        font-size:$steps-main-content-font-size;
+        color:$steps-main-content-color;
         text-align: left;
-        line-height: 20px;
+        line-height: $steps-main-content-line-height;
       }
   }
   .#{$steps-prefix-cls}-custom .#{$steps-prefix-cls}-title{
-      margin-top: 3px;
+      margin-top: $steps-custom-title-margin-top;
   }
 
   .#{$steps-prefix-cls}-title {
       display: inline-block;
-      margin-bottom: 4px;
-      padding-right: 10px;
-      font-size: 14px;
+      margin-bottom: $steps-title-margin-bottom;
+      padding-right: $steps-title-padding-right;
+      font-size:$steps-title-font-size;
     //   font-weight: bold;
-      color: #666;
+      color: $steps-title-color;
       // background: #fff;
 
       > a:first-child:last-child {
-          color: #666;
+          color: $steps-title-color;
       }
   }
   .#{$steps-prefix-cls}-item-last {
@@ -223,10 +216,10 @@ $steps-title-color: #495060;
   // }
   .#{$steps-prefix-cls}-tail {
       width: 100%;
-      padding: 0 10px;
+      padding: $steps-tail-padding;
       position: absolute;
-      left: 0;
-      top: 13px;
+      left:$steps-tail-left;
+      top: $steps-tail-top;
       > i {
           display: inline-block;
           width: 100%;
@@ -249,36 +242,36 @@ $steps-title-color: #495060;
 
   &.#{$steps-prefix-cls}-small {
       .#{$steps-prefix-cls}-head-inner {
-          width: 18px;
-          height: 18px;
-          line-height: 18px;
-          margin-right: 10px;
+          width: $steps-small-head-inner-width;
+          height: $steps-small-head-inner-height;
+          line-height: $steps-small-head-inner-height;
+          margin-right: $steps-small-head-margin-right;
           text-align: center;
           border-radius: 50%;
 
           > .#{$steps-prefix-cls}-icon {
               top: 0;
               font-size: $font-size-base;
-              line-height: 18px;
+              line-height:$steps-small-head-inner-height;
           }
       }
       .#{$steps-prefix-cls}-main {
       }
       .#{$steps-prefix-cls}-title {
-          margin-bottom: 4px;
+          margin-bottom: $steps-small-title-margin-bottom;
           margin-top: 0;
-          color: #666;
+          color:$steps-small-title-color;
           font-size: $font-size-small;
           font-weight: bold;
       }
       .#{$steps-prefix-cls}-content {
           font-size: $font-size-small;
-          color: #999;
-          padding-left: 30px;
+          color: $steps-small-content-color;
+          padding-left: $steps-small-content-padding-left;
       }
       .#{$steps-prefix-cls}-tail {
-          top: 8px;
-          padding: 0 8px;
+          top: $steps-small-tail-top;
+          padding: $steps-small-tail-padding;
           > i {
               height: 1px;
               width: 100%;
@@ -288,7 +281,7 @@ $steps-title-color: #495060;
       .#{$steps-prefix-cls}-status-finish,
       .#{$steps-prefix-cls}-status-wait {
         .#{$steps-prefix-cls}-title {
-            color: $steps-wait-title-color;
+            color: $steps-small-title-color;
         }
       }
   }
@@ -311,11 +304,11 @@ $steps-title-color: #495060;
 
   .#{$steps-prefix-cls}-tail {
       position: absolute;
-      left: 13px;
-      top: 0;
+      left: $steps-vertical-tail-left;
+      top: $steps-vertical-tail-top;
       height: 100%;
-      width: 1px;
-      padding: 30px 0 4px 0;
+      width: $steps-vertical-tail-width;
+      padding: $steps-vertical-tail-padding;
       > i {
           height: 100%;
           width: 1px;
@@ -335,21 +328,21 @@ $steps-title-color: #495060;
   .#{$steps-prefix-cls}-head {
       float: left;
       &-inner {
-          margin-right: 16px;
+          margin-right:$steps-vertical-head-inner-margin-right;
       }
   }
 
   .#{$steps-prefix-cls}-main {
-      margin-top: 0px;
-      min-height: 47px;
+      margin-top: $steps-vertical-main-margin-top;
+      min-height:$steps-vertical-main-min-height;
       overflow: hidden;
       display: block;
       .#{$steps-prefix-cls}-title {
-          line-height: 26px;
+          line-height: $steps-vertical-main-title-line-height;
       }
       .#{$steps-prefix-cls}-content {
-          padding-bottom: 12px;
-          padding-left: 0;
+          padding-bottom: $steps-vertical-main-content-padding-bottom;
+          padding-left: $steps-vertical-main-content-padding-left;
       }
   }
 
@@ -364,16 +357,16 @@ $steps-title-color: #495060;
 .#{$steps-prefix-cls}-vertical.#{$steps-prefix-cls}-small {
   .#{$steps-prefix-cls}-tail {
       position: absolute;
-      left: 9px;
-      top: 0;
-      padding: 22px 0 4px 0;
+      left: $steps-vertical-small-tail-left;
+      top: $steps-vertical-small-tail-top;
+      padding: $steps-vertical-small-tail-padding;
       > i {
           height: 100%;
       }
   }
 
   .#{$steps-prefix-cls}-title {
-      line-height: 18px;
+      line-height: $steps-vertical-small-title-line-height;
   }
 }
 

@@ -6,8 +6,8 @@ $icon-prefix-cls: "#{$css-prefix}icon";
     position: fixed;
     z-index: $zindex-message;
     width: 100%;
-    top: 16px;
-    left: 0;
+    top: $message-top;
+    left: $message-left;
 
     &-notice {
         width: auto;
@@ -16,9 +16,9 @@ $icon-prefix-cls: "#{$css-prefix}icon";
         left: 50%;
         &-close {
             position: absolute;
-            right: 6px;
-            top: 13px;
-            color: #999;
+            right: $message-notice-close-right;
+            top: $message-notice-close-top;
+            color: $message-notice-close-color;
             outline: none;
 
             i.iconfont{
@@ -30,22 +30,23 @@ $icon-prefix-cls: "#{$css-prefix}icon";
     &-notice-content {
         position: relative;
         right: 50%;
-        padding: 8px 16px;
+        padding: $message-notice-content-padding;
         //border: 1px solid $border-color-split;
         border-radius: $border-radius-small;
-        box-shadow: 0 4px 12px 0 rgba(0,0,0,0.15);
-        background: #fff;
+        box-shadow: $message-notice-content-box-shadow;
+        background:$message-notice-content-background;
         display: block;
         &-text{
             display: inline-block;
             span{
-                color: #495060;
+                color: $text-color;
+                font-size:$message-content-font-size;
             }
         }
     }
     &-notice-closable{
         .#{$message-prefix-cls}-notice-content-text{
-            padding-right: 32px;
+            padding-right: $message-notice-content-text-padding-right;
         }
     }
 
@@ -67,9 +68,9 @@ $icon-prefix-cls: "#{$css-prefix}icon";
     }
 
     .#{$icon-prefix-cls} {
-        margin-right: 4px;
-        font-size: 18px;
-        top: 1px;
+        margin-right:$message-icon-margin-right;
+        font-size: $message-icon-font-size;
+        top: $message-icon-top;
         position: relative;
     }
 }

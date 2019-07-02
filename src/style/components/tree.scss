@@ -2,13 +2,13 @@ $tree-prefix-cls: "#{$css-prefix}tree";
 .#{$tree-prefix-cls} {
   ul {
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin: $tree-ul-margin;
+    padding:$tree-ul-padding;
     font-size: $font-size-small;
     li {
       list-style: none;
-      margin: 8px 0;
-      padding: 0;
+      margin:$tree-ul-li-margin;
+      padding: $tree-ul-li-padding;
       white-space: nowrap;
       outline: none;
       user-select:none;
@@ -16,26 +16,30 @@ $tree-prefix-cls: "#{$css-prefix}tree";
   }
   li {
     ul {
-      margin: 0;
-      padding: 0 0 0 18px;
+      margin: $tree-li-margin;
+      padding:$tree-li-padding;
     }
   }
   &-title {
     display: inline-block;
-    margin: 0;
-    padding: 0 4px;
+    margin:$tree-title-margin;
+    padding: $tree-title-padding;
     border-radius: $btn-border-radius-small;
     cursor: pointer;
     vertical-align: center;
     color: $text-color;
+    font-size:$tree-title-font-size;
     transition: all $transition-time $ease-in-out;
     &:hover {
-      background-color: lighten($primary-color, 50%);
+      background-color: $tree-title-hover-bgcolor;
+      color:$tree-title-hover-color;
     }
     &-selected,
     &-selected:hover {
       // background-color: lighten($primary-color, 40%);
-      background-color: #EAF5FF;
+      background-color:$tree-title-selected-bgcolor;
+      color:$tree-title-selected-color;
+
     }
     &-filterable{
       color: darken($error-color, 10%);
@@ -46,11 +50,11 @@ $tree-prefix-cls: "#{$css-prefix}tree";
   }
   &-arrow {
     cursor: pointer;
-    min-width: 16px;
+    min-width: $tree-arrow-min-width;
     text-align: center;
     display: inline-block;
     i {
-      font-size: 14px;
+      font-size: $tree-arrow-i-font-size;
       display: inline-block;
       transition: all $transition-time $ease-in-out;
     }
@@ -70,12 +74,12 @@ $tree-prefix-cls: "#{$css-prefix}tree";
     }
   }
   &-empty {
-    padding: 5px 0;
+    padding: $tree-empty-padding;
   }
   &-isBoxRight{
     .h-checkbox-wrapper{
       float: right;
-      margin-top: 2px;
+      margin-top:$tree-isBoxRight-checkbox-margin-top;
     }
   }
 }

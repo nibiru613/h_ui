@@ -18,24 +18,24 @@ $trigger-bar-con-height: ($trigger-bar-weight + $trigger-bar-interval) * 8;
     &-pane {
         position: absolute;
         &.left-pane, &.right-pane {
-            top: 0;
-            bottom: 0;
+            top: $split-pane-top;
+            bottom:$split-pane-bottom;
         }
         &.left-pane {
-            left: 0;
+            left: $split-pane-left-left;
         }
         &.right-pane {
-            right: 0;
+            right: $split-pane-right-right;
         }
         &.top-pane, &.bottom-pane {
-            left: 0;
-            right: 0;
+            left: $split-top-bottom-pane-left;
+            right: $split-top-bottom-pane-right;
         }
         &.top-pane {
-            top: 0;
+            top: $split-top-pane-top;
         }
         &.bottom-pane {
-            bottom: 0;
+            bottom:$split-bottom-pane-bottom;
         }
 
         &-moving{

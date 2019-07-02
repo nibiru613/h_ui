@@ -14,7 +14,7 @@ $icon-prefix-cls: "#{$css-prefix}icon";
         height: 20px;
         line-height: 20px;
         font-size: $font-size-base;
-        color: $title-color;
+        color: $mixin-content-header-color;
         font-weight: bold;
         overflow: hidden;
         text-overflow: ellipsis;

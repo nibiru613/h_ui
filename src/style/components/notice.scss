@@ -1,33 +1,29 @@
 $notice-prefix-cls: "#{$css-prefix}notice";
 $icon-prefix-cls: "#{$css-prefix}icon";
 
-$notice-width: 335px;
-$notice-padding: 16px;
-$notice-margin-bottom: 10px;
-
 .#{$notice-prefix-cls} {
   width: $notice-width;
-  margin-right: 24px;
+  margin-right:$notice-margin-right;
   position: fixed;
   z-index: $zindex-notification;
 
   &-notice {
     margin-bottom: $notice-margin-bottom;
     // padding: $notice-padding;
-    padding: 16px 24px;
+    padding: $notice-notice-padding;
     //border: 1px solid $border-color-split;
     border-radius: $border-radius-small;
     box-shadow: $shadow-base;
-    background: #fff;
+    background: $notice-notice-background;
     line-height: 1;
     position: relative;
     overflow: hidden;
 
     &-close {
       position: absolute;
-      right: 16px;
-      top: 15px;
-      color: #999;
+      right: $notice-notice-close-right;
+      top: $notice-notice-close-top;
+      color:$notice-notice-close-color;
       outline: none;
 
       i{
@@ -44,39 +40,39 @@ $notice-margin-bottom: 10px;
 
   &-title {
     font-size: $font-size-base;
-    font-weight: 700;
-    color: #495060;
-    padding-right: 10px;
+    font-weight: $notice-title-font-weight;
+    color: $text-color;
+    padding-right: $notice-title-padding-right;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
   }
   &-with-desc &-title{
-    margin-bottom: 8px;
+    margin-bottom: $notice-with-desc-margin-bottom;
   }
 
   &-desc {
-      font-size: 12px;
-      color: $legend-color;
+      font-size: $notice-desc-font-size;
+      color: $notice-desc-color;
       text-align: justify;
       line-height: 1.5;
   }
   &-with-icon &-title{
-    margin-left: 8px;
+    margin-left: $notice-with-icon-margin-left;
   }
   &-with-desc &-title{
-    margin-left: 8px;
+    margin-left: $notice-with-desc-margin-left;
   }
   &-with-desc &-desc{
-    margin-left: 48px;
+    margin-left:$notice-with-desc-desc-margin-left;
   }
   &-icon {
     // position: absolute;
     position: relative;
     left: 0px;
     margin-top: -1px;
-    font-size: 18px;
+    font-size: $notice-icon-font-size;
     display: inline-block;
 
     &-success {
@@ -94,7 +90,7 @@ $notice-margin-bottom: 10px;
   }
   &-with-desc &-icon{
     & i.iconfont {
-      font-size: 36px;
+      font-size: $notice-with-desc-iconfont-font-size;
     }
   } 
 
@@ -111,7 +107,7 @@ $notice-margin-bottom: 10px;
   }
   &-with-normal{
     &:after{
-      background: $primary-color;
+      background:$notice-with-normal-color;
     }
     .#{$notice-prefix-cls}-title,.#{$notice-prefix-cls}-desc{
       margin-left: 0;
@@ -119,22 +115,22 @@ $notice-margin-bottom: 10px;
   }
   &-with-info{
     &:after{
-      background: $primary-color;
+      background: $notice-with-info-color;
     }
   }
   &-with-success{
     &:after{
-      background: $success-color;
+      background: $notice-with-success-color;
     }
   }
   &-with-warning{
     &:after{
-      background: $warning-color;
+      background: $notice-with-warning-color;
     }
   }
   &-with-error{
     &:after{
-      background: $error-color;
+      background: $notice-with-error-color;
     }
   }
 }

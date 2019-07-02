@@ -1,10 +1,5 @@
 $time-picker-prefix-cls: "#{$css-prefix}time-picker";
-$time-picker-cells-width-base: 56px;
-$time-picker-cells-width-with-date-base: 72px;
-$time-picker-cells-width: $time-picker-cells-width-base * 2;
-$time-picker-cells-width-with-seconds: $time-picker-cells-width-base *3;
-$time-picker-cells-width-with-date: $time-picker-cells-width-with-date-base * 2;
-$time-picker-cells-width-with-date-with-seconds: $time-picker-cells-width-with-date-base * 3;
+
 
 .#{$time-picker-prefix-cls} {
   &-cells{
@@ -15,7 +10,7 @@ $time-picker-cells-width-with-date-with-seconds: $time-picker-cells-width-with-d
 
     &-list{
       width: $time-picker-cells-width-base;
-      max-height: 144px;
+      max-height: $time-picker-cells-list-max-height;
       float: left;
       overflow: hidden;
       border-left: 1px solid $border-color-split;
@@ -32,16 +27,16 @@ $time-picker-cells-width-with-date-with-seconds: $time-picker-cells-width-with-d
         border-radius: 0 $btn-border-radius $btn-border-radius 0;
       }
       ul{
-        width: 100%;
-        margin: 0;
-        padding: 0 0 120px 0;
+        width: $time-picker-cells-list-ul-width;
+        margin: $time-picker-cells-list-ul-margin;
+        padding:$time-picker-cells-list-ul-padding;
         list-style: none;
         li{
-          width: 100%;
-          height: 24px;
-          line-height: 24px;
-          margin: 0;
-          padding: 0 0 0 16px;
+          width: $time-picker-cells-list-ul-li-width;
+          height:$time-picker-cells-list-ul-li-height;
+          line-height: $time-picker-cells-list-ul-li-line-height;
+          margin: $time-picker-cells-list-ul-li-margin;
+          padding: $time-picker-cells-list-ul-li-padding;
           box-sizing: content-box;
           text-align: left;
           user-select: none;
@@ -61,7 +56,7 @@ $time-picker-cells-width-with-date-with-seconds: $time-picker-cells-width-with-d
 
         &:hover {
           color: $btn-disable-color;
-          background-color: #fff;
+          background-color: $time-picker-cells-cell-hover-background-color;
           cursor: $cursor-disabled;
         }
       }
@@ -73,8 +68,8 @@ $time-picker-cells-width-with-date-with-seconds: $time-picker-cells-width-with-d
   }
 
   &-header{
-    height: 32px;
-    line-height: 32px;
+    height: $time-picker-header-height;
+    line-height: $time-picker-header-line-height;
     text-align: center;
     border-bottom: 1px solid $border-color-split;
   }
@@ -91,11 +86,11 @@ $time-picker-cells-width-with-date-with-seconds: $time-picker-cells-width-with-d
         &:after{
           content: '';
           display: block;
-          width: 2px;
+          width: $time-picker-with-range-content-after-width;
           position: absolute;
-          top: 31px;
-          bottom: 0;
-          right: -2px;
+          top: $time-picker-with-range-content-after-top;
+          bottom: $time-picker-with-range-content-after-bottom;
+          right: $time-picker-with-range-content-after-right;
           background: $border-color-split;
           z-index: 1;
         }
@@ -104,7 +99,7 @@ $time-picker-cells-width-with-date-with-seconds: $time-picker-cells-width-with-d
           float: right;
           &:after{
             right: auto;
-            left: -2px;
+            left: $time-picker-with-range-content-right-after-left;
           }
         }
       }
@@ -140,14 +135,14 @@ $time-picker-cells-width-with-date-with-seconds: $time-picker-cells-width-with-d
             width: $time-picker-cells-width-with-date-with-seconds / 3;
             ul{
               li{
-                padding: 0 0 0 28px;
+                padding: $time-picker-panel-content-with-second-li-padding;
               }
             }
           }
         }
         &-list {
           width: $time-picker-cells-width-with-date-with-seconds / 2;
-          max-height: 216px;
+          max-height: $time-picker-panel-content-list-max-height;
           &:first-child{
             border-radius: 0;
           }
@@ -155,9 +150,9 @@ $time-picker-cells-width-with-date-with-seconds: $time-picker-cells-width-with-d
               border-radius: 0;
           }
           ul{
-            padding: 0 0 192px 0;
+            padding: $time-picker-panel-content-list-ul-padding;
             li{
-              padding: 0 0 0 46px;
+              padding: $time-picker-panel-content-list-li-padding;
             }
           }
         }

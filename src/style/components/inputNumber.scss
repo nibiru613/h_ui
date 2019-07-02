@@ -1,8 +1,8 @@
 $input-number-prefix-cls: "#{$css-prefix}input-number";
 
 @mixin handler-disabled() {
-    opacity: 0.72;
-    color: #ccc !important;
+    opacity: $inputnumber-mixin-disabled-opacity;
+    color: $inputnumber-mixin-disabled-color!important;
     cursor: $cursor-disabled;
 }
 
@@ -12,7 +12,7 @@ $input-number-prefix-cls: "#{$css-prefix}input-number";
   @include input();
   margin: 0;
   padding: 0;
-  width: 80px;
+  width: $inputnumber-width;
   height: $input-height-base;
   line-height: $input-height-base;
   vertical-align: middle;
@@ -21,11 +21,11 @@ $input-number-prefix-cls: "#{$css-prefix}input-number";
   overflow: hidden;
   
   &-handler-wrap {
-    min-width: 22px;
+    min-width: inputnumber-handler-wrap-min-width;
     height: 100%;
     border-left: 1px solid $border-color-base;
     border-radius: $radius-wrap;
-    background: #fff;
+    background: $inputnumber-handler-wrap-background;
     position: absolute;
     top: 0;
     right: 0;
@@ -33,7 +33,7 @@ $input-number-prefix-cls: "#{$css-prefix}input-number";
     transition: opacity $transition-time $ease-in-out;
   }
   &-arrow-wrap {
-      width: 22px;
+      width: $inputnumber-arrow-wrap-width;
       float: left;
   }
   &-prepend, &-append {
@@ -42,13 +42,13 @@ $input-number-prefix-cls: "#{$css-prefix}input-number";
   }
   &-append {
     float: left;
-    padding: 9px $input-padding-horizontal;
+    padding: $inputnumber-padding-vertical $input-padding-horizontal;
     font-size: inherit;
     font-weight: normal;
     line-height: 1;
     color: $input-color;
     text-align: center;
-    background-color: #eee;
+    background-color: $inputnumber-append-background;
   }
   &-append > input{
       
@@ -62,13 +62,13 @@ $input-number-prefix-cls: "#{$css-prefix}input-number";
   &-handler-up {
     cursor: pointer;
     &-inner {
-      top: 1px;
+      top: $inputnumber-handler-up-inner-top;
     }
   }
 
   &-handler-down {
     border-top: 1px solid $border-color-base;
-    top: -1px;
+    top: $inputnumber-handler-down-top;
     cursor: pointer;
   }
 
@@ -79,7 +79,7 @@ $input-number-prefix-cls: "#{$css-prefix}input-number";
     line-height: 0;
     text-align: center;
     overflow: hidden;
-    color: #999;
+    color: $inputnumber-handler-color;
     position: relative;
 
     &:hover &-up-inner,
@@ -90,14 +90,14 @@ $input-number-prefix-cls: "#{$css-prefix}input-number";
 
   &-handler-up-inner,
   &-handler-down-inner {
-      width: 12px;
-      height: 12px;
-      line-height: 12px;
-      font-size: 14px;
-      color: #999;
+      width: $inputnumber-handler-down-inner-width;
+      height: $inputnumber-handler-down-inner-height;
+      line-height: $inputnumber-handler-down-inner-line-height;
+      font-size: $font-size-base;
+      color: $inputnumber-handler-down-inner-color;
       user-select: none;
       position: absolute;
-      right: 4px;
+      right: $inputnumber-handler-down-inner-right;
       transition: all $transition-time linear;
   }
 
@@ -122,11 +122,11 @@ $input-number-prefix-cls: "#{$css-prefix}input-number";
     width: 100%;
     height: $input-height-base;
     line-height: $input-height-base;
-    padding: 0 12px;
+    padding: $inputnumber-input-padding;
     text-align: left;
     outline: 0;
     -moz-appearance: textfield;
-    color: #666;
+    color:$inputnumber-input-color;
     border: 0;
     border-radius: $btn-border-radius;
     transition: all $transition-time linear;
@@ -151,10 +151,10 @@ $input-number-prefix-cls: "#{$css-prefix}input-number";
       }
 
       .#{$input-number-prefix-cls}-handler-up-inner {
-          top: 2px;
+          top: $inputnumber-large-handler-up-inner-top;
       }
       .#{$input-number-prefix-cls}-handler-down-inner {
-          bottom: 2px;
+          bottom:$inputnumber-large-handler-down-inner-bottom;
       }
   }
 
@@ -174,10 +174,10 @@ $input-number-prefix-cls: "#{$css-prefix}input-number";
           vertical-align: top;
       }
       .#{$input-number-prefix-cls}-handler-up-inner {
-          top: -1px;
+          top: $inputnumber-small-handler-up-inner-top;
       }
       .#{$input-number-prefix-cls}-handler-down-inner {
-          bottom: -1px;
+          bottom: $inputnumber-small-handler-down-inner-bottom;
       }
   }
 
@@ -194,7 +194,7 @@ $input-number-prefix-cls: "#{$css-prefix}input-number";
 
   &-disabled {
       .#{$input-number-prefix-cls}-input {
-          opacity: 1;
+          opacity: $inputnumber-disabled-opacity;
           cursor: $cursor-disabled;
           background-color: $input-disabled-bg;
       }
@@ -207,7 +207,7 @@ $input-number-prefix-cls: "#{$css-prefix}input-number";
   }
   &-readonly {
     .#{$input-number-prefix-cls}-input {
-      opacity: 0.5;
+      opacity: $inputnumber-readonly-opacity;
       background-color: $input-disabled-bg;
     }
   }

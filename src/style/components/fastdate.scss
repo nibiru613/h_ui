@@ -19,8 +19,8 @@ $fastdate-prefix-cls: "#{$css-prefix}fast-date";
         display:inner-block;
         input{
           border:none;
-          padding: 0 2px;
-          width:18px;
+          padding: $fastdate-inner-input-padding;
+          width:$fastdate-inner-input-width;
           height:$input-height-base;
           outline:none;
           background:transparent;
@@ -45,7 +45,7 @@ $fastdate-prefix-cls: "#{$css-prefix}fast-date";
         width:calc(50% - 10px);
       }
       .#{$fastdate-prefix-cls}-inner-split{
-        width:20px;
+        width:$fastdate-inner-split-width;
         text-align:center;
       }
       .#{$fastdate-prefix-cls}-range{
@@ -61,16 +61,16 @@ $fastdate-prefix-cls: "#{$css-prefix}fast-date";
     @include readonly();
   }
   &-edit{
-    padding: 0 8px;
-    border-radius: 4px;
-    min-width:160px;
+    padding: $fastdate-edit-padding;
+    border-radius: $fastdate-edit-border-radius;
+    min-width:$fastdate-edit-border-min-width;
     border:1px solid $border-color-base;
     &:hover{
       @include hover();
     }
   }
   &-activity{
-    font-size:16px;
+    font-size:$fastdate-activity-font-size;
   }
     
 }

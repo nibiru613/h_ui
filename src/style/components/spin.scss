@@ -1,17 +1,16 @@
 $spin-prefix-cls: "#{$css-prefix}spin";
-$spin-dot-size-small: 12px;
-$spin-dot-size: 20px;
-$spin-dot-size-large: 32px;
+
 
 .#{$spin-prefix-cls} {
-  color: $primary-color;
+  color: $spin-color;
   vertical-align: middle;
   text-align: center;
+  font-size:$spin-font-size;
 
   &-dot {
       position: relative;
       display: block;
-      border-radius: 50%;
+      border-radius:$spin-dot-border-radius;
       background-color: $primary-color;
       @include square($spin-dot-size);
       animation: ani-spin-bounce 1s 0s ease-in-out infinite;
@@ -27,23 +26,23 @@ $spin-dot-size-large: 32px;
 
   &-fix {
     position: absolute;
-    top: 0;
+    top: $spin-fix-top;
     // bottom: 0;
-    left: 0;
+    left:$spin-fix-left;
     // right: 0;
     z-index: $zindex-spin;
     // display: table;
     @include square(100%);
-    background-color:  rgba(255,255,255,.9);
+    background-color: $spin-fix-background-color;
   }
   &-fullscreen{
       z-index: $zindex-spin-fullscreen;
       &-wrapper{
           position: fixed;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
+          top: $spin-fullscreen-wrapper-top;
+          right: $spin-fullscreen-wrapper-right;
+          bottom: $spin-fullscreen-wrapper-bottom;
+          left: $spin-fullscreen-wrapper-left;
       }
   }
 
@@ -75,8 +74,8 @@ $spin-dot-size-large: 32px;
 .#{$table-prefix-cls}-wrapper{
     > .#{$spin-prefix-cls}-fix{
         border: 1px solid $border-color-base;
-        border-top: 0;
-        border-left: 0;
+        border-top:$spin-table-wrapper-fix-border-top;
+        border-left: $spin-table-wrapper-fix-border-left;
     }
 }
 @keyframes ani-spin-bounce {

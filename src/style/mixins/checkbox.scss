@@ -28,7 +28,7 @@
             position: relative;
             top: 0;
             left: 0;
-            border: 1px solid #D7DDE4;
+            border: 1px solid $mixin-checkbox-inner-border-color;
             border-radius: 2px;
             background-color: #fff;
             // transition: border-color $transition-time $ease-in-out, background-color $transition-time $ease-in-out;
@@ -146,30 +146,30 @@
         &.#{$checkbox-prefix-cls}-checked {
             &:hover {
                 .#{$checkbox-inner-prefix-cls} {
-                    border-color: $border-color-base;
+                    border-color: $mixin-checkbox-disabled-check-border-color;
                 }
             }
 
             .#{$checkbox-inner-prefix-cls} {
-                background-color: #f3f3f3;
-                border-color: $border-color-base;
+                background-color: $mixin-checkbox-disabled-color;
+                border-color:$mixin-checkbox-disabled-check-border-color;
 
                 &:after {
                     animation-name: none;
-                    border-color: #ccc;
+                    border-color:$mixin-checkbox-disabled-check-color;
                 }
             }
         }
 
         &:hover {
             .#{$checkbox-inner-prefix-cls} {
-                border-color: $border-color-base;
+                border-color:$mixin-checkbox-disabled-check-border-color;
             }
         }
 
         .#{$checkbox-inner-prefix-cls} {
-            border-color: $border-color-base;
-            background-color: $border-color-split;
+            border-color: $mixin-checkbox-disabled-check-border-color;
+            background-color: $mixin-checkbox-disabled-bg;
             &:after {
                 animation-name: none;
                 border-color: #f3f3f3;

@@ -5,30 +5,30 @@ $badge-prefix-cls: "#{$css-prefix}badge";
   display: inline-block;
   line-height: 1;
   vertical-align: middle;
-
+  color: $text-color;
   &-count {
     position: absolute;
     transform: translateX(50%);
-    top: -10px;
-    right: 0;
-    height: 20px;
-    border-radius: 10px;
-    min-width: 20px;
-    background: $error-color;
-    border: 1px solid transparent;
-    color: #fff;
-    line-height: 18px;
+    top: $badge-count-top;
+    right: $badge-count-right;
+    height: $badge-count-height;
+    border-radius: $badge-count-border-radius;
+    min-width:$badge-count-min-width;
+    background: $badge-count-background;
+    border: $badge-count-border;
+    color: $badge-count-color;
+    line-height: $badge-count-line-height;
     text-align: center;
-    padding: 0 6px;
-    font-size: 12px;
+    padding: $badge-count-padding;
+    font-size: $badge-count-font-size;
     white-space: nowrap;
     transform-origin: -10% center;
     z-index: 10;
-    box-shadow: 0 0 0 1px #fff;
+    box-shadow:$badge-count-box-shadow;
 
     a,
     a:hover {
-      color: #fff;
+      color: $badge-a-hover-color;
     }
 
     &-alone {
@@ -43,13 +43,13 @@ $badge-prefix-cls: "#{$css-prefix}badge";
     position: absolute;
     transform: translateX(-50%);
     transform-origin: 0 center;
-    top: -4px;
-    right: -8px;
-    height: 8px;
-    width: 8px;
-    border-radius: 100%;
-    background: $error-color;
+    top: $badge-dot-top;
+    right: $badge-dot-right;
+    height: $badge-dot-height;
+    width: $badge-dot-width;
+    border-radius: $badge-dot-border-radius;
+    background: $badge-dot-background;
     z-index: 10;
-    box-shadow: 0 0 0 1px #fff;
+    box-shadow: $badge-dot-box-shadow;
   }
 }

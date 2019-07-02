@@ -1,23 +1,22 @@
 $timeline-prefix-cls: "#{$css-prefix}timeline";
-$timeline-color: #DCE1E7;
 
 .#{$timeline-prefix-cls} {
   list-style: none;
-  margin: 0;
-  padding: 0;
+  margin: $timeline-margin;
+  padding: $timeline-padding;
 
   &-item {
-    margin: 0 !important;
-    padding: 0 0 12px 0;
+    margin: $timeline-item-margin!important;
+    padding: $timeline-item-padding;
     list-style: none;
     position: relative;
 
     &-tail {
-      height: 100%;
+      height: $timeline-item-tail-height;
       border-left: 2px solid $timeline-color;
       position: absolute;
-      left: 4px;
-      top: 2px;
+      left: $timeline-item-tail-left;
+      top: $timeline-item-tail-top;
     }
 
     &-pending &-tail {
@@ -25,11 +24,11 @@ $timeline-color: #DCE1E7;
     }
 
     &-head {
-      width: 10px;
-      height: 10px;
-      background-color: #fff;
-      border-radius: 50%;
-      top:2px;
+      width:$timeline-item-head-width;
+      height: $timeline-item-head-height;
+      background-color: $timeline-item-head-background-color;
+      border-radius:$timeline-item-head-border-radius;
+      top:$timeline-item-head-top;
       border: 2px solid transparent;
       position: absolute;
 
@@ -48,25 +47,25 @@ $timeline-color: #DCE1E7;
     }
 
     &-head-custom {
-      width: 40px;
+      width: $timeline-item-head-custom-width;
       height: auto;
-      margin-top: 6px;
-      padding: 3px 0;
+      margin-top:$timeline-item-head-custom-margin-top;
+      padding: $timeline-item-head-custom-padding;
       text-align: center;
       line-height: 1;
-      border: 0;
+      border: $timeline-item-head-custom-border;
       border-radius: 0;
       font-size: $font-size-base;
       position: absolute;
-      left: -13px;
+      left: $timeline-item-head-custom-left;
       transform: translateY(-50%);
       & i.icon-jiangbei {
-        font-size: 12px;
+        font-size: $timeline-item-head-custom-i-font-size;
       }
     }
 
     &-content {
-      padding: 1px 1px 10px 24px;
+      padding: $timeline-item-content-padding;
       font-size: $font-size-small;
       position: relative;
       top: -3px;
@@ -84,7 +83,7 @@ $timeline-color: #DCE1E7;
       border-left: 2px dotted $timeline-color;
     }
     .#{$timeline-prefix-cls}-item-content {
-      min-height: 48px;
+      min-height: $timeline-item-content-min-height;
     }
   }
 }

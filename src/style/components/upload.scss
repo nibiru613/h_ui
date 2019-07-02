@@ -6,10 +6,10 @@ $uploaded-prefix-cls: "#{$upload-prefix-cls}-uploaded";
   }
 
   &-list{
-    margin-top: 8px;
+    margin-top:$upload-list-margin-top;
 
     &-file{
-      padding: 4px;
+      padding:$upload-list-file-padding;
       color: $text-color;
       border-radius: $border-radius-small;
       transition: background-color $transition-time $ease-in-out;
@@ -20,7 +20,7 @@ $uploaded-prefix-cls: "#{$upload-prefix-cls}-uploaded";
         cursor: pointer;
         transition: color $transition-time $ease-in-out;
         > i{
-          margin-right: 8px;
+          margin-right: $upload-list-file-span-i-margin-right;
         }
         i{
           display: inline-block;
@@ -33,7 +33,7 @@ $uploaded-prefix-cls: "#{$upload-prefix-cls}-uploaded";
 
       &:hover{
         // background: $input-disabled-bg;
-        background: #EAF5FF;
+        background: $upload-list-file-background;
         & > span{
           color: $primary-color;
           i{
@@ -47,21 +47,21 @@ $uploaded-prefix-cls: "#{$upload-prefix-cls}-uploaded";
     }
     &-remove{
       // opacity: 0;
-      font-size: 18px;
+      font-size: $upload-list-remove-font-size;
       cursor: pointer;
       float: right;
-      margin-right: 4px;
+      margin-right: $upload-list-remove-margin-right;
       color: $legend-color;
       transition: all $transition-time ease;
       &:hover{
-        color: #444;
+        color: $upload-list-remove-hover-color;
       }
     }
   }
 
   &-drag{
-    background: #F7F7F7 ;
-    border: 1px dashed #D7DDE4;
+    background: $upload-drag-background ;
+    border: $upload-drag-border;
     border-radius: $border-radius-small;
     text-align: center;
     cursor: pointer;
@@ -82,26 +82,26 @@ $uploaded-prefix-cls: "#{$upload-prefix-cls}-uploaded";
     }
     > .#{$uploaded-prefix-cls}-wrap {
       display: block;
-      margin-top: 8px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      line-height: 30px;
-      text-align: left;
-      color: #000;
-      font-size: 13px;
-      font-weight: 700;
+      margin-top: $upload-self-uploaded-wrap-margin-top;
+      border: $upload-self-uploaded-wrap-border;
+      border-radius: $upload-self-uploaded-wrap-border-radius;
+      line-height: $upload-self-uploaded-wrap-line-height;
+      text-align:$upload-self-uploaded-wrap-text-align;
+      color: $upload-self-uploaded-wrap-color;
+      font-size: $upload-self-uploaded-wrap-font-size;
+      font-weight: $upload-self-uploaded-wrap-font-weight;
       .#{$uploaded-prefix-cls}-title {
-        padding-left: 10px;
-        background: #ddd;
+        padding-left: $upload-self-uploaded-title-padding-left;
+        background: $upload-self-uploaded-title-background;
       }
       .#{$uploaded-prefix-cls}-close {
-        font-size: 14px;
+        font-size: $upload-self-uploaded-close-font-size;
         cursor: pointer;
         float: right;
-        margin-right: 4px;
+        margin-right:$upload-self-uploaded-close-margin-right;
       }
       .#{$upload-prefix-cls}-list {
-        margin-top: 0;
+        margin-top: $upload-self-uploaded-list-margin-top;
       }
     }
 

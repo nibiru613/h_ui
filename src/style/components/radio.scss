@@ -11,23 +11,25 @@ $radio-group-button-prefix-cls: "#{$radio-group-prefix-cls}-button";
     &-vertical{
         .#{$radio-prefix-cls}-wrapper {
             display: block;
-            height: 30px;
-            line-height: 30px;
+            height: $radio-vertical-wrapper-height;
+            line-height: $radio-vertical-wrapper-height;
         }
     }
     & ~ .verify-tip.verify-bottom {
-        margin-top: -5px;
+        margin-top:$radio-vertical-verify-tip-margin-top;
     }
 }
 
 // 普通状态
 .#{$radio-prefix-cls}-wrapper {
-    font-size: $font-size-small;
+    font-size: $radio-wrapper-font-size;
     vertical-align: middle;
     display: inline-block;
+     // c1 repair radio and checkbox group component in form layout problem
+    line-height: 1;
     position: relative;
     white-space: nowrap;
-    margin-right: 8px;
+    margin-right: $radio-wrapper-margin-right;
     cursor: pointer;
     &-disabled{
       cursor: $cursor-disabled;
@@ -39,7 +41,7 @@ $radio-group-button-prefix-cls: "#{$radio-group-prefix-cls}-button";
 
 .#{$radio-prefix-cls} {
     display: inline-block;
-    margin-right: 8px;
+    margin-right: $radio-wrapper-margin-right;
     white-space: nowrap;
     outline: none;
     position: relative;
@@ -53,22 +55,22 @@ $radio-group-button-prefix-cls: "#{$radio-group-prefix-cls}-button";
     }
     &-inner {
       display: inline-block;
-      width: 14px;
-      height: 14px;
+      width: $radio-inner-width;
+      height: $radio-inner-height;
       position: relative;
-      top: 0;
-      left: 0;
-      background-color: #fff;
+      top: $radio-inner-top;
+      left: $radio-inner-left;
+      background-color: $radio-inner-background-color;
       border: 1px solid $border-color-base;
       border-radius: 50%;
       transition: all $transition-time $ease-in-out;
 
       &:after {
           position: absolute;
-          width: 8px;
-          height: 8px;
-          left: 2px;
-          top: 2px;
+          width:$radio-inner-after-width;
+          height: $radio-inner-after-height;
+          left: $radio-inner-after-left;
+          top: $radio-inner-after-top;
           border-radius: $border-radius-base;
           display: table;
           border-top: 0;
@@ -83,11 +85,11 @@ $radio-group-button-prefix-cls: "#{$radio-group-prefix-cls}-button";
     &-large{
         font-size: $font-size-base;
         & .#{$radio-inner-prefix-cls}{
-            width: 16px;
-            height: 16px;
+            width: $radio-large-inner-width;
+            height: $radio-large-inner-height;
             &:after{
-                width: 10px;
-                height: 10px;
+                width: $radio-large-inner-after-width;
+                height: $radio-large-inner-after-height;
             }
         }
         &.#{$radio-prefix-cls}-wrapper, & .#{$radio-prefix-cls}-wrapper{
@@ -96,23 +98,23 @@ $radio-group-button-prefix-cls: "#{$radio-group-prefix-cls}-button";
     }
     &-small{
         & .#{$radio-inner-prefix-cls}{
-            width: 12px;
-            height: 12px;
+            width: $radio-small-inner-width;
+            height: $radio-small-inner-height;
             &:after{
-                width: 6px;
-                height: 6px;
+                width: $radio-small-inner-after-width;
+                height: $radio-small-inner-after-height;
             }
         }
     }
 
     &-input {
         position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        top: $radio-input-top;
+        bottom: $radio-input-bottom;
+        left: $radio-input-left;
+        right: $radio-input-right;
         z-index: 1;
-        opacity: 0;
+        opacity: $radio-input-opacity;
         cursor: pointer;
     }
     &-inner-focus {
@@ -149,21 +151,21 @@ $radio-group-button-prefix-cls: "#{$radio-group-prefix-cls}-button";
         }
     }
     .#{$radio-inner-prefix-cls} {
-        border-color: $border-color-base;
-        background-color: #f3f3f3;
+        border-color:$radio-disabled-inner-border-color;
+        background-color: $radio-inner-color;
         &:after {
-            background-color: #cccccc;
+            background-color: $radio-inner-after-color;
         }
     }
 
     .#{$radio-prefix-cls}-disabled + span {
-        color: #ccc;
+        color: $radio-disabled-span-color;
     }
 }
 
 span.#{$radio-prefix-cls} + * {
-    margin-left: 2px;
-    margin-right: 2px;
+    margin-left: $radio-span-margin-left;
+    margin-right: $radio-span-margin-right;
 }
 
 // 按钮样式
@@ -180,15 +182,15 @@ span.#{$radio-prefix-cls} + * {
         display: inline-block;
         height: $btn-circle-size;
         line-height: $btn-circle-size - 2px;
-        margin: 0;
-        padding: 0 16px;
+        margin: $radio-group-button-wrapper-margin;
+        padding:$radio-group-button-wrapper-padding;
         font-size: $font-size-small;
         color: $btn-default-color;
         transition: all $transition-time ease-in-out;
         cursor: pointer;
         border: 1px solid $border-color-base;
         border-left: 0;
-        background: #fff;
+        background: $radio-group-button-wrapper-background;
 
         > span {
             margin-left: 0;
@@ -239,7 +241,7 @@ span.#{$radio-prefix-cls} + * {
         }
 
         &-checked {
-            background: #fff;
+            background: $radio-group-button-wrapper-checked-color;
             border-color: $primary-color;
             color: $primary-color;
             box-shadow: -1px 0 0 0 $primary-color;
@@ -266,13 +268,13 @@ span.#{$radio-prefix-cls} + * {
             border-color: $border-color-base;
             background-color: $background-color-base;
             cursor: $cursor-disabled;
-            color: #ccc;
+            color: $radio-group-button-wrapper-disabled-color;
 
             &:first-child,
             &:hover {
                 border-color: $border-color-base;
                 background-color: $background-color-base;
-                color: #ccc;
+                color: $radio-group-button-wrapper-disabled-hover-color;
             }
             &:first-child {
                 border-left-color: $border-color-base;
@@ -280,19 +282,19 @@ span.#{$radio-prefix-cls} + * {
         }
 
         &-disabled.#{$radio-prefix-cls}-wrapper-checked {
-            color: #fff;
-            background-color: #e6e6e6;
+            color: $radio-group-button-wrapper-disabled-wrapper-checked-color;
+            background-color: $radio-group-button-wrapper-disabled-wrapper-checked-background-color;
             border-color: $border-color-base;
             box-shadow: none!important;
         }
         // btn 带按钮--o45
         .#{$radio-prefix-cls}-btnIcon.#{$radio-prefix-cls} {
-            width: 18px;
+            width:$radio-group-button-wrapper-btnIcon-width;
             .#{$radio-prefix-cls}-inner {
                 // opacity: 1;
                 display: inline-block;
-                width: 14px;
-                height: 14px;
+                width: $radio-group-button-wrapper-btnIcon-inner-width;
+                height: $radio-group-button-wrapper-btnIcon-inner-height;
             }
         }
     }
@@ -303,12 +305,12 @@ span.#{$radio-prefix-cls} + * {
     line-height: $btn-circle-size-large - 2px;
     font-size: $font-size-small;
     .#{$radio-prefix-cls}-btnIcon.#{$radio-prefix-cls} {
-        width: 20px;
+        width: $radio-group-button-large-btnIcon-width;
         .#{$radio-prefix-cls}-inner {
             // opacity: 1;
             display: inline-block;
-            width: 16px;
-            height: 16px;
+            width: $radio-group-button-large-btnIcon-inner-width;
+            height: $radio-group-button-large-btnIcon-inner-height;
         }
     }
 }
@@ -316,7 +318,7 @@ span.#{$radio-prefix-cls} + * {
 .#{$radio-group-button-prefix-cls}.#{$radio-group-prefix-cls}-small .#{$radio-prefix-cls}-wrapper{
     height: $btn-circle-size-small;
     line-height: $btn-circle-size-small - 2px;
-    padding: 0 12px;
+    padding:$radio-group-button-small-wrapper-padding;
     font-size: $font-size-small;
     &:first-child {
         border-radius: $btn-border-radius-small 0 0 $btn-border-radius-small;
@@ -329,8 +331,8 @@ span.#{$radio-prefix-cls} + * {
         .#{$radio-prefix-cls}-inner {
             // opacity: 1;
             display: inline-block;
-            width: 12px;
-            height: 12px;
+            width: $radio-group-button-small-btnIcon-inner-width;
+            height: $radio-group-button-small-btnIcon-inner-height;
         }
     }
 }

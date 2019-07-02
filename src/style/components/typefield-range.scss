@@ -2,17 +2,17 @@ $typefieldRange-prefix-cls: "#{$css-prefix}typefield-range" ;
 .#{$typefieldRange-prefix-cls}{
   display: inline-block;
   position: relative;
-  border:1px solid #d7dde4;
-  border-radius:4px;
+  border:$typefield-range-border;
+  border-radius:$typefield-range-border-radius;
   height: $form-component-height;
   line-height: $form-component-height;
-  width: 100%;
+  width: $typefield-range-width;
   vertical-align: middle;
   &:hover{
     @include hover();
   }
   &-inner{
-    width: calc(50% - 10px);
+    width:$typefield-range-inner-width;
     float: left;
     .#{$typefield-prefix-cls} input{
       height: $form-component-height - 2px;
@@ -28,7 +28,7 @@ $typefieldRange-prefix-cls: "#{$css-prefix}typefield-range" ;
     }
   }
   &-inner.split{
-    width: 20px;
+    width: $typefield-range-inner-split-width;
     height: $form-component-height - 2px;
     line-height: $form-component-height - 2px;
     text-align: center;

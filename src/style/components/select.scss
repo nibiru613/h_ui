@@ -20,7 +20,7 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
         user-select: none;
         cursor: pointer;
 
-        background-color: #fff;
+        background-color: $select-selection-background-color;
         border-radius: $btn-border-radius;
         border: 1px solid $border-color-base;
         transition: all $transition-time $ease-in-out;
@@ -46,15 +46,15 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
             white-space: nowrap;
             max-width: 45%;
             text-overflow: ellipsis;
-            height: $form-component-height - 12px;
-            line-height: $form-component-height - 12px;
+            height: $select-tag-height;
+            line-height:$select-tag-line-height;
             // margin: 0;
-            padding: 0;
-            padding-right: 12px;
-            padding-left: 2px;
-            margin-left:8px;
-            background: #F5F5F5 !important;
-            border: 1px solid $border-color-split !important;
+            padding: $select-tag-padding;
+            padding-right: $select-tag-padding-right;
+            padding-left: $select-tag-padding-left;
+            margin-left:$select-tag-margin-left;
+            background: $select-tag-background !important;
+            border: 1px solid $border-color-split !important;  
             &>.#{$css-prefix}icon {
               position: absolute;
               right: 0;
@@ -122,12 +122,12 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
             display: block;
             height: $input-height-base - 2px;
             line-height: $input-height-base - 2px;
-            font-size: $font-size-small;
+            font-size: $select-single-selection-font-size;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            padding-left: 8px;
-            padding-right: 24px;
+            padding-left: $select-single-selection-selected-value-padding-left;
+            padding-right: $select-single-selection-selected-value-padding-right;
         }
     }
 
@@ -154,8 +154,8 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
     &-multiple &-selection{
         overflow-y: auto;
         height: $input-height-base;
-        padding-right:30px;
-        padding-left: 2px;
+        padding-right:$select-multiple-selection-padding-right;
+        padding-left: $select-multiple-selection-padding-left;
         display: flex;
         flex-flow: wrap;
         .#{$select-prefix-cls}-placeholder{
@@ -163,12 +163,12 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
             height: $input-height-base - 2px;
             line-height: $input-height-base - 2px;
             color: $input-placeholder-color;
-            font-size: $font-size-small;
+            font-size: $select-multiple-selection-font-size;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            padding-left: 8px;
-            padding-right: 22px;
+            padding-left: $select-multiple-selection-placeholder-padding-left;
+            padding-right: $select-multiple-selection-placeholder-padding-right;
         }
     }
 
@@ -182,8 +182,8 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
         display: inline-block;
         height: $input-height-base;
         line-height: $input-height-base;
-        padding: 0 24px 0 8px;
-        font-size: $font-size-small;
+        padding:$select-input-padding;
+        font-size: $select-content-input-font-size;
         outline: none;
         border: none;
         box-sizing: border-box;
@@ -199,13 +199,13 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
     }
     &-checkHead{
       .h-checkbox-wrapper{
-          margin-left:16px;
-          margin-right:0px;
+          margin-left:$select-checkHead-margin-left;
+          margin-right:$select-checkHead-margin-right;
       }
       .#{$select-prefix-cls}-content-input{
           width: calc(100% - 36px);
-          height: 20px;
-          line-height: 20px;
+          height: $select-checkHead-content-input-height;
+          line-height: $select-checkHead-content-input-line-height;
       }
     }
 
@@ -225,7 +225,7 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
     &-multiple &-input{
         height: $input-height-base - 3px;
         line-height: $input-height-base;
-        padding: 0 0 0 8px;
+        padding:$select-multiple-input-padding;
     }
 
     &-not-found{
@@ -241,25 +241,25 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
         color: $btn-disable-color;
     }
     &-multiple .#{css-prefix}tag{
-        margin: 3px 4px 2px 0;
+        margin:$select-multiple-tag-margin;
     }
     &-hideMultHead{
         position: relative;
         display: block;
-        font-size: $font-size-small;
-        padding: 7px 12px;
+        font-size: $select-hideMultHead-font-size;
+        padding:$select-hideMultHead-padding;
     }
     &-hideMultHead:hover{
         cursor: pointer;
     }
     &-hideMultHead:after{
         @include h-icon();
-        font-size: 22px;
+        font-size: $select-hideMultHead-after-font-size;
         content: '\E734';
         color: $no-select-color;
         position: absolute;
-        top: 8px;
-        right: 2px;
+        top: $select-hideMultHead-after-top;
+        right: $select-hideMultHead-after-right;
     }
     &-hideMultHead-select,&-hideMultHead-select:after{
         color: $selected-color;
@@ -267,7 +267,7 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
     // select-arrow
     &-single &-selection {
         .#{$select-prefix-cls}-arrow {
-            right: 8px!important;
+            right: $select-single-selection-arrow-right!important;
         }
     }
 
@@ -275,8 +275,8 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
     &-dropdown &-dropdown-list {
         .#{$select-prefix-cls}-item {
             position: relative;
-            height: 30px;
-            line-height: 16px;
+            height: $select-dropdown-item-height;
+            line-height: $select-dropdown-item-line-height;
             & label {
                 // position: absolute;
                 // left: 8px;
@@ -285,7 +285,7 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
     }
     &-dropdown-content{
         max-height:$max-height;
-        padding: 5px 0;
+        padding: $select-dropdown-content-padding;
         overflow:auto;
     }
     &-left{
@@ -304,7 +304,7 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
 .#{$select-prefix-cls}-multiple .#{$select-item-prefix-cls} {
     &-selected{
         color: $selected-color;
-        background: #fff;
+        background: $select-multiple-selected-item-background;
     }
     &-focus,&-selected:hover{
         color:$selected-color;
@@ -313,8 +313,8 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
 
     .#{$select-item-prefix-cls}-selected.#{$select-item-prefix-cls}-focus {
         color: shade($selected-color, 10%);
-        background: #fff;
-    }
+        background: $select-multiple-selected-item-focus-background;
+    }   
 }
 .#{$select-prefix-cls}-hideMult .#{$select-item-prefix-cls} {
     padding-right: 12px;
@@ -323,12 +323,12 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
 
     &:after{
         @include h-icon();
-        font-size: 22px;
+        font-size: $select-hideMultHead-after-font-size;
         content: '\E734';
-        color: #fff;
+        color: $select-hideMultHead-after-color;
         position: absolute;
-        top: 5px;
-        right: 2px;
+        top: $select-hideMult-top;
+        right: $select-hideMult-right;
     }
     &:hover:after{
         color: $no-select-color;
@@ -343,11 +343,11 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
     padding: 0;
 
     &-title {
-        padding-left: 8px;
-        font-size: 12px;
+        padding-left: $select-group-title-padding-left;
+        font-size: $select-group-title-font-size;
         color: $legend-color;
-        height: 30px;
-        line-height: 30px;
+        height: $select-group-title-height;
+        line-height: $select-group-title-line-height;
     }
 }
 
@@ -407,9 +407,9 @@ $select-group-prefix-cls:  "#{$css-prefix}select-group";
 // .#{$select-prefix-cls}-multiple{
 .#{$select-prefix-cls}{
     &-checkall{
-        border-top: 1px solid #e1e1e1;
+        border-top: $select-checkall-border-top;
         text-align: right;
-        padding: 8px;
+        padding: $select-checkall-padding;
         clear: both;
     }
 }

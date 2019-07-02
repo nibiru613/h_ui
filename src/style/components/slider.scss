@@ -28,11 +28,11 @@ $slider-prefix-cls: "#{$css-prefix}slider";
     }
 
     &-button{
-        width: 12px;
-        height: 12px;
+        width: $slider-button-width;
+        height: $slider-button-height;
         border: 2px solid $slider-color;
-        border-radius: 50%;
-        background-color: #fff;
+        border-radius: $slider-button-border-radius;
+        background-color: $slider-button-border-background-color;
         transition: all $transition-time linear;
 
         &:hover,
@@ -101,11 +101,11 @@ $slider-prefix-cls: "#{$css-prefix}slider";
 .#{$slider-prefix-cls}-input{
     .#{$slider-prefix-cls}-wrap{
         width: auto;
-        margin-right: 100px;
+        margin-right: $slider-input-wrap-margin-right;
     }
 
     .#{$input-number-prefix-cls}{
         float: right;
-        margin-top: -14px;
+        margin-top: $slider-input-wrap-number-margin-top;
     }
 }

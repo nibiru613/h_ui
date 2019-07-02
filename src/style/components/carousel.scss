@@ -18,14 +18,14 @@ $carousel-item-prefix-cls: "#{$css-prefix}carousel-item";
     display: block;
     overflow: hidden;
 
-    margin: 0;
-    padding: 0;
+    margin: $carousel-list-margin;
+    padding:$carousel-list-padding;
   }
 
   &-track {
     position: relative;
-    top: 0;
-    left: 0;
+    top: $carousel-track-top;
+    left: $carousel-track-left;
     display: block;
 
     overflow: hidden;
@@ -47,9 +47,9 @@ $carousel-item-prefix-cls: "#{$css-prefix}carousel-item";
     padding: 0;
     margin: 0;
 
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
+    width: $carousel-arrow-width;
+    height: $carousel-arrow-height;
+    border-radius: $carousel-arrow-border-radius;
 
     cursor: pointer;
 
@@ -61,11 +61,11 @@ $carousel-item-prefix-cls: "#{$css-prefix}carousel-item";
     transform: translateY(-50%);
 
     transition: $transition-time;
-    background-color: rgba(31, 45, 61, .11);
-    color: #fff;
+    background-color: $carousel-arrow-background-color;
+    color: $carousel-arrow-color;
 
     &:hover {
-      background-color: rgba(31, 45, 61, 0.5);
+      background-color: $carousel-arrow-hover-background-color;
     }
 
     text-align: center;
@@ -135,7 +135,7 @@ $carousel-item-prefix-cls: "#{$css-prefix}carousel-item";
       vertical-align: top;
       text-align: center;
 
-      margin: 0 2px;
+      margin: $carousel-dots-li-margin;
       padding: $padding 0;
 
       cursor: pointer;
@@ -144,14 +144,14 @@ $carousel-item-prefix-cls: "#{$css-prefix}carousel-item";
         border: 0;
         cursor: pointer;
 
-        background: #8391a5;
-        opacity: 0.3;
+        background:$carousel-dots-button-background;
+        opacity:$carousel-dots-button-opacity;
 
         display: block;
-        width: 16px;
-        height: 3px;
+        width: $carousel-dots-button-width;
+        height: $carousel-dots-button-height;
 
-        border-radius: 1px;
+        border-radius:$carousel-dots-button-border-radius;
         outline: none;
 
         font-size: 0;

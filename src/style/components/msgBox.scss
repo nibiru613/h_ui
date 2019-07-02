@@ -6,7 +6,7 @@ $confirm-prefix-cls: "#{$css-prefix}modal-confirm";
   margin: 0 auto;
   position: relative;
   outline: none;
-  top: 100px;
+  top:$msgbox-top;
 
   &-hidden {
       display: none !important;
@@ -37,7 +37,7 @@ $confirm-prefix-cls: "#{$css-prefix}modal-confirm";
 
   &-content {
       position: relative;
-      background-color: #fff;
+      background-color:$msgbox-content-background-color;
       border: 0;
       border-radius: $border-radius-base;
       background-clip: padding-box;
@@ -56,18 +56,18 @@ $confirm-prefix-cls: "#{$css-prefix}modal-confirm";
   }
 
   &-body {
-    padding: 32px 32px 16px 32px;
-    font-size: 12px;
+    padding: $msgbox-body-padding;
+    font-size: $msgbox-body-font-size;
     line-height: 1.5;
     & p {
-      color: #7E828A;
+      color: $msgbox-body-color;
       font-size: $font-size-small; 
     }
   }
 
   &-footer {
     border-top: 1px solid $border-color-split;
-    padding: 12px 18px 12px 18px;
+    padding: $msgbox-footer-padding;
     text-align: right;
     button + button {
         margin-left: 8px;
@@ -89,15 +89,15 @@ $confirm-prefix-cls: "#{$css-prefix}modal-confirm";
 }
 
 .#{$confirm-prefix-cls} {
-  padding: 0 4px;
+  padding:$msgbox-confirm-padding;
   &-head {
 
     &-icon {
       position: absolute;
-      top: 16px;
-      left: 32px;
+      top: $msgbox-confirm-head-icon-top;
+      left: $msgbox-confirm-head-icon-left;
       & i {
-        font-size: 36px;
+        font-size:$msgbox-confirm-head-icon-font-size;
       }
 
       &-info {
@@ -120,24 +120,24 @@ $confirm-prefix-cls: "#{$css-prefix}modal-confirm";
     &-title {
       display: inline-block;
       font-size: $font-size-base;
-      color: $title-color;
-      font-weight: 700;
-      margin-left: 38px;
+      color: $msgbox-title-color;
+      font-weight: $msgbox-title-font-weight;
+      margin-left: $msgbox-title-margin-left;
     }
   }
 
   &-body{
     font-family: MicrosoftYaHei;
     font-size: $font-size-small;
-    color: #7E828A;
+    color: $msgbox-body-color;
     text-align: left;
-    line-height: 20px;
-    padding-left: 38px;
-    padding-top: 18px;
+    line-height: $msgbox-body-line-height;
+    padding-left: $msgbox-body-padding-left;
+    padding-top:$msgbox-body-padding-top;
     position: relative;
 
     &-render{
-      margin: 16px 0 0 0;
+      margin: $msgbox-body-render-margin;
       padding: 0;
     }
 
@@ -146,7 +146,7 @@ $confirm-prefix-cls: "#{$css-prefix}modal-confirm";
       top: 0;
       left: 0;
       & i {
-        font-size: 36px;
+        font-size: $msgbox-body-icon-font-size;
       }
 
       &-info {
@@ -166,12 +166,12 @@ $confirm-prefix-cls: "#{$css-prefix}modal-confirm";
       }
     }
     & p {
-      font-size: $font-size-small;
+      font-size: $msgbox-body-font-size;
     }
   }
 
   &-footer{
-    margin-top: 40px;
+    margin-top: $msgbox-footer-margin-top;
     text-align: right;
 
     button + button {

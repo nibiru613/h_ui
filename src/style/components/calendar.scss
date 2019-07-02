@@ -4,23 +4,23 @@ $calendar-prefix-cls: "#{$css-prefix}calendar";
   &-top-change &-top-text {
     display: inline-block;
     vertical-align: middle;
-    font-size: 28px;
+    font-size: $calendar-top-text-font-size;
   }
   &-top-icon {
     &:hover {
       background-color: $background-color-base;
     }
     &.h-prev-year {
-      margin-right: 30px;
+      margin-right: $calendar-prev-year-margin-right;
     }
     &.h-next-year {
-      margin-left: 30px;
+      margin-left: $calendar-next-year-margin-left;
     }
   }
 
   &-top-change{
-    height: 50px;
-    line-height: 50px;
+    height: $calendar-top-change-height;
+    line-height: $calendar-top-change-line-height;
     text-align: center;
     position: relative;
   }
@@ -34,27 +34,27 @@ $calendar-prefix-cls: "#{$css-prefix}calendar";
   }
   &-month-content.#{$calendar-prefix-cls}-month-week &-month-content-item-tag,
   &-month-content.#{$calendar-prefix-cls}-month-week &-month-content-item {
-    color: #333;
-    font-size: 15px;
-    background: #e9eaec;
-    border-color:#e9eaec;
+    color: $calendar-month-content-color;
+    font-size: $calendar-month-content-font-size;
+    background: $calendar-month-content-background;
+    border-color:$calendar-month-content-border-color;
   }
   &-month-content-item {
-    font-size: 15px;
+    font-size: $calendar-month-content-item-font-size;
     width: 14.28%;
     text-align: center;
-    color: black;
+    color: $calendar-month-content-item-color;
     position: relative;
-    height: 40px;
-    line-height: 40px;
+    height: $calendar-month-content-item-height;
+    line-height: $calendar-month-content-item-height;
     padding: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     /* border:2px solid #fff; */
-    border: 1px solid #fff;
-    border-width: 0 1px 1px 0;
-
+    border: $calendar-month-content-item-boder;
+    border-width: $calendar-month-content-item-border-width;
+    
     .h-badge {
       width: 0;
       height: 0;
@@ -65,10 +65,10 @@ $calendar-prefix-cls: "#{$css-prefix}calendar";
     }
   }
   &-month-content-item:nth-child(7n + 1){
-    border-width: 0 1px 1px 1px;
+    border-width: $calendar-month-content-item-nth-child-border-width;
   }
   &-month-week {
-    background: #e9eaec;
+    background: $calendar-month-content-background;
   }
   &-month-week &-month-content-item {
     border-top-width: 1px;
@@ -85,16 +85,16 @@ $calendar-prefix-cls: "#{$css-prefix}calendar";
     color: $btn-disable-color;
   }
   &-month-content.#{$calendar-prefix-cls}-month-day &-month-content-item.#{$calendar-prefix-cls}-month-restDay{
-    color: red;
+    color: $calendar-month-restDay-color;
     background: none;
   }
   &-month-content.#{$calendar-prefix-cls}-month-day &-month-content-item.#{$calendar-prefix-cls}-month-day-active {
-    background: $primary-color;
+    background:$calendar-month-day-selected-background;
     border-radius:4px;
-    color:#fff;
+    color:$calendar-month-day-active-color;
   }
   &-month-content.#{$calendar-prefix-cls}-month-day {
-    border: 1px #e9eaec solid;
+    border: $calendar-month-day-border;
   }
   &-month {
     width: 22%;
@@ -103,17 +103,17 @@ $calendar-prefix-cls: "#{$css-prefix}calendar";
     flex: 0 0 auto;
     // height: 330px;
     & > div {
-      box-shadow: 0 2px 8px #d3ddeb;
+      box-shadow: $calendar-month-div-box-shadow;
     }
   }
   &-month-title {
     display: block;
-    font-size: 15px;
-    height: 36px;
-    line-height: 40px;
+    font-size: $calendar-month-title-font-size;
+    height: $calendar-month-title-height;
+    line-height: $calendar-month-title-line-height;
     text-align: center;
-    background:#e9eaec;
-    border-radius:2px 2px 0 0;
+    background:$calendar-month-content-background;
+    border-radius:$calendar-month-title-border-radius;
   }
   &-wrapper {
     position: relative;
@@ -123,32 +123,32 @@ $calendar-prefix-cls: "#{$css-prefix}calendar";
     position: absolute;
   }
   &-handle {
-    width: 100px;
-    height: 70px;
-    padding: 2px 0;
+    width: $calendar-handle-width;
+    height: $calendar-handle-height;
+    padding: $calendar-handle-padding;
     text-align: center;
-    background-color: #fff;
+    background-color: $calendar-handle-background-color;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 4px;
-    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-    border: 1px solid #ccc;
+    -webkit-box-shadow: $calendar-handle-box-shadow;
+    box-shadow: $calendar-handle-box-shadow;
+    border:$calendar-handle-border;
   }
   &-handle &-handle-item {
     display: block;
-    height: 32px;
-    line-height: 32px;
+    height: $calendar-handle-item-height;
+    line-height: $calendar-handle-item-height;
     outline: none;
     list-style: none;
-    font-size: 13px;
+    font-size: $calendar-handle-item-font-size;
     cursor: pointer;
   }
   &-handle &-handle-item.#{$calendar-prefix-cls}-handle-setWorkDay {
-    border-bottom: 1px solid #ccc;
+    border-bottom: $calendar-handle-border;
   }
   &-handle &-handle-item:hover {
-      background: #4A94FA;
-      color: #fff;
+      background: $calendar-handle-item-hover-background;
+      color: $calendar-handle-item-hover-color;
   }
 }

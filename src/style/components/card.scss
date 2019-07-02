@@ -1,7 +1,7 @@
 $card-prefix-cls: "#{$css-prefix}card";
 
 .#{$card-prefix-cls}{
-    background: #fff;
+    background: $card-background;
     border-radius: $border-radius-small;
     font-size: $font-size-base;
     position: relative;
@@ -19,7 +19,7 @@ $card-prefix-cls: "#{$css-prefix}card";
 
     &:hover {
         box-shadow: $shadow-base;
-        border-color: #eee;
+        border-color: $card-hover-border-color;
     }
     &-dis-hover:hover{
         box-shadow: none;
@@ -40,24 +40,24 @@ $card-prefix-cls: "#{$css-prefix}card";
 
     &-extra {
         position: absolute;
-        right: 16px;
-        top: 14px;
+        right: $card-extra-right;
+        top: $card-extra-top;
     }
 
     &-body {
-        padding: 16px;
+        padding: $card-body-padding;
     }
     ul li {
-        margin-bottom: 5px;
+        margin-bottom: $card-ul-li-margin-bottom;
     }
     ul li span {
         float: right;
-        color: #ffac2d;
+        color: $card-ul-li-span-color;
     }
     ul li a[target=_blank]:after {
         content: "\e69c";
         font-family: iconfont;
-        color: #aaa;
-        margin-left: 3px;
+        color: $card-ul-li-a-color;
+        margin-left: $card-ul-li-a-margin-left;
     }
 }

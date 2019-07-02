@@ -8,23 +8,23 @@ $progress-prefix-cls: "#{$css-prefix}progress";
 
     &-vertical {
         position: relative;
-        height: 90%;
+        height: $progress-vertical-height;
         height: -moz-calc(100% - 20px);
         height: -webkit-calc(100% - 20px);
         height: calc(100% - 20px);
         width: auto;
-        margin: 0 10px;
+        margin: $progress-vertical-margin;
     }
 
     &-outer {
         display: inline-block;
         width: 100%;
-        margin-right: 0;
-        padding-right: 0;
+        margin-right: $progress-outer-margin-right;
+        padding-right:$progress-outer-padding-right;
 
         .#{$progress-prefix-cls}-show-info & {
-            padding-right: 55px;
-            margin-right: -55px;
+            padding-right:$progress-outer-show-info-padding-right;
+            margin-right: $progress-outer-show-info-margin-right;
         }
     }
 
@@ -36,8 +36,8 @@ $progress-prefix-cls: "#{$css-prefix}progress";
     &-inner {
         display: inline-block;
         width: 100%;
-        background-color: #F7F7F7;
-        border-radius: 100px;
+        background-color:$progress-inner-background-color;
+        border-radius: $progress-inner-border-radius;
         vertical-align: middle;
     }
     &-vertical &-inner {
@@ -56,15 +56,15 @@ $progress-prefix-cls: "#{$css-prefix}progress";
     }
     &-vertical &-text {
         position:absolute;
-        left: -11px;
-        bottom: -20px;
-        width: 32px;
-        margin-left: 0;
+        left: $progress-vertical-text-left;
+        bottom: $progress-vertical-text-bottom;
+        width: $progress-vertical-text-width;
+        margin-left:$progress-vertical-text-margin-left;
         text-align: center;
     }
 
     &-bg {
-        border-radius: 100px;
+        border-radius: $progress-inner-border-radius;
         background-color: $info-color;
         transition: all $transition-time linear;
         position: relative;
@@ -72,16 +72,15 @@ $progress-prefix-cls: "#{$css-prefix}progress";
 
     &-text {
         display: inline-block;
-        margin-left: 5px;
+        margin-left: $progress-text-margin-left;
         text-align: left;
-        font-size: 1em;
         vertical-align: middle;
         font-family: MicrosoftYaHei;
-        font-size: 12px;
-        color: #7E828A;
-        line-height: 20px;
+        font-size: $progress-text-font-size;
+        color:$progress-text-color;
+        line-height: $progress-textline-height;
         .iconfont {
-            font-size: 14px;
+            font-size: $font-size-base;
         }
     }
 
@@ -94,8 +93,8 @@ $progress-prefix-cls: "#{$css-prefix}progress";
             left: 0;
             right: 0;
             bottom: 0;
-            background: #fff;
-            border-radius: 10px;
+            background: $progress-active-background;
+            border-radius:$progress-active-border-radius;
             animation: h-progress-active 2s $ease-in-out infinite;
         }
     }

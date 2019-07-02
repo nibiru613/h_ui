@@ -4,6 +4,7 @@ $page-prefix-cls: "#{$css-prefix}page";
   -webkit-user-slect:none;
   -ms-user-slect:none;
   -moz-user-slect:none;
+  font-size:$page-font-size;
   &:after {
     content: '';
     display: block;
@@ -16,13 +17,13 @@ $page-prefix-cls: "#{$css-prefix}page";
     display: inline-block;
     //float: left;
     vertical-align: middle;
-    min-width: $btn-circle-size;
-    height: $btn-circle-size;
-    line-height: $btn-circle-size - 2px;
-    margin-right: 4px;
+    min-width: $page-item-min-width;
+    height: $page-item-height;
+    line-height: $page-item-line-height;
+    margin-right: $page-item-margin-right;
     text-align: center;
     list-style: none;
-    background-color: #fff;
+    background-color: $page-item-background-color;
     user-select: none;
     cursor: pointer;
     font-family: Arial;
@@ -31,9 +32,9 @@ $page-prefix-cls: "#{$css-prefix}page";
     //transition: all @transition-time @ease-in-out;
     transition: border $transition-time $ease-in-out, color $transition-time $ease-in-out;
     a {
-      margin: 0 6px;
+      margin:$page-a-margin;
       text-decoration: none;
-      color: $text-color;
+      color: $page-a-color;
       //transition: none;
     }
     &:hover {
@@ -47,7 +48,7 @@ $page-prefix-cls: "#{$css-prefix}page";
       border-color: $primary-color;
       a,
       &:hover a {
-        color: #fff;
+        color: $page-item-active-hover-a-color;
       }
     }
   }
@@ -57,7 +58,7 @@ $page-prefix-cls: "#{$css-prefix}page";
       content: "•••";
       display: block;
       letter-spacing: 1px;
-      color: #ccc;
+      color: $page-jump-next-after-color;
       text-align: center;
     }
     i {
@@ -75,24 +76,24 @@ $page-prefix-cls: "#{$css-prefix}page";
   &-item-jump-prev:hover {
     i:after {
       content: "\e733";
-      margin-left: -5px;
+      margin-left: $page-item-jump-prev-hover-after-margin-left;
     }
   }
   &-item-jump-next:hover {
     i:after {
       content: "\e704";
-      margin-left: -5px;
+      margin-left: $page-item-jump-next-hover-after-margin-left;
     }
   }
   &-prev {
-    margin-right: 8px;
+    margin-right: $page-prev-margin-right;
   }
   &-item-jump-prev,
   &-item-jump-next {
-      margin-right: 4px;
+      margin-right: $page-item-jump-next-margin-right;
   }
   &-next {
-      margin-left: 4px;
+      margin-left: $page-next-margin-left;
   }
   &-prev,
   &-next,
@@ -101,13 +102,13 @@ $page-prefix-cls: "#{$css-prefix}page";
     display: inline-block;
     vertical-align: middle;
     //float: left;
-    min-width: $btn-circle-size;
-    height: $btn-circle-size;
-    line-height: $btn-circle-size - 2px;
+    min-width: $page-item-min-width;
+    height: $page-item-height;
+    line-height: $page-item-line-height;
     list-style: none;
     text-align: center;
     cursor: pointer;
-    color: #DCE1E7;
+    color: $page-jump-next-color;
     font-family: Arial;
     border: 1px solid $border-color-base;
     border-radius: $btn-border-radius;
@@ -117,8 +118,8 @@ $page-prefix-cls: "#{$css-prefix}page";
   &-next {
     //background-color: #F7F7F7;
     a {
-      color: #495060;
-      font-size: 14px;
+      color: $page-next-a-color;
+      font-size: $page-next-a-font-size;
     }
     &:hover {
       border-color: $primary-color;
@@ -129,14 +130,15 @@ $page-prefix-cls: "#{$css-prefix}page";
   }
   &-disabled {
     cursor: $cursor-disabled;
-    background-color: #F7F7F7;
+    background-color:$page-disabled-bgcolor;
+    border-color:$page-disabled-color;
     a {
-      color: #ccc;
+      color: $page-disabled-color;
     }
     &:hover {
-      border-color: $border-color-base;
+      border-color:$page-disabled-hover-border-color;
       a {
-        color: #ccc;
+        color: $page-disabled-color;
         cursor: $cursor-disabled;
       }
     }
@@ -145,48 +147,64 @@ $page-prefix-cls: "#{$css-prefix}page";
     display: inline-block;
     vertical-align: middle;
     //float: left;
-    margin-left: 15px;
+    margin-left:$page-options-margin-left;
     &-sizer {
       display: inline-block;
       //float: left;
-      margin-right: 10px;
+      margin-right: $page-options-sizer-margin-right;
+      .h-select-single{
+        height:$page-item-height;
+        .h-select-selection{
+          height:$page-item-height;
+          .h-select-placeholder {
+            height: $page-option-select-height;
+            line-height: $page-option-select-height;
+          }
+          .h-select-selected-value {
+            height: $page-option-select-height;
+            line-height: $page-option-select-height;
+          }
+        }
+      }
     }
     &-sizer-label {
       display: inline-block;
-      margin-right: 5px; 
+      margin-right: $page-options-sizer-label-margin-right; 
     }
     &-elevator {
       display: inline-block;
       vertical-align: middle;
       //float: left;
-      height: $btn-circle-size;
-      line-height: $btn-circle-size;
+      height: $page-item-height;
+      line-height:$page-item-height;
+      font-size:$page-font-size;
       input {
         @include input();
-        line-height: 1.5;
+        line-height: $page-options-elevator-input-line-height;
+        height: $page-item-height;
         border-radius: $btn-border-radius;
-        margin: 0 8px;
-        width: 50px;
+        margin: $page-options-elevator-input-margin;
+        width: $page-options-elevator-input-width;
       }
     }
     &-reload{
       display: inline-block;
       vertical-align: middle;
-      margin-left: 10px;
+      margin-left: $page-options-reload-margin-left;
        a{
         display: inline-block;
         vertical-align: middle;
-        min-width: 32px;
-        height: 32px;
-        line-height: 30px;
+        min-width: $page-options-reload-a-min-width;
+        height: $page-options-reload-a-height;
+        line-height: $page-options-reload-a-line-height;
         list-style: none;
         text-align: center;
         cursor: pointer;
-        color: #495060;
+        color: $page-options-reload-a-color;
         font-family: Arial;
-        border: 1px solid #D7DDE4;
-        border-radius: 4px;
-        transition: all 0.2s ease-in-out;
+        border:$page-options-reload-a-border;
+        border-radius: $page-options-reload-a-border-radius;
+        transition: $page-options-reload-a-transition;
        }
     }
   }
@@ -195,31 +213,31 @@ $page-prefix-cls: "#{$css-prefix}page";
     //float: left;
     height: $btn-circle-size;
     line-height: $btn-circle-size;
-    margin-right: 10px;
+    margin-right: $page-total-margin-right;
   }
   &-simple &-prev,
   &-simple &-next {
-    margin: 0;
-    border: 0;
-    height: 24px;
-    line-height: 24px;
-    font-size: 18px;
+    margin: $page-simple-next-margin;
+    border: $page-simple-next-border;
+    height:$page-simple-next-height;
+    line-height: $page-simple-next-line-height;
+    font-size: $page-simple-next-font-size;
   }
   &-simple >&-disabled{
-    background: #fff;
+    background: $page-simple-disabled-background;
   }
   &-simple &-simple-pager {
     display: inline-block;
     //float: left;
-    margin-right: 8px;
+    margin-right: $page-simple-margin-right;
     input {
-      min-width: 32px;
-      height: 24px;
-      margin: 0 8px;
-      padding: 5px 8px;
+      min-width: $page-simple-input-min-width;
+      height: $page-simple-input-height;
+      margin:$page-simple-input-margin;
+      padding: $page-simple-input-padding;
       text-align: center;
       box-sizing: border-box;
-      background-color: #fff;
+      background-color: $page-simple-input-background-color;
       outline: none;
       border: 1px solid $border-color-base;
       border-radius: $btn-border-radius;
@@ -229,7 +247,7 @@ $page-prefix-cls: "#{$css-prefix}page";
       }
     }
     span {
-      padding: 0 8px 0 2px;
+      padding: $page-simple-span-padding;
     }
     span.#{$page-prefix-cls}-allpage {
       display: inline-block;
@@ -240,7 +258,7 @@ $page-prefix-cls: "#{$css-prefix}page";
 
 .#{$page-prefix-cls} {
   &.mini &-disabled{
-    background-color: #fff;
+    background-color: $page-mini-background-color;
   }
 
   &.mini &-total {
@@ -248,8 +266,8 @@ $page-prefix-cls: "#{$css-prefix}page";
     line-height: $btn-circle-size-small;
   }
   &.mini &-item {
-    border: 0;
-    margin: 0;
+    border: $page-mini-item-border;
+    margin:$page-mini-item-margin;
     min-width: $btn-circle-size-small;
     height: $btn-circle-size-small;
     line-height: $btn-circle-size-small;
@@ -257,11 +275,11 @@ $page-prefix-cls: "#{$css-prefix}page";
   }
   &.mini &-prev,
   &.mini &-next {
-    margin: 0;
+    margin:$page-mini-next-margin;
     min-width: $btn-circle-size-small;
     height: $btn-circle-size-small;
     line-height: $btn-circle-size-small;
-    border: 0;
+    border:$page-mini-next-border;
     a {
       i:after {
         height: $btn-circle-size-small;
@@ -274,22 +292,22 @@ $page-prefix-cls: "#{$css-prefix}page";
       height: $btn-circle-size-small;
       line-height: $btn-circle-size-small;
       border: none;
-      margin-right: 0;
+      margin-right:$page-mini-item-jump-next-margin-right;
   }
   &.mini &-options {
-    margin-left: 8px;
+    margin-left:$page-mini-options-margin-left;
     &-elevator {
       height: $btn-circle-size-small;
       line-height: $btn-circle-size-small;
       input {
         @include input-small();
-        width: 44px;
+        width: $page-mini-options-elevator-input-width;
       } 
     }
     &-reload{
-      margin-left: 6px;
+      margin-left:$page-mini-options-margin-left;
       a{
-        border: 0;
+        border: $page-mini-options-reload-a-border;
         min-width: btn-circle-size-small;
         height: btn-circle-size-small;
         line-height: btn-circle-size-small;

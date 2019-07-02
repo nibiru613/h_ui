@@ -21,30 +21,30 @@ $date-picker-cells-width-with-weeknumbers: 226px;
     overflow: visible;
     max-height: none;
   }
-  
+
   &-cells:not(&-cells-month-selection) {
     span {
-      width: 24px;
-      height: 24px;
+      width: $date-picker-cell-span-width;
+      height: $date-picker-cell-span-height;
     }
     span.#{$date-picker-prefix-cls}-cells-cell {
-      width: 28px;
-      height: 28px;
+      width: $date-picker-cells-cell-span-width;
+      height: $date-picker-cells-cell-span-height;
     }
   }
 
   &-cells{
     width: $date-picker-cells-width;
-    margin: 10px;
+    margin: $date-picker-cell-margin;
     white-space: normal;
     span{
       display: inline-block;
       em{
         display: inline-block;
-        width: 24px;
-        height: 24px;
-        line-height: 24px;
-        margin: 2px;
+        width: $date-picker-cell-span-width;
+        height: $date-picker-cell-span-height;
+        line-height: $date-picker-cell-span-height;
+        margin: $date-picker-cell-span-margin;
         font-style: normal;
         border-radius: $btn-border-radius-small;
         text-align: center;
@@ -52,10 +52,10 @@ $date-picker-cells-width-with-weeknumbers: 226px;
       }
     }
     &-header span{
-      line-height: 24px;
+      line-height:$date-picker-cells-header-span-line-height;
       text-align: center;
-      margin: 2px;
-      color: $btn-disable-color;
+      margin:$date-picker-cells-header-span-margin;
+      color: $datepicker-cells-header-color;
     }
     span.#{$date-picker-prefix-cls}-cells-cell{
         cursor: pointer;
@@ -69,7 +69,7 @@ $date-picker-cells-width-with-weeknumbers: 226px;
     }
     &-cell-prev-month,&-cell-next-month{
       em{
-        color: $btn-disable-color;
+        color: $datepicker-cells-prev-month-color;
       }
       &:hover{
         em{
@@ -83,13 +83,13 @@ $date-picker-cells-width-with-weeknumbers: 226px;
         &:after{
           content: '';
           display: block;
-          width: 6px;
-          height: 6px;
+          width: $date-picker-cells-cell-today-width;
+          height: $date-picker-cells-cell-today-height;
           border-radius: 50%;
           background: $primary-color;
           position: absolute;
-          top: 1px;
-          right: 1px;
+          top: $date-picker-cells-cell-today-top;
+          right: $date-picker-cells-cell-today-right;
         }
       }
     }
@@ -106,8 +106,8 @@ $date-picker-cells-width-with-weeknumbers: 226px;
         border-radius: 0;
         border: 0;
         position: absolute;
-        top: 2px;
-        bottom: 2px;
+        top: $date-picker-cell-range-before-top;
+        bottom: $date-picker-cell-range-before-bottom;
         left: 0;
         right: 0;
       }
@@ -116,7 +116,7 @@ $date-picker-cells-width-with-weeknumbers: 226px;
     {
       em{
         background: $primary-color;
-        color: #fff;
+        color: $date-picker-cell-selected-hover-color;
       }
     }
     span.#{$date-picker-prefix-cls}-cells-cell-disabled.#{$date-picker-prefix-cls}-cells-cell-selected{
@@ -129,7 +129,7 @@ $date-picker-cells-width-with-weeknumbers: 226px;
     {
         em{
             &:after{
-                background: #fff;
+                background: $date-picker-cell-selected-hover-color;
             }
         }
     }
@@ -169,23 +169,23 @@ $date-picker-cells-width-with-weeknumbers: 226px;
   }
 
   &-cells-year,&-cells-month{
-    margin-top: 14px;
+    margin-top: $date-picker-cells-year-margin-top;
     // padding-left: 11px;
     span{
-      line-height: 28px;
+      line-height: $date-picker-cells-year-span-height;
       border-radius: $btn-border-radius-small;
       em{
-        width: 40px;
-        height: 28px;
-        line-height: 28px;
+        width: $date-picker-cells-year-span-width;
+        height: $date-picker-cells-year-span-height;
+        line-height: $date-picker-cells-year-span-height;
         margin: 0;
       }
     }
   }
 
   &-header{
-    height: 32px;
-    line-height: 32px;
+    height: $date-picker-header-height;
+    line-height: $date-picker-header-height;
     text-align: center;
     border-bottom: 1px solid $border-color-split;
     &-label{
@@ -248,10 +248,10 @@ $date-picker-cells-width-with-weeknumbers: 226px;
   &-panel{
     &-icon-btn{
       display: inline-block;
-      width: 20px;
-      height: 24px;
-      line-height: 26px;
-      margin-top: 4px;
+      width: $date-picker-panel-width;
+      height: $date-picker-panel-height;
+      line-height: $date-picker-panel-line-height;
+      margin-top: $date-picker-panel-margin-top;
       text-align: center;
       cursor: pointer;
       color: $icon-color;
@@ -260,7 +260,7 @@ $date-picker-cells-width-with-weeknumbers: 226px;
         color: $primary-color;
       }
       i{
-        font-size: 14px;
+        font-size: $font-size-base;
       }
     }
 
@@ -268,9 +268,9 @@ $date-picker-cells-width-with-weeknumbers: 226px;
       padding-left: 92px;
     }
     &-sidebar{
-      width: 92px;
+      width: $date-picker-sidebar-width;
       float: left;
-      margin-left: -92px;
+      margin-left: $date-picker-sidebar-margin-left;
       position: absolute;
       top: 0;
       bottom: 0;
@@ -297,7 +297,7 @@ $date-picker-cells-width-with-weeknumbers: 226px;
   }
 
   &-confirm{
-    border-top: 1px solid #DCE1E7;
+    border-top: $date-picker-confirm-border-top;
     text-align: right;
     padding: 8px;
     clear: both;

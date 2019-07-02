@@ -11,18 +11,18 @@ $typefield-prefix-cls: "#{$css-prefix}typefield" ;
     width: 100%;
     height: $form-component-height;
     line-height: $form-component-height;
-    padding-left:12px;
-    padding-right:12px;
+    padding-left:$typefield-input-padding-left;
+    padding-right:$typefield-input-padding-right;
     outline: 0;
-    font-size: 12px;
+    font-size:$typefield-input-font-size;
     // line-height: 1.42857143;
     -webkit-box-shadow: none;
     box-shadow: none;
     -webkit-transition: border-color ease-in-out $transition-time, -webkit-box-shadow ease-in-out $transition-time;
     -o-transition: border-color ease-in-out $transition-time, box-shadow ease-in-out $transition-time;
     transition: border-color ease-in-out $transition-time, box-shadow ease-in-out $transition-time;
-    color: #555;
-    background-color: #fff;
+    color: $typefield-input-color;
+    background-color: $typefield-input-background-color;
     background-image: none;
     border: 1px solid $border-color-base;
     border-radius: $border-radius-small;
@@ -40,7 +40,7 @@ $typefield-prefix-cls: "#{$css-prefix}typefield" ;
   }
   input:focus {
     outline: 0;
-    border-color: #298DFF;
+    border-color: $typefield-input-focus-border-color;
   }
   &-disabled{
     input[disabled], {
@@ -58,17 +58,17 @@ $typefield-prefix-cls: "#{$css-prefix}typefield" ;
     display: block;
     font-family: 'Microsoft YaHei';
     text-align: left;
-    line-height: 22px;
-    top: 34px;
-    left: 0;
-    padding: 6px 12px 8px 12px;
+    line-height:$typefield-tip-line-height;
+    top: $typefield-tip-top;
+    left:$typefield-tip-left;
+    padding: $typefield-tip-padding;
     z-index: $zindex-tooltip ;
-    font-size: 12px;
+    font-size: $typefield-tip-font-size;
     border-radius: $border-radius-small;
-    border:1px solid #cfcfcf;
-    background: #fff;
-    color: #495060;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    border:$typefield-tip-border;
+    background: $typefield-tip-background;
+    color: $typefield-tip-color;
+    box-shadow: $typefield-tip-color-box-shadow;
   }
   &-left{
     text-align:left;
@@ -89,13 +89,13 @@ $typefield-prefix-cls: "#{$css-prefix}typefield" ;
   .h-typefield-left {
       border-bottom-left-radius: $border-radius-small;
       border-top-left-radius: $border-radius-small;
-      border-bottom-right-radius: 0;
-      border-top-right-radius: 0;
+      border-bottom-right-radius: $typefield-h-typefield-border-bottom-right-radius;
+      border-top-right-radius: $typefield-h-typefield-border-top-right-radius;
   }
   .h-select-selection {
-      margin: 0;
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 0;
+      margin: $typefield-h-select-selection-margin;
+      border-bottom-left-radius: $typefield-h-select-selection-border-bottom-left-radius;
+      border-top-left-radius: $typefield-h-select-selection-border-top-left-radius;
   }
 }
 

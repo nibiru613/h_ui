@@ -12,7 +12,7 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
   }
 
   &-ink-bar {
-    height: 2px;
+    height: $tabs-ink-bar-height;
     box-sizing: border-box;
     background-color: $primary-color;
     position: absolute;
@@ -25,11 +25,11 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
 
   &-bar {
     border-bottom: 1px solid $border-color-base;
-    margin-bottom: 16px;
+    margin-bottom: $tabs-bar-margin-bottom;
   }
   &-bar-top{
     border-top: 1px solid $border-color-base;
-    margin-bottom: 16px;
+    margin-bottom: $tabs-bar-top-margin-bottom;
     // margin-top: -1px;
   }
   &-nav-container {
@@ -44,18 +44,18 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
   }
 
   &-nav-container-scrolling {
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-left: $tabs-nav-container-scrolling-padding-left;
+    padding-right: $tabs-nav-container-scrolling-padding-right;
   }
   &-return{
     float: left;
-    height: 100%;
-    padding: 6px 5px 0 0;
+    height: $tabs-return-height;
+    padding: $tabs-return-padding;
   }
   &-enter{
     float: right;
-    height: 100%;
-    padding: 6px 5px 0 0; 
+    height: $tabs-enter-height;
+    padding:$tabs-enter-padding; 
   }
   &-return,&-enter:hover{
     cursor: pointer;
@@ -68,7 +68,7 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
     margin-bottom: -1px;
   }
   &-nav-wrap-width{
-    width: calc(100% - 42px);
+    width: $tabs-nav-wrap-width;
   }
 
   &-nav-scroll {
@@ -103,9 +103,9 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
 
     .#{$tabs-prefix-cls}-tab {
       display: inline-block;
-      height: 100%;
-      padding: 8px 16px;
-      margin-right: 16px;
+      height:$tabs-tab-height;
+      padding:$tabs-tab-padding;
+      margin-right:$tabs-tab-margin-right;
       box-sizing: border-box;
       cursor: pointer;
       text-decoration: none;
@@ -113,26 +113,25 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
       transition: color .3s $ease-in-out;
 
       font-family: MicrosoftYaHei;
-      font-size: 14px;
-      color: #495060;
+      font-size:$tabs-tab-font-size;
+      color: $tabs-nav-tab-color;
       letter-spacing: 0;
       text-align: left;
-      line-height: 22px;
+      line-height: $tabs-tab-line-height;
 
       &:hover {
-          color: $link-hover-color;
+          color: $tabs-tab-hover-color;
       }
-
       &:active {
-          color: $link-active-color;
+          color: $tabs-tab-hover-color;
       }
       .#{$css-prefix-iconfont} {
-          width: 14px;
-          height: 14px;
-          margin-right: 8px;
+          width: $tabs-tab-iconfont-width;
+          height: $tabs-tab-iconfont-height;
+          margin-right: $tabs-tab-iconfont-margin-right;
       }
       i{
-        font-size: 14px;
+        font-size: $tabs-tab-font-size;
       }
     }
     .#{$tabs-prefix-cls}-tab-disabled {
@@ -140,17 +139,17 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
       cursor: default;
       
       font-family: MicrosoftYaHei;
-      font-size: 14px;
-      color: #C3CBD6;
+      font-size: $tabs-tab-font-size;
+      color: $tabs-tab-disabled-color;
       letter-spacing: 0;
       text-align: left;
-      line-height: 22px;
+      line-height: $tabs-tab-disabled-line-height;
     }
 
 
 
     .#{$tabs-prefix-cls}-tab-active {
-      color: $primary-color;
+      color:$tabs-tab-active-color;
     }
   }
   &-mini &-nav-container {
@@ -159,7 +158,7 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
 
   &-mini &-tab {
     margin-right: 0;
-    padding: 8px 16px;
+    padding: $tabs-mini-tab-padding;
     font-size: $font-size-small;
   }
 
@@ -186,7 +185,7 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
 
   // card style
   &.#{$tabs-prefix-cls}-card > &-bar &-nav-container,&.#{$tabs-prefix-cls}-card-top > &-bar-top &-nav-container {
-      height: 32px;
+      height: $tabs-card-bar-top-nav-container-height;
   }
   &.#{$tabs-prefix-cls}-card-top > &-bar-top &-nav-container {
     margin-top:-1px;
@@ -196,10 +195,10 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
       visibility: hidden;
   }
   &.#{$tabs-prefix-cls}-card > &-bar &-tab, &.#{$tabs-prefix-cls}-card-top > &-bar-top &-tab{
-      margin: 0;
-      margin-right: 4px;
-      height: 31px;
-      padding: 5px 16px 4px;
+      margin:$tabs-card-bar-top-tab-margin;
+      margin-right: $tabs-card-bar-top-tab-margin-right;
+      height: $tabs-card-bar-top-tab-height;
+      padding: $tabs-card-bar-top-tab-padding;
       border: 1px solid $border-color-base;
       border-bottom: 0;
       border-radius: $btn-border-radius $btn-border-radius 0 0;
@@ -211,17 +210,17 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
     border-radius: 0 0 $btn-border-radius $btn-border-radius;
   }
   &.#{$tabs-prefix-cls}-card > &-bar &-tab-active {
-      height: 32px;
-      padding-bottom: 5px;
-      background: #fff;
+      height: $tabs-card-bar-tab-active-height;
+      padding-bottom:$tabs-card-bar-tab-active-padding-bottom;
+      background: $tabs-bar-active-background;
       transform: translateZ(0);
-      border-color: $border-color-base;
-      color: $primary-color;
+      border-color: $tabs-bar-active-border-color;
+      color:$tabs-bar-active-color;
   }
   &.#{$tabs-prefix-cls}-card-top > &-bar-top &-tab-active{
-    height: 32px;
-    padding-bottom: 5px;
-    background: #fff;
+    height: $tabs-card-top-bar-top-tab-active-height;
+    padding-bottom:$tabs-card-top-bar-top-tab-active-padding-bottom;
+    background: $tabs-card-top-bar-top-tab-active-background;
     transform: translateZ(0);
     border-color: $border-color-base;
     color: $primary-color;
@@ -231,10 +230,10 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
       margin-bottom: 0;
   }
   &.#{$tabs-prefix-cls}-card > &-bar &-tab .#{$css-prefix-iconfont}-ios-close-empty,&.#{$tabs-prefix-cls}-card-top > &-bar-top &-tab .#{$css-prefix-iconfont}-ios-close-empty {
-      width: 0;
-      height: 22px;
-      font-size: 22px;
-      margin-right: 0;
+      width: $tabs-card-bar-tab-ios-close-empty-width;
+      height: $tabs-card-bar-tab-ios-close-empty-height;
+      font-size:$tabs-card-bar-tab-ios-close-empty-font-size;
+      margin-right:$tabs-card-bar-tab-ios-close-empty-margin-right;
       color: $legend-color;
       text-align: right;
       vertical-align: middle;
@@ -244,7 +243,7 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
       transform-origin: 100% 50%;
       transition: all 0.3s $ease-in-out;
       &:hover {
-        color: #444;
+        color: $tabs-card-bar-tab-ios-close-empty-hover-color;
       }
   }
 
@@ -274,20 +273,20 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
     }
   }
   &-nav-right{
-    padding-top:10px 0px;
-    padding-right:15px;
+    padding-top:$tabs-nav-right-padding-top;
+    padding-right:$tabs-nav-right-padding-right;
     .h-tabs-tab{
-      width:100%;
-      height:36px;
-      line-height:36px;
+      width:$tabs-nav-right-tabs-tab-width;
+      height:$tabs-nav-right-tabs-tab-height;
+      line-height:$tabs-nav-right-tabs-tab-line-height;
       text-align:right;
       position:relative;
-      padding: 0 10px;
+      padding: $tabs-nav-right-tabs-tab-padding;
       i{
         color:transparent;
         position: absolute;
         right:0px;
-        margin-right:-9px;
+        margin-right:$tabs-nav-right-tabs-tab-i-margin-right;
       }
     }
     .h-tabs-tab-alginleft{
@@ -302,7 +301,7 @@ $tabs-prefix-cls: "#{$css-prefix}tabs";
     }
     .h-tabs-tab-active{
       background:$primary-color;
-      color:#fff;
+      color:$primary-color;
       font-weight:bold;
       i{
         color:$primary-color;

@@ -10,18 +10,18 @@ $schedule-prefix-cls: "#{$css-prefix}schedule";
       top: 1px;
     }
     .#{$schedule-prefix-cls}-today-btn {
-      margin-left: 10px;
-      right: 1.5%;
-      height: 34px;
+      margin-left: $schedule-today-btn-margin-left;
+      right:$schedule-today-btn-right;
+      height: $schedule-today-btn-height;
     }
     .#{$btn-prefix-cls}-group {
-      left: 1.5%;
+      left: $schedule-header-button-group-left;
     }
     .#{$btn-prefix-cls}-group button {
-      width: 35px;
-      padding-left: 10px;
-      padding-right: 10px;
-      height: 34px;
+      width: $schedule-header-button-group-width;
+      padding-left: $schedule-header-button-group-padding-left;
+      padding-right: $schedule-header-button-group-padding-right;
+      height: $schedule-header-button-group-height;
     }
     .#{$schedule-prefix-cls}-date-text {
       display: inline-block;
@@ -29,19 +29,19 @@ $schedule-prefix-cls: "#{$css-prefix}schedule";
   }
   &-events {
     position: absolute;
-    top: 136px;
-    left: 0;
+    top: $schedule-events-top;
+    left: $schedule-events-left;
     z-index: $zindex-spin;
-    width: 97%;
-    margin: 1.5%;
+    width: $schedule-events-width;
+    margin: $schedule-events-margin;
     border-left: 1px solid transparent;
     pointer-events: none;
     display: flex;
     flex-wrap: wrap;
     .#{$schedule-prefix-cls}-event-wrapper {
-      width: 14.28%;
-      height: 75px;
-      margin-top: 25px;
+      width:$schedule-event-wrapper-width;
+      height: $schedule-event-wrapper-height;
+      margin-top: $schedule-event-wrapper-margin-top;
       &:nth-child(7n + 1) {
         padding-left: 1px;
       }
@@ -50,13 +50,13 @@ $schedule-prefix-cls: "#{$css-prefix}schedule";
       }
       .#{$schedule-prefix-cls}-event-content {
         pointer-events: auto;
-        height: 16px;
-        margin-bottom: 2px;
-        padding-left: 5px;
-        font-size: 12px;
-        line-height: 16px;
-        color: #fff;
-        background: #2e97d0;
+        height:$schedule-event-content-height;
+        margin-bottom: $schedule-event-content-margin-bottom;
+        padding-left:$schedule-event-content-padding-left;
+        font-size: $schedule-event-content-font-size;
+        line-height: $schedule-event-content-height;
+        color: $schedule-event-content-color;
+        background: $schedule-event-content-background;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -66,12 +66,12 @@ $schedule-prefix-cls: "#{$css-prefix}schedule";
           pointer-events: none;
         }
         &.event-place-start {
-          margin-left: 5px;
-          border-radius: 3px 0 0 3px;
+          margin-left: $schedule-event-place-start-margin-left;
+          border-radius: $schedule-event-place-start-border-radius;
         }
         &.event-place-end {
-          margin-right: 5px;
-          border-radius: 0 3px 3px 0;
+          margin-right: $schedule-event-place-start-margin-right;
+          border-radius: $schedule-event-place-start-border-radius;
         }
         &.event-place-start.event-place-end {
           border-radius: 3px;
@@ -97,16 +97,16 @@ $schedule-prefix-cls: "#{$css-prefix}schedule";
       position: absolute;
       z-index: $zindex-affix;
       width: 14.28%;
-      min-width: 220px;
-      background: #fff;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-      color: #444;
+      min-width: $schedule-popover-min-width;
+      background: $schedule-popover-background;
+      box-shadow: $schedule-popover-box-shadow;
+      color: $schedule-popover-color;
       pointer-events: auto;
       &-header {
         line-height: 1.5;
-        padding: 0 4px;
-        background: #ddd;
-        font-size: 12px;
+        padding:$schedule-popover-header-padding;
+        background: $schedule-popover-header-background;
+        font-size: $schedule-popover-header-font-size;
         i.icon-close {
           display: inline-block;
           float: right;
@@ -114,15 +114,15 @@ $schedule-prefix-cls: "#{$css-prefix}schedule";
         }
       }
       &-body {
-        padding: 10px 10px 0;
-        max-height: 150px;
+        padding:$schedule-popover-body-padding;
+        max-height: $schedule-popover-body-max-height;
         overflow: auto;
         &-item {
-          background: #2e97d0;
-          color: #fff;
-          margin-bottom: 2px;
-          border-radius: 3px;
-          padding: 0 4px;
+          background:$schedule-popover-body-item-background;
+          color: $schedule-popover-body-item-color;
+          margin-bottom: $schedule-popover-body-item-margin-bottom;
+          border-radius: $schedule-popover-body-item-border-radius;
+          padding:$schedule-popover-body-item-padding;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
@@ -138,11 +138,11 @@ $schedule-prefix-cls: "#{$css-prefix}schedule";
     &::before {
       content: "●";
       position: absolute;
-      top: 5px;
-      left: 6%;
-      color: #217af7;
+      top: $schedule-calendar-today-top;
+      left: $schedule-calendar-today-left;
+      color: $schedule-calendar-today-color;
       line-height: 1;
-      font-size: 14px;
+      font-size: $schedule-calendar-today-font-size;
     }
   }
   .#{$calendar-prefix-cls}-month-content .#{$calendar-prefix-cls}-month-content-item {
@@ -150,8 +150,8 @@ $schedule-prefix-cls: "#{$css-prefix}schedule";
     .#{$calendar-prefix-cls}-month-content-item-text {
       position: absolute;
       line-height: 1;
-      top: 4px;
-      right: 4px;
+      top: $schedule-calendar-month-content-item-top;
+      right: $schedule-calendar-month-content-item-right;
     }
   }
 }

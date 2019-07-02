@@ -2,15 +2,15 @@ $backtop-prefix-cls-top: "#{$css-prefix}back-top";
 $backtop-prefix-cls-bottom: "#{$css-prefix}back-bottom";
 
 @mixin inner(){
-    background-color: rgba(0,0,0,.6);
-    border-radius: 2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    background-color: $backtop-inner-background-color;
+    border-radius: $backtop-inner-border-radius;
+    box-shadow: $backtop-inner-box-shadow;
     transition: all $transition-time $ease-in-out;
-    padding: 4px 6px;
-    font-size: 14px;
-    color: #fff;
+    padding: $backtop-inner-padding;
+    font-size: $backtop-inner-font-size;
+    color: $backtop-inner-color;
     &:hover {
-        background-color: rgba(0,0,0,.7);
+        background-color: $backtop-inner-hover-background-color;
     }
 }
 
@@ -29,9 +29,9 @@ $backtop-prefix-cls-bottom: "#{$css-prefix}back-bottom";
     &-inner {
         @include inner();
         i{
-            color: #fff;
-            font-size: 24px;
-            padding: 8px 12px;
+            color: $backtop-top-inner-i-color;
+            font-size: $backtop-top-inner-i-font-size;
+            padding: $backtop-top-inner-i-padding;
         }
     }
     
@@ -44,9 +44,9 @@ $backtop-prefix-cls-bottom: "#{$css-prefix}back-bottom";
     &-inner {
         @include inner();
         i{
-            color: #fff;
-            font-size: 24px;
-            padding: 8px 12px;
+            color: $backtop-bottom-inner-i-color;
+            font-size: $backtop-bottom-inner-i-font-size;
+            padding: $backtop-bottom-inner-i-padding;
         }
     }
     

@@ -4,16 +4,16 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
 .#{$table-prefix-cls} {
   &-phantom{
     position: absolute;
-     left: 0;
-     top: 0;
-     right: 0;
+     left: $table-phantom-left;
+     top: $table-phantom-top;
+     right: $table-phantom-right;
      z-index: -1;
   }
   &-wrapper{
     position: relative;
     border: 1px solid $border-color-base;
-    border-bottom: 0;
-    border-right: 0;
+    border-bottom: $table-wrapper-border-bottom;
+    border-right: $table-wrapper-border-right;
   }
   &-wrapper:focus{
     outline: none
@@ -36,21 +36,21 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
   &:before{
     content: '';
     width: 100%;
-    height: 1px;
+    height: $table-before-height;
     position: absolute;
-    left: 0;
-    bottom: 0;
+    left: $table-before-left;
+    bottom:$table-before-bottom;
     background-color: $border-color-base;
     z-index: 1;
   }
 
   &:after{
     content: '';
-    width: 1px;
-    height: 100%;
+    width: $table-after-width;
+    height: $table-after-height;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: $table-after-top;
+    right: $table-after-right;
     background-color: $border-color-base;
     z-index: 3;
   }
@@ -69,8 +69,9 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
   }
 
   &-title, &-footer{
-    height: 42px;
-    line-height: 42px;
+    height:$table-title-height;
+    font-size:$table-title-font-size;
+    line-height: $table-title-line-height;
     border-bottom: 1px solid $border-color-bottom;
   }
   &-footer{
@@ -98,9 +99,10 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
   th, td
   {
     min-width: 0;
-    height: 40px;
+    height:$table-th-td-height;
     box-sizing: border-box;
     text-align: left;
+    font-size:$table-td-font-size;
     // text-overflow: ellipsis;
     vertical-align: middle;
     //position: relative;
@@ -108,11 +110,10 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
   }
 
   th {
-    height: 42px;
+    height: $table-th-height;
     // white-space: nowrap;
     overflow: hidden;
     background-color: $table-thead-bg;
-    font-size: $font-size-base;
   }
   td{
     background-color: $table-tbody-bg;
@@ -159,8 +160,8 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
     }
   }
   &-cell{
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: $table-cell-padding-left;
+    padding-right:$table-cell-padding-right;
     overflow: hidden;
     // text-overflow: ellipsis;
     white-space: normal;
@@ -174,9 +175,9 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
       text-overflow: ellipsis;
     }
     &-with-expand{
-      height: 39px;
-      line-height: 39px;
-      padding: 0;
+      height: $table-with-expand-height;
+      line-height: $table-with-expand-line-height;
+      padding: $table-with-expand-padding;
       text-align: center;
     }
     &-with-drag i {
@@ -224,13 +225,8 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
         background-color: $table-td-hover-bg;
       }
     }
-    // tr:hover{
-    //   td{background-color: $table-td-hover-bg;}
-    // }
   }
-  // &-row:hover{//改变hover高亮显示形式
-  //   td{ background-color: $table-td-hover-bg}
-  // }
+
   tr.#{$table-prefix-cls}-row-hover{
     td{
       background-color: $table-td-hover-bg;
@@ -239,35 +235,35 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
   &-large {
     font-size: $font-size-base;
     th{
-      height: 48px;
+      height: $table-large-th-height;
     }
     td{
-      height: 45px;
+      height: $table-large-td-height;
     }
     &-title, &-footer{
-      height: 50px;
-      line-height: 50px;
+      height: $table-large-title-height;
+      line-height: $table-large-title-line-height;
     }
     .#{$table-prefix-cls}-tiptext{
-      height: 45px;
-      line-height:45px;
+      height: $table-large-tiptext-height;
+      line-height:$table-large-tiptext-line-height;
     }
   }
 
   &-small{
     th{
-      height: 35px;
+      height: $table-small-th-height;
     }
     td{
-      height: 32px;
+      height: $table-small-td-height;
     }
     &-title, &-footer{
       height: 35px;
       line-height: 35px;
     }
     .#{$table-prefix-cls}-tiptext{
-      height: 35px;
-      line-height:35px;
+      height: $table-small-title-height;
+      line-height:$table-small-title-line-height;
     }
   }
   // &-row-checked{
@@ -295,45 +291,45 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
 
   & tr.#{$table-prefix-cls}-row-dragover td {
     background-color: $primary-color;
-    color: #fff;
+    color: $table-row-dragover-td-color;
   }
   
   &-summation {
-    border-top: 1px solid #DCE1E7;
+    border-top: $table-summation-border;
   }
   &-fixed, &-fixed-right{
     position: absolute;
-    top: 0;
-    left: 0;
+    top: $table-fixed-top;
+    left: $table-fixed-left;
     border-bottom:none;
   }
   &-fixed-right{
-    top: 0;
+    top: $table-fixed-fixedright-top;
     left: auto;
-    right: 0;
+    right: $table-fixed-fixedright-right;
   }
   &-fixed-right-patch{
     position: absolute;
-    top: 0;
-    right: 0;
+    top: $table-fixed-fixedright-patch-top;
+    right:$table-fixed-fixedright-patch-right;
     background-color: $table-thead-bg;
     border-bottom:1px solid $border-color-bottom;
     // border-bottom: 1px solid #e6ebf5;
   }
   &-fixed{
     &-header{
-      box-shadow: 2px 0 6px -2px rgba(0, 0, 0, 0.2);
+      box-shadow:$table-fixed-header-box-shadow;
     }
     &-body-shadow{
-      box-shadow: 2px 0 6px -2px rgba(0, 0, 0, 0.2);
+      box-shadow:$table-fixed-body-box-shadow;
     }
   }
   &-fixed-right{
     .#{$table-prefix-cls}-fixed-header{
-      box-shadow: -2px 0 6px -2px rgba(0, 0, 0, 0.2);
+      box-shadow: $table-fixed-right-header-box-shadow;
     }
     .#{$table-prefix-cls}-fixed-body-shadow{
-      box-shadow: -2px 0 6px -2px rgba(0, 0, 0, 0.2);
+      box-shadow: $table-fixed-right-body-box-shadow;
     }
   }
   &-fixed-header{
@@ -346,11 +342,11 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
     z-index: 3;
   }
   &-fixed-shadow {
-    width: 1px;
+    width: $table-fixed-shadow-width;
     height: 100%;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: $table-fixed-shadow-top;
+    right: $table-fixed-shadow-right;
     box-shadow: $shadow-right;
     overflow: hidden;
     z-index: 1;
@@ -375,32 +371,32 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
       }
     }
     &-list{
-      padding: 8px 0 0;
+      padding: $table-filter-list-padding;
       &-item{
-          padding: 0 12px 8px;
+          padding: $table-filter-list-item-padding;
           //就是选择某个元素的下一个元素
           // .h-checkbox-wrapper + .h-checkbox-wrapper{            
           //     margin: 0;
           // }
           .h-checkbox-wrapper{
-            margin: 0;
+            margin:$table-filter-list-checkbox-wrapper-margin;
           }
           label {
               display: block;
-              margin-bottom: 4px;
+              margin-bottom: $table-filter-list-item-label-margin-bottom;
 
               & > span{
-                  margin-right: 4px;
+                  margin-right: $table-filter-list-item-label-margin-right;
               }
           }
       }
       ul{
-          padding-bottom: 8px;
+          padding-bottom: $table-filter-list-ul-padding-bottom;
       }
       @include select-item($table-prefix-cls, $table-select-item-prefix-cls);
     }
     &-footer{
-      padding: 4px;
+      padding: $table-filter-footer-padding;
       border-top: 1px solid $border-color-split;
     }
   }
@@ -419,7 +415,7 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
     overflow:auto;
     table {
       width: 100%;
-      min-height: 32px;
+      min-height: $table-tip-min-height;
       td {
         text-align: center;
       }
@@ -428,8 +424,8 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
   &-tiptext {
     position:absolute;
     text-align:center;
-    height: 40px;
-    line-height:40px;
+    height:$table-tiptext-height;
+    line-height:$table-tiptext-line-height;
   }
   &__column-resize-proxy{
     position:absolute;
@@ -452,9 +448,9 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
 }
 .h-simple-content{
   position:absolute;
-  left: 0;
-  right: 0;
-  top: 0;
+  left: $table-h-simple-content-left;
+  right: $table-h-simple-content-right;
+  top: $table-h-simple-content-top;
 }
 .useSelect{
   -ms-user-select:none;

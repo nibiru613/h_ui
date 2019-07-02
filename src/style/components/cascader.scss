@@ -102,8 +102,8 @@ $cascader-item-prefix-cls: "#{$css-prefix}cascader-menu-item";
   &-label{
       width: 100%;
       height: 100%;
-      line-height: 32px;
-      padding: 0 7px;
+      line-height: $cascader-label-line-height;
+      padding: $cascader-label-line-padding;
       box-sizing: border-box;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -115,11 +115,11 @@ $cascader-item-prefix-cls: "#{$css-prefix}cascader-menu-item";
       top: 0;
   }
   &-size-large &-label{
-      line-height: 36px;
+      line-height: $cascader-size-large-line-height;
       font-size: $font-size-base;
   }
   &-size-small &-label{
-      line-height: 26px;
+      line-height: $cascader-size-small-line-height;
   }
 
   .#{$cascader-prefix-cls}-arrow:nth-of-type(1) {
@@ -153,7 +153,7 @@ $cascader-item-prefix-cls: "#{$css-prefix}cascader-menu-item";
   }
 
   &-dropdown{
-      padding: 5px 0;
+      padding:$cascader-dropdown-padding;
       .#{$select-dropdown-prefix-cls}-list{
           max-height: 190px;
           box-sizing: border-box;
@@ -162,7 +162,7 @@ $cascader-item-prefix-cls: "#{$css-prefix}cascader-menu-item";
   }
 
   &-not-found-tip{
-      padding: 5px 0;
+      padding:$cascader-dropdown-padding;
       text-align: center;
       color: $btn-disable-color;
       li:not([class^=h-]){
@@ -175,10 +175,10 @@ $cascader-item-prefix-cls: "#{$css-prefix}cascader-menu-item";
 
   &-menu{
       display: inline-block;
-      min-width: 100px;
-      height: 180px;
-      margin: 0;
-      padding: 5px 0 !important;
+      min-width: $cascader-menu-min-width;
+      height: $cascader-menu-height;
+      margin: $cascader-menu-margin;
+      padding: $cascader-menu-padding !important;
       vertical-align: top;
       list-style: none;
       border-right: 1px solid $border-color-split;
@@ -196,15 +196,15 @@ $cascader-item-prefix-cls: "#{$css-prefix}cascader-menu-item";
       }
       & &-item{
           position: relative;
-          padding-right: 24px;
+          padding-right: $cascader-item-padding-right;
           transition: all $transition-time $ease-in-out;
 
           i{
               font-size: $font-size-small;
               position: absolute;
-              right: 12px;
+              right:$cascader-item-i-right;
               top: 50%;
-              margin-top: -6px;
+              margin-top: $cascader-item-i-margin-top;
           }
 
           &-active{

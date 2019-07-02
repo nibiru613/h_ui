@@ -8,19 +8,19 @@
 @mixin active($color: $input-hover-border-color) {
     border-color: mix(#fff, $color, 20%);
     outline: 0;
-    box-shadow: 0 0 0 2px rgba($color, 0.2);
+    box-shadow: $mixin-input-active-box-shadow;
 }
 @mixin active-error() {
     border-color: $error-color;
     outline: 0;
-    box-shadow: 0 0 0 2px rgba($error-color, 0.2);
+    box-shadow:$mixin-input-active-error-box-shadow;
 }
 
 @mixin disabled() {
     background-color: $input-disabled-bg;
     opacity: 1;
     cursor: $cursor-disabled;
-    color: #999;
+    color: $mixin-input-disabled-color;
     &:hover {
         @include hover($input-border-color);
     }
@@ -28,8 +28,11 @@
 
 @mixin readonly() {
     background-color: $input-readonly-bg;
-    opacity: .8;
-    color: #999;
+    opacity: $mixin-input-readonly-opacity;
+    color: $input-readonly-color;
+    &:hover {
+        border-color:$mixin-input-border-readonly-color;
+    }
 }
 @mixin editable() {
     // background-color: $input-readonly-bg;

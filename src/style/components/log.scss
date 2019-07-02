@@ -4,12 +4,12 @@ $split-prefix-cls: "#{$css-prefix}log";
 .#{$split-prefix-cls} {
     width: 100%;
     border: solid 1px $border-color-base;
-    background-color: #000;
-    color: #fff;
+    background-color:$log-background-color;
+    color: $log-color;
     position: relative;
     &-content{
         width: 100%;
-        padding:15px 10px 25px 10px;
+        padding:$log-content-padding;
         overflow: auto;
     }
     &-item {
@@ -25,17 +25,17 @@ $split-prefix-cls: "#{$css-prefix}log";
         color: $success-color;
     }
     &-footer{
-        padding: 10px;
+        padding: $log-footer-padding;
         border-top: solid 1px $border-color-base;
         overflow: auto;
         .h-btn{
             float: right;
-            background: #000;
-            color: #fff
+            background: $log-footer-btn-background;
+            color: $log-footer-btn-color;
         }
         .h-btn:hover{
-            border-color: #fff;
-            color: #fff;
+            border-color: $log-footer-btn-hover-border-color;
+            color: $log-footer-btn-hover-color;
         }
     }
 }

@@ -18,8 +18,8 @@ $tag-close-prefix-cls: h-icon-ios-close-empty;
     cursor: pointer;
     //transition: all @transition-time @ease-in-out;
     > i {
-        font-size: 12px;
-        margin-left: 4px;
+        font-size: $tag-font-size;
+        margin-left: $tag-i-margin-left;
     }
     &:not(.#{$tag-prefix-cls}-border):not(.#{$tag-prefix-cls}-dot):not(.#{$tag-prefix-cls}-checked){
         background: transparent;
@@ -30,39 +30,39 @@ $tag-close-prefix-cls: h-icon-ios-close-empty;
         }
     }
     &-dot{
-        height: 32px;
-        line-height: 32px;
+        height:$tag-dot-height;
+        line-height:$tag-dot-line-height;
         border: 1px solid $border-color-base !important;
         color: $text-color !important;
-        background: #fff !important;
-        padding: 0 12px;
+        background: $tag-dot-background !important;
+        padding:$tag-dot-padding;
 
         &-inner{
-            width: 12px;
-            height: 12px;
-            margin-right: 8px;
-            border-radius: 50%;
+            width: $tag-dot-inner-width;
+            height: $tag-dot-inner-height;
+            margin-right: $tag-dot-inner-margin-right;
+            border-radius: $tag-dot-inner-border-radius;
             background: $border-color-base;
             position: relative;
-            top: 9px;
+            top: $tag-dot-inner-top;
         }
         .#{$tag-close-prefix-cls} {
-            color: #666 !important;
-            margin-left: 12px !important;
+            color: $tag-dot-tag-close-color !important;
+            margin-left:$tag-dot-tag-close-margin-left !important;
         }
     }
 
     &-border{
-        height: 24px;
-        line-height: 24px;
+        height: $tag-border-height;
+        line-height: $tag-border-line-height;
         border: 1px solid $border-color-base !important;
         color: $text-color !important;
-        background: #fff !important;
+        background: $tag-border-background !important;
         position: relative;
 
         .#{$tag-close-prefix-cls} {
-            color: #666 !important;
-            margin-left: 12px !important;
+            color: $tag-border-tag-close-color !important;
+            margin-left: $tag-border-tag-close-margin-left !important;
         }
 
         &:after{
@@ -71,9 +71,9 @@ $tag-close-prefix-cls: h-icon-ios-close-empty;
             width: 1px;
             background: $border-color-base;
             position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 22px;
+            top: $tag-border-after-top;
+            bottom: $tag-border-after-bottom;
+            right: $tag-border-after-right;
         }
 
         &.#{$tag-prefix-cls}-closable {
@@ -144,16 +144,16 @@ $tag-close-prefix-cls: h-icon-ios-close-empty;
     &-text {
         a:first-child:last-child {
             display: inline-block;
-            margin: 0 -8px;
-            padding: 0 8px;
+            margin: $tag-text-a-margin;
+            padding: $tag-text-a-padding;
         }
     }
 
     .#{$tag-close-prefix-cls} {
-        font-size:12px;
+        font-size:$tag-font-size;
         cursor: pointer;
         margin-left: 8px;
-        color: #666;
+        color: $tag-dot-tag-close-color;
         opacity: 0.66;
         position: relative;
         top: 1px;
@@ -174,7 +174,7 @@ $tag-close-prefix-cls: h-icon-ios-close-empty;
         a:hover,
         .#{$tag-close-prefix-cls},
         .#{$tag-close-prefix-cls}:hover {
-            color: #fff;
+            color: $tag-close-hover-color;
         }
     }
 
@@ -188,7 +188,7 @@ $tag-close-prefix-cls: h-icon-ios-close-empty;
         a:hover,
         .#{$tag-close-prefix-cls},
         .#{$tag-close-prefix-cls}:hover {
-            color: #fff;
+            color: $tag-close-hover-color;
         }
         //.@{tag-close-prefix-cls}{
         //    top: 2px;

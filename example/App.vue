@@ -231,6 +231,9 @@
         <li>
           <router-link to="/tag">tag</router-link>
         </li>
+        <li>
+          <router-link to="/styleDemo">样式规范</router-link>
+        </li>
       </ul>
     </nav>
     <!-- <keep-alive>

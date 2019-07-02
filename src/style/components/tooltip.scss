@@ -1,8 +1,6 @@
 $tooltip-prefix-cls: "#{$css-prefix}tooltip";
 $tooltip-arrow: "#{$tooltip-prefix-cls}-arrow";
-$tooltip-max-width: 250px;
-$tooltip-arrow-width: 5px;
-$tooltip-distance: $tooltip-arrow-width - 1 + 4;
+
 
 .#{$tooltip-prefix-cls} {
   display: inline-block;
@@ -18,9 +16,10 @@ $tooltip-distance: $tooltip-arrow-width - 1 + 4;
 
   &-inner{
     max-width: $tooltip-max-width;
-    min-height: 34px;
-    padding: 8px 12px;
+    min-height: $tooltip-inner-min-height;
+    padding:$tooltip-inner-padding;
     color: $tooltip-color;
+    font-size:$tooltip-inner-font-size;
     text-align: left;
     text-decoration: none;
     background-color: $tooltip-bg;
@@ -31,8 +30,8 @@ $tooltip-distance: $tooltip-arrow-width - 1 + 4;
 
   &-arrow{
     position: absolute;
-    width: 0;
-    height: 0;
+    width: $tooltip-arrow-width;
+    height:$tooltip-arrow-height;
     border-color: transparent;
     border-style: solid;
   }

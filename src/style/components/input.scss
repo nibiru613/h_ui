@@ -13,7 +13,7 @@ $input-prefix-cls: "#{$css-prefix}input";
     vertical-align: middle;
   }
   &-icon {
-    width: 38px;
+    width: $input-icon-width;
     height: $input-height-base;
     line-height: $input-height-base;
     text-align: center;
@@ -30,7 +30,7 @@ $input-prefix-cls: "#{$css-prefix}input";
   }
 
   &-icon-normal + &{
-    padding-right: 32px;
+    padding-right: $input-icon-normal-padding-right;
   }
   // #554
   &-hide-icon &-icon-normal + &{
@@ -38,13 +38,13 @@ $input-prefix-cls: "#{$css-prefix}input";
   }
 
   &-wrapper-large &-icon{
-    font-size: 14px;
+    font-size: $font-size-base;
     height: $input-height-large;
     line-height: $input-height-large;
   }
   &-wrapper-small &-icon{
-    width: 24px;
-    font-size: 12px;
+    width: $input-icon-small-width;
+    font-size: $font-size-small;
     height: $input-height-small;
     line-height: $input-height-small;
 
@@ -62,17 +62,17 @@ $input-prefix-cls: "#{$css-prefix}input";
     text-align:right;
   }
   &-tips{
-    padding-top: 5px;
+    padding-top: $input-tips-padding-top;
     ul{
       li{
         display: inline-block;
         width: 25%;
-        max-width: 100px;
+        max-width:$input-tips-ul-li-max-width;
         text-align: center;
         div{
-          height: 4px;
+          height:$input-tips-ul-li-div-height;
           background:$border-color-base;
-          margin-bottom: 2px;
+          margin-bottom: $input-tips-ul-li-div-margin-bottom;
         }
       }
     }
@@ -91,8 +91,8 @@ $input-prefix-cls: "#{$css-prefix}input";
   }
   &-word-limit {
     position: absolute;
-    bottom: 1px;
-    right: 12px;
+    bottom: $input-word-limit-bottom;
+    right: $input-word-limit-right;
     color: $input-hint;
     background: $input-bg;
   }
@@ -142,7 +142,7 @@ textarea.#{$input-prefix-cls} {
         display: inline-block;
     }
     &-icon + .#{$input-prefix-cls}{
-        padding-right: 32px;
+        padding-right: $input-icon-validate-padding-right;
     }
   }
 }
@@ -171,7 +171,7 @@ textarea.#{$input-prefix-cls} {
         display: inline-block;
     }
     &-icon + .#{$input-prefix-cls}{
-        padding-right: 32px;
+        padding-right: $input-icon-validate-padding-right;
     }
   }
 }

@@ -18,7 +18,7 @@ $selecttree-prefix-cls:  "#{$css-prefix}selectTree";
     user-select: none;
     cursor: pointer;
 
-    background-color: #fff;
+    background-color: $selectTree-selection-background-color;
     border-radius: $btn-border-radius;
     border: 1px solid $border-color-base;
     transition: all $transition-time $ease-in-out;
@@ -48,20 +48,20 @@ $selecttree-prefix-cls:  "#{$css-prefix}selectTree";
       padding: 0;
       .h-selectTree-search {
           position: absolute;
-          background: #fff;
-          height: 30px;
-          padding: 5px 5px 0;
+          background: $selectTree-dropdown-content-search-background;
+          height: $selectTree-dropdown-content-search-height;
+          padding: $selectTree-dropdown-content-search-padding;
           left: 0;
           top: 0;
           z-index: 1;
           input {
             width:100%;
-            height: 26px;
-            line-height: 26px;
+            height: $selectTree-dropdown-content-input-height;
+            line-height: $selectTree-dropdown-content-input-height;
             border: 0;
-            padding: 0 5px;
+            padding:$selectTree-dropdown-content-input-padding;
             border-radius: 0;
-            border-bottom: 1px solid #D7DDE4; 
+            border-bottom: $selectTree-dropdown-content-input-border-bottom; 
           }
           input:focus {
               box-shadow: none;
@@ -71,10 +71,10 @@ $selecttree-prefix-cls:  "#{$css-prefix}selectTree";
         max-height:$max-height;
         overflow:auto;
         position: relative;
-        padding: 0px 5px 0 5px;
+        padding:$selectTree-dropdown-list-padding;
         .h-tree{
-          padding-top: 5px;
-          padding-bottom: 5px;
+          padding-top:$selectTree-dropdown-list-h-tree-padding-top;
+          padding-bottom: $selectTree-dropdown-list-h-tree-padding-bottom;
         }
       }
   }
@@ -134,8 +134,8 @@ $selecttree-prefix-cls:  "#{$css-prefix}selectTree";
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      padding-left: 8px;
-      padding-right: 24px;
+      padding-left: $selectTree-single-selection-selected-value-padding-left;
+      padding-right: $selectTree-single-selection-selected-value-padding-right;
     }
   }
 
@@ -162,7 +162,7 @@ $selecttree-prefix-cls:  "#{$css-prefix}selectTree";
   &-multiple &-selection{
     overflow: auto;
     -moz-overflow-y: auto; 
-    padding-right:30px;
+    padding-right:$selectTree-multiple-selection-padding-right;
     height: $input-height-base;
     // scrollbar[orient="vertical"] scrollbarbutton {
     // max-height:10px !important; min-height:10px !important;
@@ -177,8 +177,8 @@ $selecttree-prefix-cls:  "#{$css-prefix}selectTree";
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      padding-left: 4px;
-      padding-right: 22px;
+      padding-left: $selectTree-multiple-selection-placeholder-padding-left;
+      padding-right:$selectTree-multiple-selection-placeholder-padding-right;
     }
   }
 
@@ -187,7 +187,7 @@ $selecttree-prefix-cls:  "#{$css-prefix}selectTree";
     display: inline-block;
     height: $input-height-base;
     line-height: $input-height-base;
-    padding: 0 24px 0 8px;
+    padding: $selectTree-input-padding;
     font-size: $font-size-small;
     outline: none;
     border: none;
@@ -215,7 +215,7 @@ $selecttree-prefix-cls:  "#{$css-prefix}selectTree";
   &-multiple &-input{
       height: $input-height-base - 3px;
       line-height: $input-height-base;
-      padding: 0 0 0 4px;
+      padding:$selectTree-multiple-input-padding;
   }
 
   &-not-found{
@@ -224,7 +224,7 @@ $selecttree-prefix-cls:  "#{$css-prefix}selectTree";
   }
 
   &-multiple .#{css-prefix}tag{
-      margin: 3px 4px 2px 0;
+      margin: $selectTree-multiple-tag-margin;
   }
   // select-arrow
   &-single &-selection {
@@ -233,9 +233,9 @@ $selecttree-prefix-cls:  "#{$css-prefix}selectTree";
       }
   }
   &-content{
-    padding: 5px 0;
+    padding: $selectTree-content-padding;
     .h-tree{
-      margin-left:10px;
+      margin-left:$selectTree-content-h-tree-margin-left;
     }
   }
 }
@@ -245,7 +245,7 @@ $selecttree-prefix-cls:  "#{$css-prefix}selectTree";
 .#{$selecttree-prefix-cls}-multiple .#{$select-item-prefix-cls} {
     &-selected{
         color: $selected-color;
-        background: #fff;
+        background: $selectTree-multiple-selected-background;
     }
     &-focus,&-selected:hover{
         background: $background-color-select-hover;
@@ -253,7 +253,7 @@ $selecttree-prefix-cls:  "#{$css-prefix}selectTree";
 
     .#{$select-item-prefix-cls}-selected.#{$select-item-prefix-cls}-focus {
         color: shade($selected-color, 10%);
-        background: #fff;
+        background: $selectTree-multiple-selected-background;
     }
     .#{$checkbox-prefix-cls}-wrap {
         float:right;

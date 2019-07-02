@@ -10,7 +10,7 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
         color: $text-color;
         line-height: 1;
         // padding: 10px 12px 10px 0;
-        padding: 10px 10px 10px 0;
+        padding: $form-gird-label-padding;
         box-sizing: border-box;
         // 多余即省略
         overflow: hidden;
@@ -23,12 +23,12 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
     &-label-top .#{$form-item-prefix-cls}-label {
         float: none;
         display: inline-block;
-        padding: 0 0 10px 0;
+        padding:$form-gird-label-top-padding;
     }
     &-inline{
         .#{$form-item-prefix-cls} {
             display: inline-block;
-            margin-right: 10px;
+            margin-right: $form-gird-inline-margin-right;
             vertical-align: top;
         }
     }
@@ -37,7 +37,7 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
         .#{$form-item-prefix-cls} {
             display: block;
             float: left;
-            padding: 5px;
+            padding: $form-gird-row-padding;
             margin: 0;
             &-required {
                 .#{$form-item-prefix-cls}-requiredIcon {
@@ -46,7 +46,7 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
             }
             &-content {
                 // height: 32px; 
-                line-height: 31px;
+                line-height: $form-gird-row-content-line-height;
 
             }
         }
@@ -55,7 +55,7 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
                 padding: 0;
                 &-required {
                 .#{$form-item-prefix-cls}-requiredIcon {
-                    left: -9px;
+                    left: $form-gird-row-content-requiredIcon-left;
                 }
             }
             }
@@ -68,12 +68,12 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
 }
 
 .#{$form-item-prefix-cls} {
-    margin-bottom: 24px;
+    margin-bottom: $form-gird-item-margin-bottom;
     vertical-align: top;
     @include clearfix();
     &-content {
         position: relative;
-        line-height: 31px;
+        line-height: $form-gird-item-line-height;
         font-size: $font-size-small;
     }
     & & {
@@ -88,7 +88,7 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
         top: 100%;
         left: 0;
         line-height: 1;
-        padding-top: 6px;
+        padding-top: $form-gird-item-error-tip-padding-top;
         color: $error-color;
     }
 
@@ -97,7 +97,7 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
         .#{$form-item-prefix-cls}-label:before {
             content: '*';
             display: inline-block;
-            margin-right: 2px;
+            margin-right: $form-gird-item-required-margin-right;
             line-height: 0;
             font-family: SimSun;
             font-size: $font-size-small;
@@ -106,10 +106,10 @@ $form-item-prefix-cls: "#{$form-prefix-cls}-item";
         .#{$form-item-prefix-cls}-requiredIcon {
             display: inline-block;
             position: absolute;
-            left: -9px;
+            left: $form-gird-item-requiredIcon-left;
             vertical-align: middle;
-            line-height: 31px;
-            height: 31px;
+            line-height: $form-gird-item-requiredIcon-height;
+            height: $form-gird-item-requiredIcon-height;
             color: $error-color;
             font-family: SimSun;
             font-size: $font-size-small;

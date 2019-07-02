@@ -2,34 +2,34 @@ $switch-prefix-cls: "#{$css-prefix}switch";
 
 .#{$switch-prefix-cls} {
     display: inline-block;
-    width: 48px;
-    height: 24px;
-    line-height: 22px;
-    border-radius: 24px;
+    width: $switch-width;
+    height: $switch-height;
+    line-height: $switch-line-height;
+    border-radius: $switch-border-radius;
     vertical-align: middle;
-    border: 1px solid #C3CBD6;
-    background-color: #C3CBD6;
+    border: 1px solid $switch-border-color;
+    background-color: $switch-background-color;
     position: relative;
     cursor: pointer;
     user-select: none;
     transition: all $transition-time $ease-in-out;
     &-inner {
-        color: #fff;
+        color: $switch-inner-color;
         font-size: $font-size-small;
         position: absolute;
-        left: 25px;
+        left: $switch-inner-left;
         i {
-            width: 12px;
-            height: 12px;
+            width: $switch-inner-i-width;
+            height:$switch-inner-i-height;
             text-align: center;
         }
     }
     .slide {
         content: '';
-        width: 20px;
-        height: 20px;
-        border-radius: 20px;
-        background-color: #fff;
+        width: $switch-slide-width;
+        height: $switch-slide-height;
+        border-radius: $switch-slide-border-radius;
+        background-color:$switch-slide-border-background-color;
         position: absolute;
         left: 1px;
         top: 1px;
@@ -38,7 +38,7 @@ $switch-prefix-cls: "#{$css-prefix}switch";
     }
     &:active {
         .slide {
-            width: 26px;
+            width: $switch-active-slide-width;
         } 
     }
     &:focus {
@@ -53,13 +53,13 @@ $switch-prefix-cls: "#{$css-prefix}switch";
         background-color: $primary-color;
 
         .#{$switch-prefix-cls}-inner {
-            left: 8px;
+            left: $switch-checked-inner-left;
         }
         .slide {
-            left: 25px;
+            left: $switch-checked-slide-left;
         }
         &:active .slide {
-           left: 19px; 
+           left:$switch-checked-active-slide-left; 
         }  
     }
     &-info.#{$switch-prefix-cls}-checked {
@@ -79,53 +79,53 @@ $switch-prefix-cls: "#{$css-prefix}switch";
         background-color: $error-color;
     }
     &-small {
-        width: 40px!important;
-        height: 20px!important;
-        line-height: 20px!important;
+        width: $switch-small-width !important;
+        height: $switch-small-height!important;
+        line-height: $switch-small-line-height!important;
         .slide {
-            width: 16px!important;
-            height: 16px!important;
+            width: $switch-small-slide-width !important;
+            height: $switch-small-slide-height !important;
         }
         &:active .slide {
-            width: 16px!important;
+            width: $switch-small-slide-width !important;
         }
     }
     &-small.#{$switch-prefix-cls}-checked {
         .slide {
-            left: 21px!important;
+            left: $switch-small-checked-slide-left!important;
         } 
     }
     &-small:active.#{$switch-prefix-cls}-checked {
         .slide {
-            left: 9px!important;
+            left: $switch-small-active-checked-slide-left!important;
         }  
     }
     &-large {
-        width: 60px!important;
+        width: $switch-large-width!important;
         &:active .slide {
-            width: 26px!important;
+            width: $switch-large-slide-width!important;
         }
     }
     &-large.#{$switch-prefix-cls}-checked {
         .slide {
-            left: 37px!important;
+            left: $switch-large-checked-slide-left!important;
         }
     }
     &-large:active.#{$switch-prefix-cls}-checked {
         .slide {
-            left: 25px!important;
+            left: $switch-large-active-checked-slide-left!important;
         }
     }
     &-disabled {
         cursor: $cursor-disabled;
-        background: #D7DDE4;
-        border-color: #D7DDE4;
+        background: $switch-disabled-background-color;
+        border-color: $switch-disabled-border-color;
         .slide {
-            background: #fff;
+            background: $switch-disabled-slide-background;
             cursor: $cursor-disabled;
         }
         .#{$switch-prefix-cls}-inner {
-            color: #ccc;
+            color: $switch-disabled-inner-color;
         }
     }
 }
