@@ -163,13 +163,13 @@ export default {
         return false
       }
       if (this.multiple) {
-        this.$parent.$parent.selectBlockMultiple(item.value)
+        this.$parent.$parent.selectBlockMultiple(item.value,item)
       } else {
-        this.$parent.$parent.selectBlockSingle(item.value)
+        this.$parent.$parent.selectBlockSingle(item.value,item)
       }
     },
     checkChange(val, item) {
-      this.$parent.$parent.selectBlockMultiple(item.value)
+      this.$parent.$parent.selectBlockMultiple(item.value,item)
     },
     blur() {
       this.isFocus = false
@@ -180,19 +180,26 @@ export default {
         '\\$1'
       )
       let status = true
-      if(!this.$parent.$parent.accuFilter){   //149105 【TS:201906280063-资管业委会（资管）_钱佳华-【需求类型】需求【需求描述】select和SimpleSelect 控件多选时 如果搜索时输入的信息完全匹配到 value或者label的时候 自动勾上；对接开发：郑海华【事业部】资管业委会【项目名称】HUNDSUN投资交易管理系统软件V4.5【产品负责人】孔磊【需求提出人】钱佳华
+     // if(!this.$parent.$parent.accuFilter){   //149105 【TS:201906280063-资管业委会（资管）_钱佳华-【需求类型】需求【需求描述】select和SimpleSelect 控件多选时 如果搜索时输入的信息完全匹配到 value或者label的时候 自动勾上；对接开发：郑海华【事业部】资管业委会【项目名称】HUNDSUN投资交易管理系统软件V4.5【产品负责人】孔磊【需求提出人】钱佳华
           this.cloneData.forEach(col => {
             let targetLabel = col.label
             // 如果存在多列，则匹配目标为多列所有列
-            if (this.showCol.length) {
+            if (this.showCol.length&&!this.$parent.$parent.newSearchModel) {
               targetLabel = targetLabel + ' ' + this.getTargetLabel(col).join(' ')
-            }
-
-            let hidden = !new RegExp(parsedQuery, 'i').test(targetLabel)
+            }            
+            let targetValue =col.value
+            let selected=col.selected
+            let targetoption=this.$parent.$parent.filterBy=="label"?targetLabel:targetValue;
+            let hidden = !new RegExp(parsedQuery, 'i').test(targetoption)
             this.$set(col, 'hidden', hidden)
 
             if (status && !hidden) {
               status = false
+            }
+            if(this.$parent.$parent.accuFilter){          
+              if ((parsedQuery===targetoption)&&!selected) {
+                    this.$parent.$parent.selectBlockMultiple(targetValue)
+              }
             }
           })
 
@@ -210,19 +217,7 @@ export default {
             }
             this.$refs.block.scrollTop = 0
           })
-      }else{
-        //149105 【TS:201906280063-资管业委会（资管）_钱佳华-【需求类型】需求【需求描述】select和SimpleSelect 控件多选时 如果搜索时输入的信息完全匹配到 value或者label的时候 自动勾上；对接开发：郑海华【事业部】资管业委会【项目名称】HUNDSUN投资交易管理系统软件V4.5【产品负责人】孔磊【需求提出人】钱佳华
-            this.cloneData.forEach(col => {
-              let targetLabel = col.label
-              let targetValue =col.value
-              let selected=col.selected
-              // 如果存在多列，则匹配目标为多列所有列
-              if ((parsedQuery===targetValue||parsedQuery===targetLabel)&&!selected) {
-                    this.$parent.$parent.selectBlockMultiple(targetValue)
-              }
-           })
 
-      }
     },
     handleclick() {},
     handleBodyScroll(event) {
@@ -262,9 +257,9 @@ export default {
       this.visibleData = this.cloneData
         .filter(item => !item.hidden)
         .slice(this.start, this.end)
-      this.$refs.content.style.transform = `translate3d(0, ${this.start *
+      this.$refs.content.style.transform = `translateY(${this.start *
         itemHeight +
-        offset}px, 0)`
+        offset}px)`
     },
     selectedTop(status) {
       if(status){
@@ -383,7 +378,7 @@ export default {
           this.showEmpty = false
         }
 
-        this.$nextTick(() => {
+        // this.$nextTick(() => {//viewValue获取时机
           this.cloneData = deepCopy(this.data)
           this.cloneData.forEach((item,i) => {
             item._index = i
@@ -391,7 +386,7 @@ export default {
           })
           this.$parent.$parent.updateOptions(true)
           this.updateVisibleData()
-        })
+        // })
       }
     },
     cloneData: {

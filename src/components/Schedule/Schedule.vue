@@ -241,7 +241,6 @@ export default {
             })
           }
         }
-        console.log(dateEvents)
         return dateEvents
       }
     },

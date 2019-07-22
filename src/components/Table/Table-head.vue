@@ -42,7 +42,8 @@
                 <span :class="[prefixCls + '-filter']">
                   <Icon name="keyboard" @mousedown.native.stop="handleClick" :class="{on: column._isFiltered}"></Icon>
                 </span>
-                <div slot="content" :class="[prefixCls + '-filter-list']" v-if="column._filterMultiple" @mousedown="handleClick">
+                <render-header slot="content" v-if="column.renderFilter" :render="column.renderFilter" :column="column" :index="index"></render-header>
+                <div slot="content" :class="[prefixCls + '-filter-list']" v-else-if="column._filterMultiple" @mousedown="handleClick">
                   <div :class="[prefixCls + '-filter-list-item']">
                     <checkbox-group v-model="column._filterChecked">
                       <checkbox v-for="(item,i) in column.filters" :key="column._columnKey+i" :label="item.value">{{ item.label }}</checkbox>

@@ -30,6 +30,7 @@
           :checkStrictly="checkStrictly"
           :option="options"
           :treeOption="treeOptions"
+          :cascaderOption="cascaderOption"
           :titleRender="titleRender"
           :height="Number(height)"
           @on-select-change="selectChange"
@@ -82,6 +83,7 @@
             :checkStrictly="checkStrictly"
             :option="options"
             :treeOption="treeOptions"
+            :cascaderOption="cascaderOption"
             @on-select-change="selectChange"
             @on-editselect-change="editselectChange"
             @on-editinput-change="editinputChange"
@@ -119,6 +121,7 @@
             :checkStrictly="checkStrictly"
             :option="options"
             :treeOption="treeOptions"
+            :cascaderOption="cascaderOption"
             @on-select-change="selectChange"
             @on-editselect-change="editselectChange"
             @on-editinput-change="editinputChange"
@@ -246,6 +249,12 @@ export default {
       }
     },
     treeOption:{
+      type: Array,
+      default () {
+        return [];
+      }
+    },
+    cascaderOption: {
       type: Array,
       default () {
         return [];

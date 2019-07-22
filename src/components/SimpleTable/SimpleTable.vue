@@ -38,7 +38,7 @@
                   v-on:mousedown="mousedown($event,column,index)"
                   v-on:mouseout="mouseout($event,column,index)"
                   v-on:mousemove="mousemove($event,column,index)"
-                  :class="alignCls(column)">
+                  :class="alignCls(column)"   style="position:relative">
                 <table-cell :column="column"
                             :index="index"
                             :checked="isSelectAll"
@@ -92,7 +92,7 @@
                         <Checkbox :size="calcCheckboxSize(column.checkboxSize)"
                                   :value="rowChecked(row._index)"
                                   @click.native.stop="handleClickTr($event,row._index,rowChecked(row._index),index)"
-                                  @on-change="toggleSelect(row._index,index)"
+                                  @on-change="toggleSelect(row._index,index+start)"
                                   :disabled="rowDisabled(row._index)"></Checkbox>
                       </template>
                       <template v-if="!column.type&&!column.render"><span v-html="row[column.key]"></span></template>
@@ -131,7 +131,7 @@
           </tbody>
         </table>
       </div>
-      <div v-if="isLeftFixed||isRightFixed"
+     <div v-if="isLeftFixed||isRightFixed"
            :class="fixedCls"
            :style="fixedTableStyle"
            ref="leftF">
@@ -205,7 +205,7 @@
                           <Checkbox :size="calcCheckboxSize(column.checkboxSize)"
                                     :value="rowChecked(row._index)"
                                     @click.native.stop="handleClickTr($event,row._index,rowChecked(row._index),index)"
-                                    @on-change="toggleSelect(row._index,index)"
+                                    @on-change="toggleSelect(row._index,index+start)"
                                     :disabled="rowDisabled(row._index)"></Checkbox>
                         </template>
                         <template v-if="!column.type&&!column.render"><span v-html="row[column.key]"></span></template>
@@ -253,7 +253,7 @@
                         :key="row._rowKey"
                         :prefix-cls="prefixCls">
                 <td v-for="column in cloneColumns"
-                    :class="alignCls(column, row,'',true)"
+                     :class="alignCls(column, row,'',true)"
                     :key="column._index">
                   <div :class="classesTd(column)">
                     <span v-if="(column.type==='index'||column.type==='selection')&&column._index==0">汇总</span>
@@ -277,7 +277,7 @@
       <div class="h-table__column-move-proxy h-table-cell"
            ref="moveProxy"
            v-show="moveProxyVisible"> </div>
-      <div :class="[prefixCls + '-fixed-right-patch']" :style="fixedRightPatchStyle" v-if="isRightFixed&&showScroll" ref="rightPatch"></div>
+           <div :class="[prefixCls + '-fixed-right-patch']" :style="fixedRightPatchStyle" v-if="isRightFixed&&showScroll" ref="rightPatch"></div>
     </div>
     <Spin fix
           size="large"
@@ -476,6 +476,10 @@ export default {
     scrollbarToZero: {
       type: Boolean,
       default: false
+    },
+    newSort:{
+      type:Boolean,
+      default:false
     }
   },
   data() {
@@ -685,7 +689,7 @@ export default {
       style.width = `${width}px`
       return style
     },
-    fixedTableStyle() {
+        fixedTableStyle() {
       if(this.isLeftFixed){
         let style = {}
         let width = 0
@@ -966,7 +970,7 @@ export default {
                 lastWidth = lastWidth - dragWidth
               }
             }
-            if (table.bodyHeight !== 0&&!this.isRightFixed) {
+             if (table.bodyHeight !== 0&&!this.isRightFixed) {
               lastWidth = lastWidth - getScrollBarSize()
             }
             _this.changeWidth(columnWidth, column.key, lastWidth)
@@ -1414,7 +1418,7 @@ export default {
       }
     },
     clickCurrentRow(_index,curIndex) {
-      this.baseInx = curIndex
+       this.baseInx = curIndex
       this.offsetInx = curIndex
       if (!this.rowSelect) {
         this.focusIndex = curIndex
@@ -1474,7 +1478,7 @@ export default {
           )
     },
     toggleSelect(_index, curIndex) {
-      curIndex = curIndex + this.start
+      // curIndex = curIndex + this.start
       this.allclick = false
       let data = {}
       for (let i in this.objData) {
@@ -1617,11 +1621,22 @@ export default {
       }) //rightFixed index error
       const key = this.cloneColumns[index].key
       if (this.cloneColumns[index].sortable !== 'custom') {
+        let selectInx = -1
+        if(this.focusIndex!=-1){
+          selectInx = this.rebuildData[this.focusIndex]._index
+        }
         // custom is for remote sort
         if (type === 'normal') {
           this.rebuildData = this.makeDataWithFilter()
         } else {
           this.rebuildData = this.sortData(this.rebuildData, type, index)
+        }
+        if(this.focusIndex!=-1&&selectInx!=-1){
+          this.rebuildData.forEach((col,i)=>{
+            if (col._index == selectInx) {
+              this.focusIndex = i
+            }
+          })
         }
       }
       this.cloneColumns[index]._sortType = type
@@ -1696,7 +1711,7 @@ export default {
         this.curPageFirstIndex = Math.floor(scrolltop / this.itemHeight)
         this.$refs.header.scrollLeft = event.target.scrollLeft
         if (this.isSummation) this.sumMarginLeft = event.target.scrollLeft
-        if (this.$refs.fixedBody) this.$refs.fixedBody.scrollTop = scrolltop
+         if (this.$refs.fixedBody) this.$refs.fixedBody.scrollTop = scrolltop
         this.buttomNum = getBarBottomS(
           event.target,
           this.bodyHeight,
@@ -1786,7 +1801,7 @@ export default {
       scrollTop = scrollTop || this.$refs.body.scrollTop
       this.start = Math.floor(scrollTop / this.itemHeight)
       this.end = this.start + this.visibleCount
-      this.visibleData = this.rebuildData.slice(this.start, this.end)
+      this.visibleData = this.rebuildData.slice(this.start, this.end) 
       // let curtop =  this.start*this.itemHeight;
       // this.$refs.content.style.transform = `translate3d(0, ${curtop}px, 0)`;
       // if(this.$refs.leftContent){
@@ -2004,7 +2019,7 @@ export default {
     },
     handleKeydown(e) {
       if (this.isCurrent && !e.shiftKey) {
-        const keyCode = e.keyCode
+        const keyCode = e.keyCode    
         // next
         if (keyCode === 40) {
           e.preventDefault()
@@ -2230,14 +2245,14 @@ export default {
         // }
         // 处理从无数据到有数据或者有数据到无数据时，表头和统计行水平位置没有归零的问题
         if (oldDataLen === 0 || val.length === 0) {
-          if (this.$refs.header) {
-            this.$refs.header.scrollLeft = 0
+          if (this.$refs.body) {
+            this.$refs.body.scrollLeft = 0
           }
           if (this.$refs.summation) {
             this.$refs.summation.style.marginLeft = 0
           }
         }
-        if(this.$refs.body.scrollTop > val.length*this.itemHeight){
+         if(this.$refs.body.scrollTop > val.length*this.itemHeight){
           this.$refs.body.scrollTop = val.length*this.itemHeight-this.height
         }
         this.updateVisibleData()

@@ -1,6 +1,5 @@
 <template>
   <div :class="classes">
-    {{viewValue}}
     <slot></slot>
   </div>
 </template>
@@ -45,7 +44,7 @@
       return {
         currentValue: this.value,
         childrens: [],
-        viewValue:this.value,
+        viewValue:'',
       };
     },
     computed: {
@@ -63,6 +62,7 @@
     },
     mounted () {
       this.updateValue();
+      this.getViewVlaue(this.value)
       this.$on('on-group-click',()=>{
         this.$emit('on-click');
       })
@@ -123,14 +123,8 @@
           return false
         })[0]
         targetRadio.componentInstance.blur()
-      }
-    },
-    watch: {
-      value () {
-        this.updateValue();
       },
-      currentValue(val){
-        // debugger
+      getViewVlaue(val){
         if (this.childrens) {
           let label=''
           this.childrens.forEach(child => {
@@ -140,6 +134,14 @@
         }else{
           this.viewValue = val
         }
+      }
+    },
+    watch: {
+      value () {
+        this.updateValue();
+      },
+      currentValue(val){
+        this.getViewVlaue(val)
       }
     }
   };

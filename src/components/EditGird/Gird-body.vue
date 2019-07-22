@@ -29,7 +29,8 @@
               :expanded="rowExpanded(row._index)"
               :showEditInput="showEditInput"
               :option="selectOption[inx]"
-              :treeOption="treeOption[inx]"
+              :treeOption="treeOption[inx] ? treeOption[inx] : []"
+              :cascaderOption="cascaderOption[inx] ? cascaderOption[inx] : []" 
               :height="height"
               @on-editselect-change="editselectChange"
               @on-editinput-change="editinputChange"
@@ -119,7 +120,7 @@
               :expanded="rowExpanded(row._index)"
               :showEditInput="showEditInput"
               :option="selectOption[inx]"
-              :treeOption="treeOption[inx]"
+              :treeOption="treeOption[inx] ? treeOption[inx] : []"
               @on-editselect-change="editselectChange"
               @on-editinput-change="editinputChange"
               @on-editinput-blur="editinputBlur"
@@ -191,6 +192,7 @@
         checkStrictly:Boolean,
         option:Array,
         treeOption:Array,
+        cascaderOption: Array,
         titleRender:Function,
         height: Number
       },

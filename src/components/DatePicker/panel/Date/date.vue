@@ -3,7 +3,7 @@
         <div :class="[prefixCls + '-sidebar']" v-if="shortcuts.length">
             <div
              :class="[prefixCls + '-shortcut']"
-             v-for="shortcut in shortcuts" 
+             v-for="shortcut in shortcuts"
               @click="handleShortcutClick(shortcut)">{{ shortcut.text }}</div>
         </div>
         <div :class="[prefixCls + '-body']">
@@ -39,11 +39,12 @@
                     :value="dates"
                     :selection-mode="selectionMode"
                     :disabled-date="disabledDate"
+                    :pickMode="pickMode"
                     @on-pick="panelPickerHandlers"
                     @on-pick-click="handlePickClick"
                 ></component>
             </div>
-            
+
             <div :class="[prefixCls + '-content']" v-show="isTime">
                 <time-picker
                     ref="timePicker"
@@ -94,6 +95,7 @@
         components: { Icon, DateTable, YearTable, MonthTable, TimePicker, Confirm, datePanelLabel },
         props: {
             // in the mixin
+            pickMode: String
         },
         data () {
             const {selectionMode, value} = this;
@@ -161,7 +163,7 @@
             },
             changeYear(dir){
                 if (this.selectionMode === 'year' || this.pickerTable === 'year-table'){
-                    this.panelDate = new Date(this.panelDate.getFullYear() + dir * 10, 0, 1);
+                    this.panelDate = new Date(this.panelDate.getFullYear() + dir * 12, 0, 1);
                 } else {
                     this.panelDate = siblingMonth(this.panelDate, dir * 12);
                 }

@@ -138,6 +138,20 @@
                     class="canEdit">
         </SelectTree>
       </template>
+       <template v-if="renderType === 'cascader'">
+        <Cascader v-model="columnCascader"
+                  ref="cascader"
+                  :data="cascaderOption"
+                  :placeholder="column.placeholder"
+                  :render-format="column.renderFormat"
+                  :clearable="true"
+                  :multiple="column.multiple || false"
+                  :transfer="column.transfer"
+                  :trigger="column.trigger"
+                  class="canEdit">
+
+        </Cascader>
+      </template>
       <template v-if="renderType === 'expand' && !row._disableExpand">
         <div :class="expandCls"
              @click="toggleExpand($event)">
@@ -173,6 +187,7 @@ import SelectTree from '../SelectTree/SelectTree.vue'
 import Date from '../DatePicker'
 import hTime from '../TimePicker'
 import Radio from '../Radio'
+import Cascader from '../Cascader/index.js'
 import clickoutside from '../../directives/clickoutside'
 import {
   addClass,
@@ -205,7 +220,8 @@ export default {
     SelectTree,
     Date,
     hTime,
-    Radio
+    Radio,
+    Cascader
   },
   props: {
     prefixCls: String,
@@ -224,6 +240,7 @@ export default {
     typeName: String,
     option: Array,
     treeOption: Array,
+    cascaderOption: Array,
     fixed: {
       type: [Boolean, String],
       default: false
@@ -243,6 +260,7 @@ export default {
       columnTime: this.row[this.column.key],
       columnSelect: this.row[this.column.key],
       columnTree: '',
+      columnCascader: this.row[this.column.key],
       firstTreeValue: this.row[this.column.key],
       uid: -1,
       context: this.parent.currentContext,
@@ -392,6 +410,11 @@ export default {
             this.normalDate = this.columnTree
             if (!_parent.cloneData[this.index]) return
             _parent.cloneData[this.index][this.column.key] = this.columnTree
+            break
+          case 'cascader':
+            this.normalDate = this.columnCascader
+            // this.normalDate = this.$refs.cascader.displayRender // 类似于selectValToLabel
+            _parent.cloneData[this.index][this.column.key] = this.columnCascader
             break
         }
         if (this.rule) {
@@ -631,6 +654,9 @@ export default {
     columnText() {
       this.save('text')
     },
+    columnCascader () {
+      this.save('cascader')
+    },
     validateState(val) {
       if (val == 'error') {
         this.$nextTick(() => {
@@ -659,7 +685,7 @@ export default {
     },
     renderType(val) {
       // 多选情况下value与label的转换(显示label)
-      this.selectValToLabel()
+      if (this.column.type == 'select') this.selectValToLabel()
     },
     option: {
       // option服务端传入，初始化无值

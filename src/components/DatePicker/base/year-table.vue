@@ -28,7 +28,7 @@
                 ];
             },
             startYear() {
-                return Math.floor(this.tableDate.getFullYear() / 10) * 10;
+                return Math.floor(this.tableDate.getFullYear() / 12) * 12;
             },
             cells () {
                 let cells = [];
@@ -40,7 +40,7 @@
 
                 const selectedDays = this.dates.filter(Boolean).map(date => clearHours(new Date(date.getFullYear(), 0, 1)));
 
-                for (let i = 0; i < 10; i++) {
+                for (let i = 0; i < 12; i++) {
                     const cell = deepCopy(cell_tmpl);
                     cell.date = new Date(this.startYear + i, 0, 1);
                     cell.disabled = typeof this.disabledDate === 'function' && this.disabledDate(cell.date) && this.selectionMode === 'year';

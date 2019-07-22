@@ -361,6 +361,27 @@ $table-select-item-prefix-cls: "#{$table-prefix-cls}-filter-select-item";
   &-sort{
     @include sortable();
   }
+  &-sortnew{
+    @include sortable();
+    i{
+      color: $btn-disable-color;
+      transition: color $transition-time $ease-in-out;
+      &:hover{
+        color: $btn-disable-color;
+      }
+      &.on{
+         color: #666;
+      }
+    }
+
+  }
+  &-newsort-wrap{
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    background: #ffff; 
+    height: 24px;
+  }
   &-filter{
     display: inline-block;
     cursor: pointer;

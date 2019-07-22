@@ -564,15 +564,15 @@ export default {
           this.fixedBodyClientHeight=0
         }
         let height =this.patibleHeight?this.bodyHeight-this.scrollBarWidth+this.fixedBodyClientHeight:this.bodyHeight+this.fixedBodyClientHeight;
-        if (this.tableWidth < this.initWidth) {
-          height = height + this.scrollBarWidth-1;
-        }
+         if (this.tableWidth < this.initWidth) {
+             height = height + this.scrollBarWidth-1;
+         }
         // height不存在时bodyheight为0
         if (this.height){
           style.height = this.scrollBarWidth > 0 ? `${height}px` : `${height}px`;
            if(this.fixedAutoHeight){
              if(this.bodyRealHeight<height){
-                style.height=`${this.bodyRealHeight}px`;
+                  style.height=`${this.bodyRealHeight}px`;
              }
            }
           }
@@ -724,8 +724,12 @@ export default {
       this.tableWidth=totalWidth+1;
       if (this.cloneColumns[lastInx].fixed!='right' && this.tableWidth<this.initWidth) {
         this.tableWidth = this.initWidth-1;
-      }
+      }   
       this.$emit('on-drag', width, key);
+      this.$nextTick(()=>{
+         this.fixedBodyClientHeight=-1;
+         this.bodyRealHeight=parseInt(getStyle(this.$refs.tbody.$el, 'height'))||0;
+      })
     },
     handleMouseLeave() {
     },
@@ -1664,6 +1668,7 @@ export default {
   },
   mounted () {
     this.$on('on-expand',()=>{
+      // debugger
       if(this.closeExpandResize) return false;
       this.$nextTick(()=>{//会引起render多次执行
         this.bodyRealHeight = parseInt(getStyle(this.$refs.tbody.$el, 'height'))||0;
@@ -1725,9 +1730,9 @@ export default {
           this.$nextTick(()=>{
             this.cloneData = deepCopy(this.data);
             this.buttomNum = null;
-              if(this.fixedAutoHeight){
+            // if(this.fixedAutoHeight){
                 this.fixedBodyClientHeight=-1;
-              }
+              //}
           });
 
         },

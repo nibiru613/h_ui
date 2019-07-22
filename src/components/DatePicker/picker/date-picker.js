@@ -20,18 +20,18 @@ export default {
   },
   components: { DatePickerPanel, RangeDatePickerPanel },
   computed: {
-    panel(){
-        const isRange =  this.type === 'daterange' || this.type === 'datetimerange' || this.type === 'monthrange' ||this.showTwoPanel;
-        return isRange ? 'RangeDatePickerPanel' : 'DatePickerPanel';
+    panel() {
+      const isRange = this.type === 'daterange' || this.type === 'datetimerange' || this.type === 'monthrange' || this.showTwoPanel;
+      return isRange ? 'RangeDatePickerPanel' : 'DatePickerPanel';
     },
-    ownPickerProps(){
-        return this.options;
+    ownPickerProps() {
+      return this.options;
     },
-    localePlaceholder () {
+    localePlaceholder() {
       if (this.placeholder === undefined) {
-          return this.t('i.datepicker.selectDate');
+        return this.t('i.datepicker.selectDate');
       } else {
-          return this.placeholder;
+        return this.placeholder;
       }
     },
   },

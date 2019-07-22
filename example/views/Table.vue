@@ -248,6 +248,9 @@ export default {
                    value: 2
                }
              ],
+             renderFilter:(h,params)=>{
+               return h('span','filter测试')
+             },
              filterMultiple: false,
              filterMethod (value, row) {
                  if (value === 1) {
@@ -658,6 +661,7 @@ export default {
           title: '姓名',
           key: 'name',
           render: (h, params) => {
+            console.log(params.row._index)
             if (params.row._index==3) {
               return h('div',{
                   attrs:{

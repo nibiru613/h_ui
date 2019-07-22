@@ -7,11 +7,12 @@
     <!-- <Button @click="changeMsg">显示</Button> -->
     <!-- <h-msg-box v-model = "showMsgBox" width="1000"> -->
       <h-edit-gird ref="table" border height="200" 
+        :showEditInput=true
         :columns="columns1" 
         :data="data2" 
         :disabled-hover="true" 
         :highlight-row="true" 
-        @on-current-change="click1" 
+        @on-current-change="click1"
         stripe 
         :loading="loading" 
         @on-expand="expand" 
@@ -317,21 +318,30 @@ export default {
           width:100,
           typeWidth:0,
           render: (h, params) => {
+            // return h('div', [
+            //   h('h-button', {
+            //     props: {
+            //       type: 'primary',
+            //       size: 'small'
+            //     },
+            //     style: {
+            //       marginRight: '5px'
+            //     },
+            //     on: {
+            //       'click': () => {
+            //         this.show(params.index)
+            //       }
+            //     }
+            //   }, '查看')
+            // ]);
             return h('div', [
-              h('h-button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
+              h('h-switch', {
                 on: {
                   'click': () => {
                     this.show(params.index)
                   }
                 }
-              }, '查看')
+              })
             ]);
           }
         },

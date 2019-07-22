@@ -1,64 +1,81 @@
-
-<template>
-<div>
-    <h-simple-table :columns="columns" :data="data1"></h-simple-table>
-    <h-page :total="total" :page-size="pageSize" @on-change="change" show-sizer @on-page-size-change="pageChange"></h-page>
-</div>
+<!--<template>
+  <h-edit-gird ref="editGrid"
+    style="border-left:1px solid #dce1e7;"
+    :columns="columns"
+    :data="gridData"
+    :showEditInput=true
+    size="small"
+    height=260
+    stripe>
+  </h-edit-gird>
 </template>
+
 <script>
-let tData =require('../assets/aa.json');
-// 快速封装简单的业务组件，dataGird
-export default{
-    data () {
-        return{
-            data1:[],
-            pageSize:40,
-            page:1,
-            total:tData.length,
-        }
-    },
-    props:{
-        columns:{
-            type:Array,
-            default:()=>{
-                return []
-            },
-        }
-    },
-    methods:{
-        change(num){
-            this.page = num
+const prefixCls = 'v-hello';
+export default {
+  name: 'Hello',
+  data(){
+    return {
+      columns: [
+        {
+          title: '基准利率类型',
+          key: 'basisRateType',
+          render: (h, params) => {
+            if (params.row.basisRateType) {
+              const { basisRateType } = params.row;
+              const { dictList } = this;
+              const dictObj = dictList.basisRateTypeDict.filter(
+                item => item.value === basisRateType,
+              );
+              return h('span', dictObj[0].caption);
+            }
+            return h('span', '');
+          },
         },
-        getData(){
-            let _this = this
-            setTimeout(()=>{
-                let end = this.page*this.pageSize
-                let start = end - this.pageSize
-               _this.data1 = tData.slice(start,end) 
-            },1000)
+        {
+          type: 'money',
+          title: '年利率',
+          key: 'yearRate',
+          suffixNum: 6,
         },
-        pageChange(num){
-            this.pageSize = num
-        }
-    },
-    mounted(){
-        this.getData()
-    },
-    watch:{
-        page(){
-            this.getData()
+        {
+          type: 'money',
+          title: '月利率',
+          key: 'monthRate',
+          suffixNum: 6,
         },
-        pageSize(){
-            this.getData()
-        }
+        {
+          title: '调整日期',
+          type: 'date',
+          key: 'adjustDate',
+          hiddenCol: true,
+        },
+        {
+          title: '币种',
+          key: 'currencyNo',
+          hiddenCol: true,
+        },
+        {
+          title: '基准利率分类',
+          key: 'baseRateTypeClass',
+          hiddenCol: true,
+        },
+      ],
+      gridData:[{basisRateType:'1',yearRate:1}],
     }
+  },
+  created () {
+    this.msg = 'bye!'
+  },
+  computed:{
+    helloclass(){
+      return `${prefixCls}-hello`
+    }
+  }
+
 }
 </script>
-
-
-
-
-
+-->
 
 
 
@@ -412,7 +429,7 @@ export default{
 
 </script>
 -->
-<!-- <template>
+<template>
 <div>
     <h-form ref="formValidate" :model="formValidate" cols="2" :label-width="80">
         <h-form-item label="input" prop="name">
@@ -422,14 +439,14 @@ export default{
             <h-typefield v-model="formValidate.mail" placeholder="请输入邮箱" class="curItemClass" data-index="2"></h-typefield >
         </h-form-item>
         <h-form-item label="select" prop="city">
-            <h-select v-model="formValidate.city" placeholder="请选择所在地" class="curItemClass" data-index="1">
+            <h-select v-model="formValidate.city"  multiple placeholder="请选择所在地" class="curItemClass" data-index="1">
                 <h-option value="beijing">北京市</h-option>
                 <h-option value="shanghai">上海市</h-option>
                 <h-option value="shenzhen">深圳市</h-option>
             </h-select>
         </h-form-item>
         <h-form-item label="simpleSelect" prop="city">
-            <h-simple-select v-model="formValidate.city" placeholder="请选择所在地" class="curItemClass" data-index="4">
+            <h-simple-select v-model="formValidate.city" multiple placeholder="请选择所在地" class="curItemClass" data-index="4">
                 <h-select-block :data="bigData"></h-select-block>
             </h-simple-select>
         </h-form-item>
@@ -468,7 +485,7 @@ export default {
       formValidate: {
         name: "",
         mail: "",
-        city: "",
+        city: [],
         gender: "",
         interest: [],
         date: "",
@@ -507,7 +524,7 @@ export default {
   }
 };
 </script>
--->
+
 <!--<template>
 <div>
         <h-table border :columns="columns4" :data="data1" rowSelect @on-select="selectOne" @on-select-all="selectAll" @on-selection-change="selectChange" @on-select-cancel="selectCancel"></h-table>
