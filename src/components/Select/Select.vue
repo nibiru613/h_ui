@@ -367,7 +367,7 @@
         return [
           `${prefixCls}`,
           {
-              [`${prefixCls}-visible`]: this.visible,
+              [`${prefixCls}-visible`]: this.visible||this.isInputFocus,
               [`${prefixCls}-disabled`]: this.disabled,
               [`${prefixCls}-editable`]: !this.editable,
               [`${prefixCls}-readonly`]: this.readonly,

@@ -157,7 +157,7 @@ export default {
       // 该月最后一天
       const ed = new Date(year, month, lastDate)
       const presetDates = this.presetDates.filter(d => {
-        return d >= sd && d <= ed
+        return d.date >= sd && d.date <= ed
       })
       const dayOfWeek = sd.getDay()
       const disabledDate = this.disabledDate
@@ -189,7 +189,7 @@ export default {
         // 使用用户预设数据覆盖日期相关属性
         let presetDate = null
         presetDates.some(d => {
-          if (d.toDateString() === date.toDateString()) {
+          if (d.date.toDateString() === date.toDateString()) {
             presetDate = d
             return true
           }

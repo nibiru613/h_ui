@@ -226,12 +226,13 @@ export default {
           }
         }
         this.fields[i].$children[0].focus()
+        if(window.isO45) return false
         if (this.fields[i].$children[0].opened)
           this.fields[i].$children[0].opened = false
-        this.$nextTick(() => {
-          if (this.fields[i].$children[0].visible)
-            this.fields[i].$children[0].visible = false
-        })
+          this.$nextTick(() => {
+            if (this.fields[i].$children[0].visible)
+              this.fields[i].$children[0].visible = false
+          })
       })
     }
   },

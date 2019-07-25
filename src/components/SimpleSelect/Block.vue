@@ -186,13 +186,13 @@ export default {
             // 如果存在多列，则匹配目标为多列所有列
             if (this.showCol.length&&!this.$parent.$parent.newSearchModel) {
               targetLabel = targetLabel + ' ' + this.getTargetLabel(col).join(' ')
-            }            
+            }          
             let targetValue =col.value
             let selected=col.selected
-            let targetoption=this.$parent.$parent.filterBy=="label"?targetLabel:targetValue;
+            let targetoption=this.$parent.$parent.filterBy=="label"||this.$parent.$parent.filterBy==undefined?targetLabel:targetValue;
             let hidden = !new RegExp(parsedQuery, 'i').test(targetoption)
             this.$set(col, 'hidden', hidden)
-
+            
             if (status && !hidden) {
               status = false
             }

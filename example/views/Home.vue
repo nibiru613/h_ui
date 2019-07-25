@@ -6,6 +6,7 @@
         </h-form-item> -->
         <h-form-item label="选择器" prop="select" required>
           <h-simple-select v-model="formItem1.select" filterable>
+            <h-select-block></h-select-block>
             <!-- <h-option value="beijing">北京市</h-option>
             <h-option value="shanghai">上海市</h-option>
             <h-option value="shenzhen">深圳市</h-option> -->
@@ -270,6 +271,9 @@
       focus(){
         this.$refs.formItem1.firstNodeFocused()
       }
+    },
+    mounted(){
+      // window.isO45 = true 
     }
   }
 </script>

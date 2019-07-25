@@ -13,7 +13,7 @@
     <!-- :multiLevel="multiLevel1" -->
     <!-- <h-msg-box v-model="showmsg" :width="1000"> -->
       <!-- notAdaptive  -->
-    <h-simple-table ref="simTable" @on-right-click="rightClick" :summationData="summationData" :columns="columnsBig1" border :data="bigData" height="300" @on-selection-change="selsetChange" @on-current-change="selsetChange1" @on-row-dblclick="dblclick" highlight-row>
+    <h-simple-table ref="simTable" :summationRender="false" @on-right-click="rightClick" :summationData="summationData" :columns="columnsBig1" border :data="bigData" height="300" @on-selection-change="selsetChange" @on-current-change="selsetChange1" @on-row-dblclick="dblclick" highlight-row>
     </h-simple-table>
     <!-- </h-msg-box> -->
     <h-button @click='changeClo'>改变冻结列</h-button>
@@ -711,14 +711,14 @@ export default {
           align: 'center',
           width:200,
           key:"index",
-          fixed:'right',
+          fixed:'left',
         },
         {
           type: 'selection',
           align: 'center',
           key:'select',
           width:200,
-          fixed:'right'
+          // fixed:'left'
         },
         {
           title: '姓名',

@@ -5,7 +5,7 @@
        ref="select">
     <div :class="selectionCls"
          ref="reference"
-         :tabindex="tabIndex"
+         :tabindex="selectTabindex"
          @keyup="keyup"
          @keydown="keydown"
          @click="toggleMenu">
@@ -56,12 +56,16 @@
              ref="input">
       <Icon name="close"
             :class="[prefixCls + '-arrow']"
-            v-show="showCloseIcon"
+            v-if="showCloseIcon"
             @click.native.stop="clearSingleSelect"></Icon>
       <Icon name="unfold"
             :class="[prefixCls + '-arrow']"
-            v-if="!remote||showArrow"
+            v-if="!searchIcon && (!remote || showArrow)"
             ref="arrowb"></Icon>
+      <Icon ref="searchIcon"
+            :name="searchIcon"
+            :class="[prefixCls + '-arrow']"
+            v-if="filterable && searchIcon && !showArrow"></Icon>
     </div>
     <transition :name="transitionName">
       <Drop :class="dropdownCls"
@@ -399,6 +403,10 @@ export default {
       type:Boolean,
       dafault:false,
     },
+    searchIcon: {
+      type: [Boolean, String],
+      default: false
+    }
   },
   data() {
     return {
@@ -435,6 +443,7 @@ export default {
       selectedResult:'',
       isSearchDelete:false,
       newSearchModelselectItem:{},
+      isCopy:false,
     }
   },
   computed: {
@@ -468,7 +477,7 @@ export default {
       return [
         `${prefixCls}`,
         {
-          [`${prefixCls}-visible`]: this.visible,
+          [`${prefixCls}-visible`]: this.visible||this.isInputFocus,
           [`${prefixCls}-disabled`]: this.disabled,
           [`${prefixCls}-readonly`]: this.readonly,
           [`${prefixCls}-editable`]: !this.editable,
@@ -588,6 +597,9 @@ export default {
     checkAll() {
       return 'h-select-checkall'
     },
+    selectTabindex(){
+        return this.disabled?-1:0
+    },
     notFoundShow() {
       let options = this.options
       options = options || []
@@ -682,13 +694,15 @@ export default {
         }
       }
     },
-    offsetArrow() {
+     offsetArrow() {
       if (!this.multiple) return
       let el = this.$refs.reference
       if (el.scrollHeight > el.clientHeight) {
         if (this.$refs.arrowb) this.$refs.arrowb.$el.style.right = '22px'
+        if (this.$refs.searchIcon) this.$refs.searchIcon.$el.style.right = '22px'
       } else {
         if (this.$refs.arrowb) this.$refs.arrowb.$el.style.right = '8px'
+        if (this.$refs.searchIcon) this.$refs.searchIcon.$el.style.right = '8px'
       }
     },
     toggleMenu() {
@@ -1179,7 +1193,7 @@ export default {
     handkeSearchBlur(){
        let multipleAry=[];
       this.selectedMultiple.forEach(item=>{
-            multipleAry.push(item[this.filterBy]);
+            multipleAry.push(item["label"]);
       })
       let modelstr=multipleAry.join(",");
       if(modelstr!=this.selectedResult){
@@ -1187,13 +1201,23 @@ export default {
       }
 
     },
-    resetInputState() {
+    resetInputState(e) {
       this.inputLength = this.$refs.input.value.length * 12 + 56
+      if(this.visible &&this.showBottom&&e.keyCode==9){ //153789 【TS:201907180097-资管业委会（资管）_贺文能-【需求类型】需求【需求描述】simple-select tab切换时失去焦点，不会将下拉框收起， 详见附件】
+        this.hideMenu();
+         this.isInputFocus = false
+      }
+      if(this.newSearchModel&&e.keyCode=="86"&&e.ctrlKey){
+         this.handleNewSearchCopy(e);
+      }
     },
     handleInputDelete() {
       if (this.multiple && this.model.length && this.query === '') {
         this.removeTag(this.model.length - 1)
       }
+    },
+    handleNewSearchCopy(e){
+      this.isCopy=true;
     },
     handleNewSearchSelect(changeitem){
       if(!changeitem) return;
@@ -1582,9 +1606,9 @@ export default {
       this.offsetArrow()
       this.searchStyle()
     })
-    if (this.disabled) {
-      this.tabIndex = -1
-    }
+    // if (this.disabled) {
+    //   this.tabIndex = -1
+    // }
     this.setPlacement()
     this.$on('on-visible-change', (val, top) => {
       if (val) {
@@ -1757,12 +1781,21 @@ export default {
           this.showTotal = false
         }
       }
+      if(this.newSearchModel&&val){
+        this.$emit("on-input-focus");
+      }
     },
      selectedResult(val, oldVal){
       let  searchkey="";
       let selectAry=val.split(",");
      // let oldselectAry=oldVal.split(",");
       let multipleAry=[];
+      if(this.isCopy){
+        this.$emit("on-paste",{oldval:oldVal,newval:val});
+        this.isCopy=false;
+        return
+      }
+      
       if(oldVal!=""&&val==""&&this.model.length>0){
            this.model=[]
            return;
@@ -1773,7 +1806,7 @@ export default {
          return;
       }
       this.selectedMultiple.forEach(item=>{
-            multipleAry.push(item[this.filterBy]);
+            multipleAry.push(item["label"]);
       })
       //if(this.isSearchDelete){
           this.newModelSearchDelete(multipleAry);
@@ -1794,7 +1827,7 @@ export default {
     },
     newSearchModelselectItem(changeitem){
       if(!changeitem) return;
-       let label=changeitem[this.filterBy];
+       let label=changeitem["label"];
        let selectAry=this.selectedResult.trim().split(",");
        let index=selectAry.indexOf(label);
        if(index>=0){

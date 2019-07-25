@@ -131,7 +131,7 @@
           </tbody>
         </table>
       </div>
-     <div v-if="isLeftFixed||isRightFixed"
+      <div v-if="isLeftFixed||isRightFixed"
            :class="fixedCls"
            :style="fixedTableStyle"
            ref="leftF">
@@ -257,7 +257,7 @@
                     :key="column._index">
                   <div :class="classesTd(column)">
                     <span v-if="(column.type==='index'||column.type==='selection')&&column._index==0">汇总</span>
-                    <Cell v-else-if="column.render"
+                    <Cell v-else-if="column.render&&summationRender"
                           :row="row"
                           :key="column._columnKey"
                           :column="column"
@@ -480,6 +480,10 @@ export default {
     newSort:{
       type:Boolean,
       default:false
+    },
+    summationRender:{
+      type:Boolean,
+      default:true
     }
   },
   data() {
@@ -689,7 +693,7 @@ export default {
       style.width = `${width}px`
       return style
     },
-        fixedTableStyle() {
+    fixedTableStyle() {
       if(this.isLeftFixed){
         let style = {}
         let width = 0

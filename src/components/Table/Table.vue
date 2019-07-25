@@ -779,7 +779,7 @@ export default {
           this.initWidth =parseInt(getStyle(this.$refs.tableInner, 'width')) || 0;
           this.bodyRealHeight = parseInt(getStyle(this.$refs.tbody.$el, 'height'))||0;
           this.headerRealHeight = parseInt(getStyle(this.$refs.header, 'height')) || 0;
-
+          if(!$td||$td.length<1) return
           let lastInx = this.cloneColumns[$td.length-1]._index;
           let scrollWidth = (this.bodyHeight<this.bodyRealHeight)?this.scrollBarWidth:0
           if(tableWidth<this.initWidth){
@@ -1217,7 +1217,6 @@ export default {
     handleMouseWheel (event) {
         const deltaX = event.deltaX;
         const $body = this.$refs.body;
-
         if (deltaX > 0) {
             $body.scrollLeft = $body.scrollLeft + 10;
         } else {

@@ -202,6 +202,10 @@ export default {
       type: Boolean,
       default: false
     }, // 是否按照字节计算长度
+    byteNum:{//字节占位符
+      type: [Number, String],
+      default: 2
+    },
     autocomplete: {
       type: String,
       default: 'off'
@@ -312,7 +316,7 @@ export default {
             //匹配双字节
             bytesCount += 1
           } else {
-            bytesCount += 2
+            bytesCount += this.byteNum
           }
         }
 
@@ -457,7 +461,7 @@ export default {
             //匹配双字节
             bytesCount += 1
           } else {
-            bytesCount += 2
+            bytesCount += this.byteNum
           }
           if (bytesCount > this.maxlength) {
             value = value.substr(0, i)

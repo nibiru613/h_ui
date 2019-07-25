@@ -71,10 +71,6 @@
         type:Boolean
       },
       selectToCheck:Boolean,
-      // visible: {
-      //   type: Boolean,
-      //   default: false
-      // }
     },
     data () {
       return {
@@ -101,7 +97,6 @@
         return [
           `${prefixCls}-arrow`,
           {
-            [`${prefixCls}-arrow-disabled`]: this.data.disabled,
             [`${prefixCls}-arrow-open`]: this.iconShow,
             // [`${prefixCls}-arrow-hidden`]: !(this.data.children && this.data.children.length)
           }
@@ -180,7 +175,6 @@
     methods: {
       handleExpand () {
         const item = this.data;
-        if (item.disabled) return;
         // async loading
         if (item.children&&item.children.length === 0) {
           const tree = findComponentsUpward(this, 'Tree');
