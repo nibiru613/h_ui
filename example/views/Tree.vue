@@ -37,7 +37,7 @@
         <h-tree :data="baseData2" show-checkbox ></h-tree>
       </h-col>
       <h-col span="8">
-        <h-tree :data="baseData2" @on-select-change="showChange" ></h-tree>
+        <h-tree :data="baseData2" @on-select-change="showChange" isAlwaysSelect></h-tree>
       </h-col>
     </h-row>
     <h1>过滤高亮</h1>
@@ -263,7 +263,7 @@ bigObj = curdata;
           },
           {
             title: 'parent112-autoload',
-            expand: false,            
+            expand: false,
             loading: false,
             autoLoad: true,
             children: []
@@ -592,7 +592,6 @@ bigObj = curdata;
         // console.log(1)
       },
       showChange(arr){
-        debugger
         console.log(arr)
       },
       showExpand (payload) {

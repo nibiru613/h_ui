@@ -183,7 +183,7 @@
             if (childHasCheckSetter && parent.checked != node.checked && !this.checkStrictly) {//当前子节点选中且父组件为选中
               if(!this.onlyUpdateDown){
                 this.updateTreeUp(node.nodeKey); // update tree upwards
-              }          
+              }
             }
         });
         autoLoadNodes.forEach(node =>  {
@@ -211,7 +211,7 @@
         for (let key in changes) {
           this.$set(node, key, changes[key]);
         }
-        // 如果当前节点leaf属性为true，则返回当前节点  
+        // 如果当前节点leaf属性为true，则返回当前节点
         if (node.children && !this.checkStrictly && !node.leaf) {
           node.children.forEach(child => {
               this.updateTreeDown(child, changes);
@@ -236,9 +236,9 @@
         if (!this.checkStrictly) {
           if(!this.onlyUpdateDown){
             this.updateTreeUp(nodeKey); // propagate up
-          }  
+          }
           this.updateTreeDown(node, {checked, indeterminate: false}); // reset `indeterminate` when going down
-        } 
+        }
         this.$emit('on-check-change', this.getCheckedNodes(),node);
       },
       nodeSelect(key,value,status=true){
@@ -285,9 +285,9 @@
         if (!this.checkStrictly) {
           if(!this.onlyUpdateDown){
             this.updateTreeUp(node.nodeKey); // propagate up
-          }  
+          }
           this.updateTreeDown(node, {status, indeterminate: false}); // reset `indeterminate` when going down
-        } 
+        }
       },
       filterHighlight(val,key='title'){
         this.flatState.forEach(item=>{
@@ -328,7 +328,7 @@
       },
       currentPageInfo: {
         handler: function (val) {
-          if (val && val.nodeKey >= 0 && val.page) {           
+          if (val && val.nodeKey >= 0 && val.page) {
             let node = this.flatState[val.nodeKey].node;
             if (node.hasPage&&node.hasPage!="false") {
               this.$set(node, 'currentPage', val.page);
@@ -339,6 +339,6 @@
         deep: true
       }
     },
-    
+
   };
 </script>

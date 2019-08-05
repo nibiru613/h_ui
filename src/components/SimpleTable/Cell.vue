@@ -11,6 +11,7 @@
       :row="row"
       :column="column"
       :index="index"
+      :sum="sum"
       :render="column.render"></Cell>
   </div>
 </template>
@@ -26,9 +27,9 @@ export default {
     fixed: {
       type: [Boolean, String],
       default: false
-    }
+    },
     // showTitle:Boolean,
-    // sum: Boolean,
+    sum: Boolean,
     // columnIdx: Number
   },
   data () {

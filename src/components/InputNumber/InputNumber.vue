@@ -33,7 +33,8 @@
              @input="change"
              @change="change"
              :value="viewValue==null?'':viewValue"
-             :readonly="!editable ||readonly">
+             :readonly="!editable ||readonly"
+             :tabindex="tabindex">
     </div>
   </div>
 </template>
@@ -119,6 +120,14 @@ export default {
     notScientificNotation: {
       type: Boolean,
       default: false
+    },
+    tabindex: {
+      type: [String, Number],
+      default: "-1",
+      validator(value) {
+        let num = parseInt(value);
+        return num <= 32767 && num >= -1;
+      }
     }
   },
   data() {

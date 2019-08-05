@@ -3,9 +3,9 @@
     <div
       :class="[prefixCls + '-selection']"
       ref="reference"
-      :tabindex="tabIndex" 
-      @click="toggleMenu" 
-      @keyup="keyup" 
+      :tabindex="tabIndex"
+      @click="toggleMenu"
+      @keyup="keyup"
       @keydown="keydown">
       <!-- 多选时输入框内选中值模拟 -->
       <div class="h-tag" v-for="(item, index) in selectedMultiple" :key="index">
@@ -29,7 +29,7 @@
         @blur="handleBlur"
         @input="handleInputDown"
         @keydown.delete="handleInputDelete"
-        tabindex="-1" 
+        tabindex="-1"
         ref="input">
       <!-- 单选时清空按钮 -->
       <Icon name="close" :class="[prefixCls + '-arrow']" v-show="showCloseIcon" @click.native.stop="clearSingleSelect"
@@ -37,11 +37,11 @@
       <Icon name="unfold" :class="[prefixCls + '-arrow']" ref="arrowb" v-if="!remote"></Icon>
     </div>
     <transition :name="transitionName">
-      <Drop v-show="dropVisible" 
-        :placement="fPlacement" 
+      <Drop v-show="dropVisible"
+        :placement="fPlacement"
         :dropWidth="dropWidth"
         :class="dropdownCls"
-        :data-transfer="transfer" 
+        :data-transfer="transfer"
         ref="dropdown"
         v-transfer-dom>
         <!--  <ul v-show="notFountShow" :class="[prefixCls + '-not-found']"><li>{{ localeNotFoundText }}</li></ul> -->
@@ -59,12 +59,11 @@
                 @blur="handleBlur"
                 @input="handleInputDown"
                 @keydown.delete="handleInputDelete"
-                tabindex="-1" 
+                tabindex="-1"
                 ref="input">
           </div>
-          <div class="h-selectTree-dropdown-list" ref="list" :style="listStyle"> 
-            <Tree ref="tree" :data="baseDate" :show-checkbox="showCheckbox" :multiple="multiple" :checkStrictly="checkStrictly" :showIndeterminate="!checkIndeter" @on-select-change="selectChange" @on-check-change="checkChange" @on-toggle-expand="toggleExpand" v-show="remote && !loading || !remote" isFormSelect :render="render">
-            
+          <div class="h-selectTree-dropdown-list" ref="list" :style="listStyle">
+            <Tree ref="tree" :data="baseDate" :show-checkbox="showCheckbox" :multiple="multiple" :isAlwaysSelect="isAlwaysSelect" :checkStrictly="checkStrictly" :showIndeterminate="!checkIndeter" @on-select-change="selectChange" @on-check-change="checkChange" @on-toggle-expand="toggleExpand" v-show="remote && !loading || !remote" isFormSelect>
             </Tree>
           </div>
           <!-- 远程搜索loading -->
@@ -214,13 +213,16 @@
         type:Boolean,
         default:false
       },
-      render: Function
+      isAlwaysSelect: {
+        type:Boolean,
+        default:false
+      }
     },
     data(){
       return{
         prefixCls: prefixCls,
         visible: false,
-        selectedSingle: '',  
+        selectedSingle: '',
         selectedMultiple: [],
         query:'',
         inputLength: 20,
@@ -390,7 +392,7 @@
           // 点击其他地方时触发blur校验
           if (this.showCheckbox){
             // 多选返回数组
-            this.dispatch('FormItem', 'on-form-blur', this.selectedMultiple)          
+            this.dispatch('FormItem', 'on-form-blur', this.selectedMultiple)
           } else {
             // 单选返回字符串
             this.dispatch('FormItem', 'on-form-blur', this.selectedSingle)
@@ -401,7 +403,7 @@
       selectChange(val){
         let strModel = this.formatValue;
         if (this.visible) {
-          this.$emit('on-select-change', val); 
+          this.$emit('on-select-change', val);
         }
         if (!this.showCheckbox) {
           this.selectedSingle=val.length!=0?val[0].title:'';
@@ -560,7 +562,7 @@
             return '';
           }else{
             return val.join(',');
-          } 
+          }
         }else{
           return val;
         }
@@ -592,12 +594,12 @@
         }
         findDown(data,value);
         this.$nextTick(()=>{
-          let tree = this.$refs.tree;   
+          let tree = this.$refs.tree;
           if (typeOf(value) == 'string'||typeOf(value) == 'number') {
             this.selectChange(tree.getSelectedNodes());
           }else{
             this.checkChange(tree.getCheckedNodes());
-          }  
+          }
         });
       },
       expandLevels(data){
@@ -683,8 +685,8 @@
           }
         });
       },
-      model () {  
-        let backModel = this.arrtoStr(this.model);   
+      model () {
+        let backModel = this.arrtoStr(this.model);
         // this.$emit('input', this.model);
         this.$emit('input', backModel);
         // 初次会执行

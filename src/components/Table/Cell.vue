@@ -13,8 +13,11 @@
     <template v-else-if="renderType === 'drag'">
       <h-icon name="arrow-move" size="18" data-drag="true" draggable="true" @dragstart.native="dragStart($event, row._index)"></h-icon>
     </template>
-    <template v-if="renderType === 'normal'" >
+    <template v-if="renderType === 'html'" >
       <span v-html="row[column.key]"></span>
+    </template>
+    <template v-if="renderType === 'normal'" >
+      <span v-text="row[column.key]"></span>
     </template>
     <template v-if="renderType === 'text'" >
       <span>{{row[column.key]}}</span>
@@ -108,7 +111,7 @@ export default {
       clickCurrentRow () {
         this.$parent.$parent.$parent.highlightCurrentRow(this.index);
         this.$parent.$parent.$parent.clickCurrentBtn(this.index)
-        
+
       },
       toggleExpand () {
         this.$parent.$parent.$parent.toggleExpand(this.index);
@@ -139,8 +142,10 @@ export default {
         this.renderType = 'text';
     }else if(this.column.type === 'drag'){
         this.renderType = 'drag';
-    }else{
-        this.renderType = 'normal';
+    }else if(this.column.type === 'html'){
+      this.renderType = 'html'
+    }else {
+      this.renderType = 'normal';
     }
   },
   mounted(){

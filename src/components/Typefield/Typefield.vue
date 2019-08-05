@@ -8,6 +8,7 @@
       :placeholder="localePlaceholder"
       :value="inputValue"
       :maxlength="maxlength"
+      :tabindex="tabindex"
       @blur="blurValue"
       @input="valChange"
       @change="valChange"
@@ -137,6 +138,14 @@ export default {
     transfer:{
       type:Boolean,
       default:false,
+    },
+    tabindex: {
+      type: [String, Number],
+      default: "-1",
+      validator(value) {
+        let num = parseInt(value);
+        return num <= 32767 && num >= -1;
+      }
     }
   },
   computed: {

@@ -16,7 +16,7 @@
             @click.native.prevent="handleCheck"></h-checkbox>
           <Render v-if="data.render" :render="data.render" :data="data" :node="node"></Render>
           <Render v-else-if="isParentRender" :render="parentRender" :data="data" :node="node"></Render>
-          <span v-else :class="titleClasses" @click="handleSelect" @mouseover="handeMouseover">{{data.title}}</span>        
+          <span v-else :class="titleClasses" @click="handleSelect" @mouseover="handeMouseover">{{data.title}}</span>
         </div>
         <ul :class="classes" ref="children"  v-if="childrenShow">
           <Tree-node
@@ -114,7 +114,7 @@
       },
       showArrow () {
         // 添加leaf子节点属性--fof系统（数据库存在loading字段，无论loading为true或false,均会被渲染成父节点）
-        //fof系统： children.length == 0 && leaf == false时，显示arrow标识 
+        //fof系统： children.length == 0 && leaf == false时，显示arrow标识
         return (this.data.children && this.data.children.length >= 0) && (!this.data.leaf||this.data.leaf=='false') || ('loading' in this.data && (!this.data.loading||this.data.loading=='false')) && (!this.data.leaf||this.data=='false');
       },
       showLoading () {

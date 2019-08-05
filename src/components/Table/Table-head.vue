@@ -12,13 +12,13 @@
       </tr>
       <tr class="cur-th">
         <th v-for="(column, index) in columns"
-          v-on:mousedown="mousedown($event,column,index)" 
-          v-on:mouseout="mouseout($event,column,index)" 
+          v-on:mousedown="mousedown($event,column,index)"
+          v-on:mouseout="mouseout($event,column,index)"
           v-on:mousemove="mousemove($event,column,index)"
           :key="index"
-          :class="alignCls(column)" 
+          :class="alignCls(column)"
           >
-          <div :class="cellClasses(column)">
+          <div :class="cellClasses(column)" @mousedown="handleSortByClickHead(index)">
             <template v-if="column.type === 'expand'"></template>
             <template v-else-if="column.type === 'selection'">
               <render-header v-if="column.renderHeader" :render="column.renderHeader" :column="column" :index="index"></render-header>
@@ -118,6 +118,8 @@ export default {
       moveing:false,
       cloumnsLeft:{},
       multiData:null,
+      isCurrent: true,
+      sortIndex: 0
     }
   },
   computed: {
@@ -146,11 +148,23 @@ export default {
   },
   mounted(){
     this.getLeftWidth();
+    on(document, 'keyup', this.handleKeyup);
     //  this.changeMultiData(this.multiLevel);
     this.multiData = this.multiLevel;
     on(window, 'resize', this.getLeftWidth);
   },
   methods: {
+    handleKeyup(e) {
+      if (this.isCurrent && !e.shiftKey) {
+        const keyCode = e.keyCode
+        // ctrl
+        if (keyCode === 17) {
+          e.preventDefault()
+          e.stopPropagation()
+          this.cancelSort()
+        }
+      }
+    },
     cellClasses (column) {
       return [
         `${this.prefixCls}-cell`,
@@ -181,10 +195,11 @@ export default {
     },
     handleSort (index, type) {
       if (this.columns[index]._sortType === type) {
-          type = 'normal';
+        type = 'normal';
       }
       let _index = this.columns[index]._index;
       this.$parent.handleSort(_index, type);
+      this.sortIndex = index
     },
     handleSortByHead (index) {
       const column = this.columns[index];
@@ -198,6 +213,23 @@ export default {
             this.handleSort(index, 'normal');
         }
       }
+    },
+    handleSortByClickHead(index) {
+      const column = this.columns[index]
+      if (column.sortable) {
+        const type = column._sortType;
+        console.log(column)
+        if (type === 'normal') {
+          this.handleSort(index, 'asc');
+        } else if (type === 'asc') {
+          this.handleSort(index, 'desc');
+        } else {
+          this.handleSort(index, 'normal');
+        }
+      }
+    },
+    cancelSort() {
+      this.handleSort(this.sortIndex, 'normal');
     },
     handleFilter (index) {
       let _index = this.columns[index]._index;
@@ -232,9 +264,9 @@ export default {
       let _this = this;
       if (!this.canDrag && !this.canMove) return;
       if (this.draggingColumn) {
-        this.dragging = true;      
+        this.dragging = true;
         this.$parent.resizeProxyVisible = true;
-        const table = this.$parent; 
+        const table = this.$parent;
         const tableEl = table.$el;
         const tableLeft = tableEl.getBoundingClientRect().left;
         const columnEl = this.$el.querySelector(`th.h-ui-${column.key}`);
@@ -264,7 +296,7 @@ export default {
 
         document.onselectstart = function() { return false; };
         document.ondragstart = function() { return false; };
-        
+
         const handleMouseMove = (event) => {
           const deltaLeft = event.clientX - this.dragState.startMouseLeft;
           const proxyLeft = this.dragState.startLeft + deltaLeft;
@@ -318,13 +350,13 @@ export default {
         document.addEventListener('mouseup', handleMouseUp);
       }
       if(this.moveingColumn){
-        this.moveing = true;  
+        this.moveing = true;
          addClass(document.body, 'useSelect');
         this.$parent.moveProxyVisible = true;
         let dom = this.findObj(event,'TH').cloneNode(true);
         dom.width = column._width;
         addClass(dom,'move-proxy-th');
-        const table = this.$parent; 
+        const table = this.$parent;
         const tableEl = table.$el;
         const tableLeft = tableEl.getBoundingClientRect().left;
         const tableTop = tableEl.getBoundingClientRect().top;
@@ -444,7 +476,7 @@ export default {
       while(obj&&obj.tagName!=name){
         obj=obj.parentElement
       }
-      return obj;      
+      return obj;
     },
     handleClick (event) {
       event.stopPropagation();

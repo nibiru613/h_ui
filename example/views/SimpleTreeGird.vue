@@ -6,9 +6,11 @@
     <h-button @on-click="clearData">清除已选项</h-button>
     <h-button @on-click="selectData(true)">选择某行</h-button>
     <h-button @on-click="selectData(false)">不选择某行</h-button>
+    <h-button @on-click="checkedData(true)">多选选择某行</h-button>
+    <h-button @on-click="checkedData(false)">多选不选择某行</h-button>
     <!-- isCheckbox checkStrictly -->
     <!-- selectRoot -->
-    <h-simple-tree-gird ref="treeGird" canMove @on-move="move" rowSelect :columns="columns1" isCheckbox no-data-text="123" :data="treedata" canDrag :height="400" @on-select-root="selectChange" @on-expand="expand" @on-drag="expand" @on-row-click="selectChange" @on-scroll="selectChange">
+    <h-simple-tree-gird ref="treeGird" headSelection canMove :columns="columns1" no-data-text="123" isCheckbox :data="treedata" :height="400" @on-row-dblclick="selectChange" @on-expand="expand" @on-drag="expand" >
       <span slot="loading">1244</span>
     </h-simple-tree-gird>
   </div>
@@ -19,7 +21,7 @@ let bigData = [];
 for(var i=0;i<5;i++){
   let obj =  {
     id: i,
-    expand:i==0?true:false,
+    // expand:i==0?true:false,
     name: '王小明'+i,
     age: 18,
     address: '北京市朝阳区芍药居',
@@ -32,7 +34,7 @@ for(var i=0;i<5;i++){
   }
   bigData.push(obj)
 }
-for(var i=50;i<1000;i++){
+for(var i=50;i<100;i++){
   let obj =  {
     id: i,
     name: '王小明'+i,
@@ -43,11 +45,11 @@ for(var i=50;i<1000;i++){
     city: '北京',
     dating:'2018',
     timing:'16',
-    _parentId:parseInt(Math.random()*50,10)
+    _parentId:parseInt(Math.random()*5,10)
   }
   bigData.push(obj)
 }
-for(var i=1000;i<10000;i++){
+for(var i=100;i<200;i++){
   let obj =  {
     id: i,
     name: '王小明'+i,
@@ -58,7 +60,7 @@ for(var i=1000;i<10000;i++){
     city: '北京',
     dating:'2018',
     timing:'16',
-    _parentId:Math.ceil(Math.random()*1000),
+    _parentId:Math.ceil(Math.random()*100),
   }
   bigData.push(obj)
 }
@@ -110,24 +112,24 @@ export default {
       columns1: [
          {
                 /* type: 'selectTree', */
-                title: '科目',
-                key: 'show_accountelement_fullname',
+                title: 'name',
+                key: 'name',
                 // width: 100,
                 align: 'left',
             },
             {
                 /* type: 'text', */
-                title: '科目方向',
+                title: 'age',
                 // width: 200,
-                key: 'accountelement_dir',
+                key: 'age',
                 align: 'left',
                 // hiddenCol: true,
             },
             {
                 /* type: 'text', */
-                title: '科目方向',
+                title: 'address',
                 // width: 300,
-                key: 'show_dir',
+                key: 'address',
                 align: 'center',
                 hiddenCol: false,
             }
@@ -160,13 +162,17 @@ export default {
     },
     loadData(){
       let old = new Date().getTime()
-      // this.treedata=this.baseData;
-      this.treedata=tData;
-      // this.bigData = jsonData.slice(0, 100);
+      this.treedata=this.baseData;
+      // this.treedata=bigData;
+      // this.treedata = jsonData.slice(0, 100);
       this.$nextTick(() => {
         let newDate = new Date().getTime() - old
         console.log(newDate)
       })
+      // setTimeout(() => {
+      //   // this.$refs.treeGird.selectRow(51, true)
+      //   this.$refs.treeGird.checkedRow(3, true)
+      // }, 1000)
     },
     selectChange(data) {
       console.log(data);
@@ -176,23 +182,21 @@ export default {
       console.log(status)
     },
     changeData(id){
-      this.$refs.treeGird.expandRow(id,true);
+      this.$refs.treeGird.expandRow(1,false)
     },
     changeData1(){
       this.$refs.treeGird.expandRow(1,true)
-      this.$refs.treeGird.expandRow(2,true)
-      this.$refs.treeGird.expandRow(3,true)
-      this.$refs.treeGird.expandRow(4,true)
-      this.$refs.treeGird.expandRow(6,true)
-      // for(var item in this.baseData){
-      //   this.$refs['treeGird'].expandRow(this.baseData[item].code,true)
-      // }
     },
     clearData(){
       this.$refs.treeGird.clearSelected();
     },
     selectData(status){
-      this.$refs.treeGird.selectRow('1103',status);
+      this.$refs.treeGird.selectRow(0,status);
+      console.log(this.$refs.treeGird.getSelection())
+    },
+    checkedData(status){
+      this.$refs.treeGird.checkedRow(0,status);
+      console.log(this.$refs.treeGird.getSelection())
     },
   },
   mounted () {

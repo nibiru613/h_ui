@@ -11,6 +11,11 @@
           :columns-width="columnsWidth"
           :data="rebuildData"
           :multiLevel="cloneMultiLevel"
+          :canDrag="canDrag"
+          :canMove="canMove"
+          :lastColWidth="lastColWidth"
+          :minDragWidth="minDragWidth"
+          @on-change-width="changeWidth"
           ></gird-head>
       </div>
       <div :class="[prefixCls + '-body']" :style="bodyStyle" ref="body" @scroll="handleBodyScroll" @click="handlerClick"
@@ -131,6 +136,8 @@
             ></gird-body>
         </div>
       </div>
+      <div class="h-table__column-resize-proxy" ref="resizeProxy" v-show="resizeProxyVisible"> </div>
+      <div class="h-table__column-move-proxy h-table-cell" ref="moveProxy" v-show="moveProxyVisible"> </div>
       <div :class="['h-table-fixed-right-patch']" :style="fixedRightPatchStyle" v-if="isRightFixed&&showScroll" ref="rightPatch"></div>
     </div>
     <Spin fix size="large" v-if="loading">
@@ -273,7 +280,23 @@ export default {
     cancelSelection: {
       type: Boolean,
       default: false
-    }
+    },
+    canDrag: {
+      type: Boolean,
+      default: true,
+    },
+    canMove: {
+      type: Boolean,
+      default: true,
+    },
+    lastColWidth:{
+      type:[Number,String],
+      default:80,
+    },
+    minDragWidth:{
+      type:[Number,String],
+      default:30,
+    },
   },
   data () {
     return {
@@ -300,7 +323,9 @@ export default {
       canVisible:true,
       curKey:null,
       /* 保存垂直滚动距离，用于判断垂直滚动方向 */
-      scrollTop: 0
+      scrollTop: 0,
+      resizeProxyVisible: false,
+      moveProxyVisible:false,
     };
   },
   computed: {
@@ -506,6 +531,45 @@ export default {
   methods: {
     rowClsName (index) {
       return this.rowClassName(this.data[index], index);
+    },
+    changeWidth(width,key,lastWidth,lastInx){
+      var that = this;
+      var totalWidth=0;
+      this.cloneColumns.forEach((col,i)=>{
+        if (col.key==key) {
+          that.$set(col,"width",width);
+          that.$set(col,"_width",width);
+        }
+        if (i == lastInx) {
+          that.$set(col,"width",lastWidth);
+          that.$set(col,"_width",lastWidth);
+        }
+        var colWidth = col.width||col._width
+        totalWidth = totalWidth+ colWidth;
+      });
+      if (this.bodyHeight !== 0 && lastInx==this.cloneColumns.length) {
+        totalWidth = totalWidth + this.scrollBarWidth;
+      }
+      this.tableWidth=totalWidth+1;
+      if (this.cloneColumns[lastInx].fixed!='right' && this.tableWidth<this.initWidth) {
+        this.tableWidth = this.initWidth-1;
+      }
+      this.$emit('on-drag', width, key);
+      this.$nextTick(()=>{
+         this.bodyRealHeight=parseInt(getStyle(this.$refs.tbody.$el, 'height'))||0;
+      })
+    },
+    sortCloumn (curIndex,insertIndex,_index){
+      if (this.cloneColumns[insertIndex].fixed) return;
+      const item = this.cloneColumns[curIndex];
+      this.cloneColumns.splice(curIndex,1);
+      this.cloneColumns.splice(insertIndex,0,item);
+      this.$emit('on-move',curIndex,insertIndex);
+    },
+    setMoveProxy(index){
+      let el = this.$refs.moveProxy;
+      let width = this.cloneColumns[index]._width;
+      el.style.width = width+'px';
     },
     handleMouseLeave() {
 

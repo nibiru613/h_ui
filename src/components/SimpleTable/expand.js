@@ -8,6 +8,10 @@ export default {
     column: {
         type: Object,
         default: null
+    },
+    sum:{
+      type: [Boolean, String],
+      default: false
     }
   },
   render: (h, ctx) => {
@@ -16,6 +20,7 @@ export default {
       index: ctx.props.index
     };
     if (ctx.props.column) params.column = ctx.props.column;
+    if(ctx.props.sum) params.sum=true;
     return ctx.props.render(h, params);
   }
 };

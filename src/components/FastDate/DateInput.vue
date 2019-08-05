@@ -5,6 +5,7 @@
   :class="classes" 
   :readonly="readonly"
   :disabled="disabled"
+  :tabindex="tabindex"
   @input="val"
   @blur="blur" 
   @focus="focuser"
@@ -30,6 +31,14 @@ export default {
       type: Boolean,
       default: false
     },
+    tabindex: {
+      type: [String, Number],
+      default: "-1",
+      validator(value) {
+        let num = parseInt(value);
+        return num <= 32767 && num >= -1;
+      }
+    }
   },
   data(){
     return{

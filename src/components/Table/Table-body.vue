@@ -125,7 +125,7 @@
         },
         clickCurrentRow (event,_index,curIndex) {
           if (this.sum||this.objData[_index]._isDisabled) return           
-          if(this.rowSelect||this.rowSelectOnly){
+          if(this.rowSelect){
              this.$parent.toggleSelect(_index,event,curIndex);
           }
           this.$parent.clickCurrentRow(event,_index,curIndex);

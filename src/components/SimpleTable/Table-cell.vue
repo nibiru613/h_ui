@@ -1,5 +1,5 @@
 <template>
-  <div :class="cellClasses">
+  <div :class="cellClasses" @mousedown="handleSortByClickHead(index)">
     <template v-if="column.type === 'selection'">
       <Checkbox v-if="!column.title" :size="checkboxSize" @mousedown.native.stop="handleClick" :value="checked" @on-change="selectAll"></Checkbox>
       <span v-else>{{column.title}}</span>
@@ -11,7 +11,7 @@
     <span :class="[prefixCls + '-sort']" v-if="column.sortable&&!useNewSort">
       <Icon name="android-arrow-dropup" :class="{on: column._sortType === 'asc'}" @on-click="handleSort(index, 'asc')" @mousedown.native.stop="handleClick"></Icon>
       <Icon name="android-arrow-dropdo" :class="{on: column._sortType === 'desc'}" @on-click="handleSort(index, 'desc')" @mousedown.native.stop="handleClick"></Icon>
-    </span> 
+    </span>
     <div v-if="column.sortable&&useNewSort"  :class="newsortWrapClass" @click="handleSortByHead(index)">
       <span :class="[prefixCls + '-sortnew']" >
         <Icon name="android-arrow-dropup" :class="{on: column._sortType === 'asc'}"  ></Icon>
@@ -63,6 +63,9 @@ import renderHeader from './header';
       },
       handleSortByHead(index){
         this.$parent.handleSortByHead(index);
+      },
+      handleSortByClickHead(index) {
+        this.$parent.handleSortByClickHead(index)
       }
     },
   };

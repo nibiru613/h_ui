@@ -34,6 +34,7 @@
              :spellcheck="spellcheck"
              :autocomplete="autocomplete"
              :style="inputStyle"
+             :tabindex="tabindex"
              @keyup.enter="handleEnter"
              @keyup="handleKeyup"
              @keypress="handleKeypress"
@@ -62,6 +63,7 @@
               :autofocus="autofocus"
               :spellcheck="spellcheck"
               :autocomplete="autocomplete"
+              :tabindex="tabindex"
               @keyup.enter="handleEnter"
               @keyup="handleKeyup"
               @keypress="handleKeypress"
@@ -231,6 +233,14 @@ export default {
     limitTip:{
       type:String,
       default:''
+    },
+    tabindex: {
+      type: [String, Number],
+      default: "-1",
+      validator(value) {
+        let num = parseInt(value);
+        return num <= 32767 && num >= -1;
+      }
     }
   },
   data() {
@@ -242,7 +252,6 @@ export default {
       slotReady: false,
       textareaStyles: {},
       viewValue:this.value,
-      clearstyle:{},
       hasvalue:false,
       /* 是否按下按键 */
       keyPressed: false
@@ -341,6 +350,13 @@ export default {
         }
       }
       return style;
+    },
+    clearstyle(){
+        let style={}
+        let right=this.icon?22:10
+        style.right=right+'px'
+        style.width='16px'
+        return style
     }
   },
   methods: {
@@ -544,13 +560,6 @@ export default {
         this.$refs.input.blur()
       }
     },
-    showClear(){
-      let right=this.icon?22:10;
-       this.clearstyle= {
-         right:right+'px',
-         width:'16px'
-       }
-    }
   },
   watch: {
     value(val) {
@@ -570,7 +579,6 @@ export default {
     }
     this.slotReady = true
     this.resizeTextarea()
-    this.showClear()
   }
 }
 </script>

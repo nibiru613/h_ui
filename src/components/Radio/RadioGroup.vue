@@ -38,6 +38,14 @@
       btnIconOnlyChecked: {
         type: Boolean,
         default: false
+      },
+      tabindex: {
+        type: [String, Number],
+        default: "0",
+        validator(value) {
+          let num = parseInt(value);
+          return num <= 32767 && num >= -1;
+        }
       }
     },
     data () {

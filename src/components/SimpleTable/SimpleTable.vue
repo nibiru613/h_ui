@@ -95,7 +95,7 @@
                                   @on-change="toggleSelect(row._index,index+start)"
                                   :disabled="rowDisabled(row._index)"></Checkbox>
                       </template>
-                      <template v-if="!column.type&&!column.render"><span v-html="row[column.key]"></span></template>
+                      <template v-if="!column.type&&!column.render"><span v-text="row[column.key]"></span></template>
                       <template v-if="column.render">
                         <Cell :row="row"
                               :key="column._columnKey"
@@ -116,9 +116,9 @@
            :style="bodyStyle">
         <div :class="[prefixCls+'-tiptext']"
              :style="textStyle">
-          <span v-html="localeNoDataText"
+          <span v-text="localeNoDataText"
                 v-if="!data || data.length === 0"></span>
-          <span v-html="localeNoFilteredDataText"
+          <span v-text="localeNoFilteredDataText"
                 v-else></span>
         </div>
         <table cellspacing="0"
@@ -208,7 +208,7 @@
                                     @on-change="toggleSelect(row._index,index+start)"
                                     :disabled="rowDisabled(row._index)"></Checkbox>
                         </template>
-                        <template v-if="!column.type&&!column.render"><span v-html="row[column.key]"></span></template>
+                        <template v-if="!column.type&&!column.render"><span v-text="row[column.key]"></span></template>
                         <template v-if="column.render">
                           <Cell :row="row"
                                 :key="column._columnKey"
@@ -261,9 +261,10 @@
                           :row="row"
                           :key="column._columnKey"
                           :column="column"
+                          :sum="summationRender"
                           :index="row._index"></Cell>
                     <span v-else
-                          v-html="row[column.key]"></span>
+                          v-text="row[column.key]"></span>
                   </div>
                 </td>
               </table-tr>
@@ -286,7 +287,7 @@
         <h-icon name="load-c"
                 size=18
                 class='h-load-loop'></h-icon>
-        <div v-html="loadingText"></div>
+        <div v-text="loadingText"></div>
       </slot>
     </Spin>
   </div>
@@ -484,7 +485,11 @@ export default {
     summationRender:{
       type:Boolean,
       default:true
-    }
+    },
+    rowSelectOnly:{
+      type:Boolean,//多选时是否支持点击行只选中，再次点击不进行反选
+      default:false
+    },
   },
   data() {
     return {
@@ -536,7 +541,9 @@ export default {
       baseInx: null,
       offsetInx: null,
       hoverIndex:-1,
-      scheduledAnimationFrame: false // 是否进行动画帧更新visibledata
+      scheduledAnimationFrame: false, // 是否进行动画帧更新visibledata,
+      isHorizontal:false,
+      lastScrollTop: 0
     }
   },
   computed: {
@@ -740,7 +747,10 @@ export default {
       let style = {}
       if (this.bodyHeight !== 0) {
         let height = this.bodyHeight - 1
-        if (this.tableWidth > this.initWidth) {
+        // if (this.tableWidth > this.initWidth) {
+        //   height = this.bodyHeight - this.scrollBarHeight
+        // }
+        if (this.isHorizontal) {
           height = this.bodyHeight - this.scrollBarHeight
         }
         style.height = `${height}px`
@@ -811,7 +821,7 @@ export default {
         this.$emit('on-right-click', JSON.parse(JSON.stringify(this.cloneData[_index])), _index)
       } else {
         this.$emit('on-right-click', null, null)
-      }           
+      }
 
     },
     calcCheckboxSize(size) {
@@ -896,6 +906,9 @@ export default {
       }
       this.$nextTick(() => {
         this.$emit('on-drag', width, key)
+        if(this.$refs.content){
+          this.isHorizontal = this.$refs.content.scrollWidth > this.$refs.content.clientWidth?true:false
+        }
       })
     },
     getLeftWidth() {
@@ -1258,6 +1271,11 @@ export default {
           this.headerRealHeight =
             parseInt(getStyle(this.$refs.header, 'height')) || 0
           this.initWidth = parseInt(getStyle(this.$refs.tableWrap, 'width')) || 0
+          if(this.$refs.content){
+            this.$nextTick(()=>{
+              this.isHorizontal = this.$refs.content.scrollWidth > this.$refs.content.clientWidth?true:false
+            })
+          }
         })
       })
     },
@@ -1333,6 +1351,9 @@ export default {
           ? this.objData[_index]._isHighlight
           : false
       let oldIndex = -1
+      if(this.objData[_index]._isChecked&&this.rowSelectOnly){
+          return;
+        }
       for (let i in this.objData) {
         this.objData[i]._isChecked = false //单选时取消多选项，估值6.0专用
         if (
@@ -1422,7 +1443,7 @@ export default {
       }
     },
     clickCurrentRow(_index,curIndex) {
-       this.baseInx = curIndex
+      this.baseInx = curIndex
       this.offsetInx = curIndex
       if (!this.rowSelect) {
         this.focusIndex = curIndex
@@ -1482,7 +1503,9 @@ export default {
           )
     },
     toggleSelect(_index, curIndex) {
-      // curIndex = curIndex + this.start
+      if(this.highlightRow){
+        this.focusIndex = curIndex
+      }
       this.allclick = false
       let data = {}
       for (let i in this.objData) {
@@ -1584,10 +1607,24 @@ export default {
         this.cloneColumns[index]._sortType = type
         return
       }
+      this.sortIndex = index
       let _index = this.cloneColumns[index]._index
       this.handleSortT(_index, type)
     },
     handleSortByHead(index) {
+      const column = this.cloneColumns[index]
+      if (column.sortable) {
+        const type = column._sortType
+        if (type === 'normal') {
+          this.handleSort(index, 'asc')
+        } else if (type === 'asc') {
+          this.handleSort(index, 'desc')
+        } else {
+          this.handleSort(index, 'normal')
+        }
+      }
+    },
+    handleSortByClickHead(index) {
       const column = this.cloneColumns[index]
       if (column.sortable) {
         const type = column._sortType
@@ -1616,6 +1653,12 @@ export default {
       return data
     },
     handleSortT(_index, type) {
+      const columnType = this.cloneColumns[_index].type
+      if(columnType === 'selection') {
+        console.log(_index, columnType)
+
+      }
+
       let index
       this.cloneColumns.forEach((col, i) => {
         col._sortType = 'normal'
@@ -1715,7 +1758,8 @@ export default {
         this.curPageFirstIndex = Math.floor(scrolltop / this.itemHeight)
         this.$refs.header.scrollLeft = event.target.scrollLeft
         if (this.isSummation) this.sumMarginLeft = event.target.scrollLeft
-         if (this.$refs.fixedBody) this.$refs.fixedBody.scrollTop = scrolltop
+        if (this.$refs.fixedBody) this.$refs.fixedBody.scrollTop = scrolltop
+        let oldBottomNum = this.buttomNum;
         this.buttomNum = getBarBottomS(
           event.target,
           this.bodyHeight,
@@ -1723,6 +1767,10 @@ export default {
           this.scrollBarHeight,
           this.isScrollX
         )
+        if (oldBottomNum !== null && this.buttomNum !== null) {
+          this.$emit('on-scroll', this.buttomNum, scrolltop !== this.lastScrollTop ? "y" : "x");
+        }
+        this.lastScrollTop = scrolltop;
         let curtop = Math.floor(scrolltop / this.itemHeight) * this.itemHeight
 
         this.updateVisibleDataDebounce(false)(scrolltop)
@@ -1749,6 +1797,7 @@ export default {
         this.$refs.header.scrollLeft = event.target.scrollLeft
         if (this.isSummation) this.sumMarginLeft = event.target.scrollLeft
         if (this.$refs.fixedBody) this.$refs.fixedBody.scrollTop = scrolltop
+        let oldBottomNum = this.buttomNum;
         this.buttomNum = getBarBottomS(
           event.target,
           this.bodyHeight,
@@ -1756,6 +1805,10 @@ export default {
           this.scrollBarHeight,
           this.isScrollX
         )
+        if (oldBottomNum !== null && this.buttomNum !== null) {
+          this.$emit('on-scroll', this.buttomNum, scrolltop !== this.lastScrollTop ? "y" : "x");
+        }
+        this.lastScrollTop = scrolltop;
         let curtop = Math.floor(scrolltop / this.itemHeight) * this.itemHeight
         this.updateVisibleData(scrolltop)
         this.$refs.content.style.transform = `translate3d(0, ${curtop}px, 0)`
@@ -1805,7 +1858,7 @@ export default {
       scrollTop = scrollTop || this.$refs.body.scrollTop
       this.start = Math.floor(scrollTop / this.itemHeight)
       this.end = this.start + this.visibleCount
-      this.visibleData = this.rebuildData.slice(this.start, this.end) 
+      this.visibleData = this.rebuildData.slice(this.start, this.end)
       // let curtop =  this.start*this.itemHeight;
       // this.$refs.content.style.transform = `translate3d(0, ${curtop}px, 0)`;
       // if(this.$refs.leftContent){
@@ -2023,7 +2076,7 @@ export default {
     },
     handleKeydown(e) {
       if (this.isCurrent && !e.shiftKey) {
-        const keyCode = e.keyCode    
+        const keyCode = e.keyCode
         // next
         if (keyCode === 40) {
           e.preventDefault()
@@ -2099,6 +2152,8 @@ export default {
         this.focusIndex = this.curPageFirstIndex
         top = curTop
       }
+      this.baseInx = this.focusIndex
+      this.offsetInx = this.focusIndex
       if (curTop != top) {
         this.updateVisibleData(top)
         this.$refs.body.scrollTop = top
@@ -2117,7 +2172,16 @@ export default {
           let _index = this.rebuildData[this.focusIndex]._index
           this.highlightCurrentRow(_index)
         }
+        // ctrl
+        if (e.keyCode === 17) {
+          e.preventDefault()
+          e.stopPropagation()
+          this.cancelSort()
+        }
       }
+    },
+    cancelSort() {
+      this.handleSort(this.sortIndex, 'normal');
     },
     keySelectRange() {
       let max, min
@@ -2138,6 +2202,7 @@ export default {
           this.objData[index]._isChecked = false
         }
       }
+      this.focusIndex = this.offsetInx
       this.$emit(
         'on-selection-change',
         this.getSelection(),
@@ -2198,7 +2263,7 @@ export default {
         this.getLeftWidth()
       }
     })
-    on(this.$refs.tableWrap, 'keyup', this.keySelect)
+    on(document, 'keyup', this.keySelect)
   },
   beforeDestroy() {
     //window.removeEventListener('resize', this.handleResize, false);
@@ -2207,7 +2272,7 @@ export default {
     off(window, 'resize', this.getLeftWidth)
     off(document, 'keydown', this.handleKeydown)
     off(document, 'keyup', this.handleKeyup)
-    off(this.$refs.tableWrap, 'keyup', this.keySelect)
+    off(document, 'keyup', this.keySelect)
   },
   watch: {
     toScrollTop() {
@@ -2294,12 +2359,6 @@ export default {
         this.visibleCount =
           Math.ceil(this.height / this.itemHeight) - (this.showHeader ? 0 : -1)
         this.updateVisibleData()
-      })
-    },
-    buttomNum(val, oldvalue) {
-      if (val == null || oldvalue == null) return
-      this.$nextTick(() => {
-        this.$emit('on-scroll', this.buttomNum)
       })
     },
     shiftSelect(val) {

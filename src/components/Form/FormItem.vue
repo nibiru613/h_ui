@@ -14,10 +14,13 @@
       <slot></slot>
       <transition name="fade">
         <div class="verify-tip verify-bottom"
-             v-if="isShowError"
+             v-if="isShowError&&showModal"
              :style="{left: `${msgOffset}px`}">
           <div class="verify-tip-arrow"></div>
-          <div class="verify-tip-inner" :style="verifyTipStyle" :title="validateMessage">{{validateMessage}}</div>
+          <div class="verify-tip-inner" :style="verifyTipStyle" :title="validateMessage">
+            <h-icon v-if="showCloseIcon" :name="closeName" @on-click="closeTip" :size="12"></h-icon>
+            {{validateMessage}}
+          </div>
         </div>
       </transition>
     </div>
@@ -126,6 +129,14 @@ export default {
     marginLeftForce: {
       type: Boolean,
       default: false
+    },
+    closeName: {
+      type: String,
+      default: 'close'
+    },
+    showCloseIcon:{
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -141,7 +152,8 @@ export default {
       curCols: this.cols,
       mustShowError: false,
       mustShowErrorList: [],
-      modeChanged: false
+      modeChanged: false,
+      showModal:true,
     }
   },
   watch: {
@@ -333,7 +345,8 @@ export default {
         rule => !rule.trigger || rule.trigger.indexOf(trigger) !== -1
       )
     },
-    validate(trigger, callback = function() {}, value) {
+    validate(trigger, callback = function() {}) {
+      this.showModal = true
       if (this.isNotChecked) return
       const rules = this.getFilteredRule(trigger)
 
@@ -349,7 +362,7 @@ export default {
       let model = {}
 
       // 允许由事件传值
-      model[this.prop] = value || this.fieldValue
+      model[this.prop] = this.fieldValue
       if (typeOf(this.fieldValue) == 'array' && this.fieldValue.length == 2) {
         if (this.fieldValue[0] == '' && this.fieldValue[1] == '')
           model[this.prop] = []
@@ -405,16 +418,16 @@ export default {
 
       if (cb) cb()
     },
-    onFieldBlur(val = '') {
-      this.validate('blur', () => {}, val)
+    onFieldBlur(val) {
+      this.validate('blur', () => {})
     },
-    onFieldChange(val = '') {
+    onFieldChange(val) {
       if (this.validateDisabled) {
         this.validateDisabled = false
         return
       }
       if (this.isOnlyBlurRequire) return
-      this.validate('change', () => {}, val)
+      this.validate('change', () => {})
     },
     commonRule(str) {
       let rules = this.getRules()
@@ -437,6 +450,9 @@ export default {
         this.$off('on-form-blur').$on('on-form-blur', this.onFieldBlur)
         this.$off('on-form-change').$on('on-form-change', this.onFieldChange)
       }
+    },
+    closeTip(){
+      this.showModal = false
     }
   },
   mounted() {

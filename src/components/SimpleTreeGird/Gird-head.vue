@@ -14,7 +14,7 @@
           :class="alignCls(column)" 
           >
           <div :class="[`${prefixCls}-cell`]">
-            <!-- <Checkbox v-if="headSelection&&!index" @on-change="selectAll" class="asyc-check"></Checkbox> -->
+            <Checkbox v-if="headSelection&&!index" @mousedown.native.stop="handleClick" @click.native.stop="selectAll" :value="isSelectAll" class="asyc-check"></Checkbox>
             <template>
               <span v-if="!column.renderHeader" @click="handleSortByHead(index)">{{ column.title || '#' }}</span>
               <render-header v-else :render="column.renderHeader" :column="column" :index="index"></render-header>
@@ -49,7 +49,7 @@ export default {
     columnsWidth: Object,
     headSelection: Boolean,
     canDrag:Boolean,
-    canMove: Boolean
+    canMove: Boolean,
   },
   data(){
     return{
@@ -58,21 +58,22 @@ export default {
       dragState: {},
       moving: false,
       movingColumn: null,
-      cloumnsLeft: []
+      cloumnsLeft: [],
+      isSelectAll:false
     }
   },
   computed: {
-    isSelectAll () {
-      // let isSelectAll = true;
-      // if (!this.data.length) isSelectAll = false;
-      // for (let i = 0; i < this.data.length; i++) {
-        // if (!this.objData[this.data[i]._index]._isChecked && !this.objData[this.data[i]._index]._isDisabled) {
-        //   isSelectAll = false;
-        //   break;
-        // }
-      // }
-      // return isSelectAll;
-    }
+    // isSelectAll () {
+    //   let isSelectAll = true;
+    //   if (!this.data.length) isSelectAll = false;
+    //   for (let i = 0; i < this.data.length; i++) {
+    //     if (!this.objData[this.data[i]._index]._isChecked && !this.objData[this.data[i]._index]._isDisabled) {
+    //       isSelectAll = false;
+    //       break;
+    //     }
+    //   }
+    //   return isSelectAll;
+    // }
   },
   watch: {
     columns: {
@@ -90,8 +91,11 @@ export default {
     off(window, 'resize', this.getLeftWidth);
   },
   methods: {
-    selectAll (status) {
-      this.$parent.selectAll(status);
+    selectAll (event) {
+      event.stopPropagation();
+      this.isSelectAll = !this.isSelectAll
+      this.$parent.isSelectAll = this.isSelectAll
+      // this.$parent.selectAll(this.isSelectAll);
     },
     handleSortByHead (index) {
     },
@@ -323,7 +327,10 @@ export default {
       columns.splice(curIndex,1);
       columns.splice(insertIndex,0,item);
       this.$emit('on-move', _index, insertIndex);
-    }
+    },
+    handleClick (event) {
+      event.stopPropagation();
+    },
   }
 };
 </script>

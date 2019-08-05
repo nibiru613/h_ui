@@ -26,7 +26,7 @@
     <h2>showCheckbox表示多选默认不显示半选中状态</h2>
     <h-select-tree :data="baseData3"></h-select-tree>
     {{val1}}
-    <h-select-tree v-model="val2" style="width:200px" :firstValue="firstVal1" :data="baseData" onlyChild showCheckbox isString></h-select-tree>
+    <h-select-tree v-model="val2" style="width:200px" :data="baseData" onlyChild showCheckbox isString></h-select-tree>
     {{val2}}
     <h-select-tree v-model="val4" :data="baseData" showCheckbox disabled></h-select-tree>
     <br><br><br>
@@ -88,11 +88,13 @@
                 children: [
                   {
                     title: 'child1-1-1',
-                    id: '1-1-1'
+                    id: '1-1-1',
+                    checked:'false'
                   },
                   {
                     title: 'child1-1-2',
-                    id: '1-1-2'
+                    id: '1-1-2',
+                    checked:'false'
                   }
                 ]
               },

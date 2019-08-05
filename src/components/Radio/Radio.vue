@@ -11,6 +11,7 @@
         :disabled="disabled"
         :readonly = "readonly"
         :checked="currentValue"
+        :tabindex="getTabIndex()"
         @change="change">
     </span><slot>{{ text||label }}</slot>
   </label>
@@ -58,6 +59,14 @@
         type: Boolean,
         default: false
       },
+      tabindex: {
+        type: [String, Number],
+        default: "0",
+        validator(value) {
+          let num = parseInt(value);
+          return num <= 32767 && num >= -1;
+        }
+      }
     },
     data () {
       return {
@@ -156,6 +165,17 @@
       blur () {
         this.$refs.input.blur();
         this.isFocus = false;
+      },
+      getTabIndex() {
+        let tabindex = this.tabindex;
+        if (("" + tabindex) === "0") {
+          if (this.parent) {
+            if (("" + this.parent.tabindex) !== "0") {
+              tabindex = this.parent.tabindex
+            }
+          }
+        }
+        return tabindex
       }
     },
     watch: {

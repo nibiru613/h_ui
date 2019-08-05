@@ -8,7 +8,8 @@
         <tr :key="row.id"
           class="not-child"
           :class="rowClasses(row.id)"
-          @click="clickCurrentRow(row,row.id,$event)">
+          @click="clickCurrentRow(row,row.id,$event)"
+          @dblclick="dblclickCurrentRow(row,row.id,$event)">
           <td v-for="(column,inx) in columns" :class="alignCls(column, row)" :key="column.index">
             <span v-if="inx==(columns[0].type=='index'?1:0)" :style="indentCls" >
               <Icon v-if="row.children && row.children.length!=0" name = "play_fill" :class="iconClass(row.id,index)" @click.native.stop="toggleExpand(index,row,$event)"></Icon>
@@ -85,6 +86,7 @@
       initWidth:[Number,String],
       scrollBarWidth:[Number,String],
       rowSelect:Boolean,
+      headSelection: Boolean,
     },
     computed: {
       objData () {
@@ -150,6 +152,13 @@
           }
         }
       },
+      dblclickCurrentRow (row,id,e) {
+        this._parent.dblclickCurrentRow(row);
+        this._parent.clickCurrentRow(row)
+        if(this.rowSelect){
+          this.changeSelect(id,row,e)
+        }
+      },
       selectRootUp(id,status){
         this._parent.changeCheckedObj(this.indexAndId[id],status,'_isHighlight')   
       },
@@ -192,7 +201,7 @@
       changeSelect(id,row,event){
         this._parent.changeCheckedObj(this.indexAndId[id],null);
         let status = this.checkedObj[this.indexAndId[id]].checked;
-        this._parent.changeSelect(row,status);
+        this._parent.changeSelect(row);
         if(!this.checkStrictly){
           if(row._parentId!=undefined){
             this.updateTreeUp(row._parentId);
@@ -235,17 +244,16 @@
             _isExpand:col.expand||false,
             _collectionState: this.collectionState[inx],
             _parentId:col._parentId,
-            _isHighlight:col.highlight
+            _isHighlight:col.highlight||false,
+            row:col,
           })
         }
-      },
-      getPathIndex(col,inx){
-        if(col._parentId){
-          let index = this.indexAndId[col._parentId]
-          return this.checkedObj[index].parentIndex+';'+inx;
-        }else{
-          return inx;
-        }
+        //此处引起性能问题，目的是为了兼容外部选中
+        // if(this.isCheckbox&&(!this.checkStrictly||this.headSelection)&&this.indent==0&&col.children&&col.children.length>0){
+        //   col.children.forEach((item,inx)=>{
+        //     this.setStatus(item,inx)
+        //   })
+        // }
       },
       getStatus(){
         this._parent = this.findParent();
@@ -260,7 +268,7 @@
             this.setStatus(col,inx);
           }
         })  
-      }
+      },
     },
     mounted(){
       this.getStatus();   
@@ -269,7 +277,7 @@
       data:{
         deep:true,
         handler () {
-          this.getStatus();    
+          this.getStatus();
         }
       },
     }

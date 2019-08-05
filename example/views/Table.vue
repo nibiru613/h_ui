@@ -89,7 +89,7 @@
     支持IE9~IE11、Edge、Chrome、Safari、Firefox 全系列浏览器。
     IE9、Safari 需要手动修改后缀名为 .csv。
     IE9暂时只支持英文，中文会显示为乱码。</p>
-    <h-table height="300" border width="1000" :columns="columns8" :data="data7" :loading="loading" canMove :summationData="summationData"></h-table>
+    <h-table height="200" border width="1000" :columns="columns8" isMulitSort :data="data7" :loading="loading"  @on-sort-change="sortChnage"></h-table>
     <p>设置maxheight 800</p>
     <h-table maxHeight="800" border width="1000" :columns="columns8" :data="data7" :loading="loading" canMove :summationData="summationData"></h-table>
     <br>
@@ -823,8 +823,9 @@ export default {
         {
           title: "名称",
           key: "name",
+          sortable: true,
           width: 100,
-          fixed: "right",
+          // fixed: "right",
         },
         {
           title: "展示",
@@ -832,24 +833,24 @@ export default {
           sortable: true,
           // fixed: "left",
           // hiddenCol:true,//通过在column中设置hiddenCol表示该列是否隐藏
-          filters: [
-            {
-              label: '大于4000',
-              value: 1
-            },
-            {
-              label: '小于4000',
-              value: 2
-            }
-          ],
-          filterMultiple: false,
-          filterMethod (value, row) {
-            if (value === 1) {
-              return row.show > 4000;
-            } else if (value === 2) {
-              return row.show < 4000;
-            }
-          }
+          // filters: [
+          //   {
+          //     label: '大于4000',
+          //     value: 1
+          //   },
+          //   {
+          //     label: '小于4000',
+          //     value: 2
+          //   }
+          // ],
+          // filterMultiple: false,
+          // filterMethod (value, row) {
+          //   if (value === 1) {
+          //     return row.show > 4000;
+          //   } else if (value === 2) {
+          //     return row.show < 4000;
+          //   }
+          // }
         },
         // {
         //   title: "唤醒",
@@ -1824,6 +1825,10 @@ export default {
     },
     moveDown(){
       
+    },
+    sortChnage(obj){
+      debugger
+      console.log(obj)
     }      
   },
   mounted(){

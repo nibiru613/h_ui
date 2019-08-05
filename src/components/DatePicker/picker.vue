@@ -16,6 +16,7 @@
                  :placeholder="localePlaceholder"
                  :value="visualValue"
                  :name="name"
+                 :tabindex="tabindex"
                  @click.native="clickHandler"
                  @on-keyup.prevent="keyUpHandler"
                  @on-input-change="handleInputChange"
@@ -224,6 +225,14 @@ export default {
         ])
       },
       default: 'click'
+    },
+    tabindex: {
+      type: [String, Number],
+      default: "-1",
+      validator(value) {
+        let num = parseInt(value);
+        return num <= 32767 && num >= -1;
+      }
     }
   },
   data() {

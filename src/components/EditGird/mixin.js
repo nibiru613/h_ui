@@ -7,7 +7,7 @@ export default {
                 cellClassName = row.cellClassName[column.key];
             }
             return [
-                // `${column.key}`,
+                `h-ui-${column.key}`,
                 {
                     [`${cellClassName}`]: cellClassName,    // cell className
                     [`${column.className}`]: column.className,    // column className

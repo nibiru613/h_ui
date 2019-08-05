@@ -30,7 +30,7 @@ module.exports = {
     // 逗号风格 行尾
     'comma-style': [2, 'last'],
     'vue/use-v-on-exact': 0,
-    'vue/no-parsing-error': [2, { 'x-invalid-end-tag': 0 }],
+    'vue/no-parsing-error': [2, { 'x-invalid-end-tag': false }],
     'no-useless-escape': 0
   }
 }

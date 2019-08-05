@@ -42,7 +42,7 @@
         autocomplete="off"
         @blur="handleBlur"
         @keydown.delete="handleInputDelete"
-        tabindex="-1"
+        :tabindex="tabindex"
         ref="input">
       <!-- 单选时清空按钮 -->
       <Icon name="close" :class="[prefixCls + '-arrow']" v-if="showCloseIcon" @click.native.stop="handleIconClose" ref="close"></Icon>
@@ -73,7 +73,7 @@
               autocomplete="off"
               @blur="handleBlur"
               @keydown.delete="handleInputDelete"
-              tabindex="-1"
+              :tabindex="tabindex"
               ref="input">
           </span>
           <span v-if="hideMult&&multiple" :class="hideMultHead" @click="toggleSelect(!isSelectAll)">全选</span>
@@ -324,6 +324,14 @@
       showValue: {
         type: Boolean,
         default: false
+      },
+      tabindex: {
+        type: [String, Number],
+        default: "-1",
+        validator(value) {
+          let num = parseInt(value);
+          return num <= 32767 && num >= -1;
+        }
       }
     },
     data () {
@@ -346,14 +354,15 @@
         isLi:true,
         scrollBarWidth: getScrollBarSize(),
         isfirstSelect: false,
-        tabIndex:0,
+        tabIndex: 0,
         selectHead:false,
         titleTip:'',
         fPlacement:this.placement,
         isSelectAll:false,
         typeValue:'string',
         focusValue:'',
-        viewValue:null
+        viewValue:null,
+        lastScrollTop: 0
       };
     },
     computed: {
@@ -367,7 +376,7 @@
         return [
           `${prefixCls}`,
           {
-              [`${prefixCls}-visible`]: this.visible||this.isInputFocus,
+              [`${prefixCls}-visible`]: this.visible,
               [`${prefixCls}-disabled`]: this.disabled,
               [`${prefixCls}-editable`]: !this.editable,
               [`${prefixCls}-readonly`]: this.readonly,
@@ -567,7 +576,8 @@
       },
       handleSelectScroll(event){
         let num = getBarBottom(event.target,this.scrollBarWidth);
-        this.$emit('on-scroll',num)
+        this.$emit('on-scroll', num, this.lastScrollTop !== event.target.scrollTop ? "y" : "x");
+        this.lastScrollTop = event.target.scrollTop;
       },
       toggleSelect(val){
         this.isSelectAll = !this.isSelectAll
@@ -1095,6 +1105,7 @@
       },
       handleBlur () {
         if (this.multiple && this.filterable) this.$refs.reference.scrollTop = 0
+        this.isInputFocus = false
         this.$emit('on-blur');
         if (this.showBottom) return false;
         // this.isInputFocus = false
@@ -1364,6 +1375,10 @@
       });
       if (this.disabled) {
         this.tabIndex = -1;
+      } else {
+        if (("" + this.tabindex) !== '-1') {
+          this.tabIndex = this.tabindex;
+        }
       }
       // this.setPlacement();
       this.$on('on-visible-change', (val,top) => {
