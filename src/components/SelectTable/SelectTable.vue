@@ -22,7 +22,7 @@
       <input
         ref="input"
         type="text"
-        v-if="filterable && !showBottom"
+        v-show="filterable && !showBottom && (inputVisible || showPlaceholder || !multiple)"
         v-model="query"
         :disabled="disabled"
         :readonly="!editable||readonly"
@@ -34,7 +34,6 @@
         @keydown.delete="handleInputDelete"
         @keyup="handleInputKeyup($event)"
         :tabindex="tabindex"
-        :style="inputVisibleStyle"
       />
       <Icon name="close" :class="[prefixCls + '-arrow']" v-if="showCloseIcon" @click.native.stop="clearSingleSelect"></Icon>
       <Icon name="unfold" :class="[prefixCls + '-arrow']" v-if="!searchIcon && (!remote || showArrow)"
@@ -371,6 +370,7 @@ export default {
     return {
       prefixCls: prefixCls,
       visible: false,
+      inputVisible: true,
       selectTabindex: 0,
       options: [],
       optionInstances: [],
@@ -541,20 +541,6 @@ export default {
     },
     checkAll() {
       return "h-select-checkall";
-    },
-    inputVisibleStyle() {
-      if(this.filterable && this.multiple) {
-        let style =  {}
-        if(!this.isInputFocus && this.selectedMultiple.length !== 0) {
-          style.height = '1px'
-          style.position = 'absolute'
-          style.bottom = 0
-          style.opacity = 0
-        }else {
-          style.height =  '29px'
-        }
-        return style
-      }
     },
     notFoundShow() {
       let options = this.options;
@@ -1605,6 +1591,7 @@ export default {
       if (val) {
         if(this.filterable) {
           this.isInputFocus = true
+          this.inputVisible = true
           this.$refs.input.focus()
         }
         this.$nextTick(() => {
@@ -1622,6 +1609,7 @@ export default {
       } else {
         if (this.filterable) {
           this.isInputFocus = false
+          this.inputVisible = false
           this.$refs.reference.scrollTop = 0; // reference element scroll to 0
           this.$refs.input.blur()
           setTimeout(() => {
